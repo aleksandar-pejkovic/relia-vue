@@ -4,6 +4,7 @@ export const useAuthenticationStore = defineStore({
   id: 'authentication',
   state: () => ({
     token: localStorage.getItem('token') || null,
+    username: null
   }),
   getters: {
     isAuthenticated: (state) => {
@@ -19,5 +20,13 @@ export const useAuthenticationStore = defineStore({
       this.token = null;
       localStorage.removeItem('token');
     },
+    setUsername(username) {
+      this.username = username
+      localStorage.setItem('username', username);
+    },
+    removeUsername() {
+      this.username = null;
+      localStorage.removeItem('username');
+    }
   },
 });

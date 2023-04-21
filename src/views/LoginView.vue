@@ -10,7 +10,7 @@
                 Password:
                 <input type="password" v-model="password">
             </label>
-            <button class="submit-button" type="submit" autofocus>Login</button>
+            <button class="submit-button" type="submit">Login</button>
         </form>
     </div>
 </template>
@@ -43,6 +43,7 @@ export default defineComponent({
             if (response.ok) {
                 const authenticationStore = useAuthenticationStore();
                 authenticationStore.setToken(data.jwt);
+                authenticationStore.setUsername(this.username)
                 this.$router.push("/");
             } else {
                 console.error(data.message);

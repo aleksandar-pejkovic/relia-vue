@@ -78,28 +78,5 @@ export default {
 </template>
 
 <style scoped>
-nav {
-  width: 100%;
-  height: 7vh;
-  font-size: large;
-  background-color: royalblue;
-  display: flex;
-  align-items: center;
-}
-
-nav a {
-  color: ivory;
-  padding: 0 1rem;
-}
-
-nav a:hover {
-  color: gold;
-  transform: scale(1.5);
-  transition: 500ms;
-}
-
-.active {
-  color: aqua;
-}
 
 @media (min-width: 1024px) {}</style>

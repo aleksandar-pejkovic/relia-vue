@@ -1,0 +1,15 @@
+* {
+    margin: 0;
+    text-decoration: none;
+    text-align: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.main {
+    min-height: 93vh;
+    display: flex;
+    align-items: center;
+    color: royalblue;
+  }
+  

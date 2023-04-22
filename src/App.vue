@@ -8,35 +8,35 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <RouterLink class="nav-link" v-if="loggedIn" to="/">Home</RouterLink>
+          <li v-if="loggedIn" class="nav-item">
+            <RouterLink class="nav-link" to="/">Home</RouterLink>
           </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" v-if="loggedIn" to="/customers">Customers</RouterLink>
+          <li  v-if="loggedIn" class="nav-item">
+            <RouterLink class="nav-link" to="/customers">Customers</RouterLink>
           </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" v-if="loggedIn" to="/invoices">Invoices</RouterLink>
+          <li v-if="loggedIn" class="nav-item">
+            <RouterLink class="nav-link" to="/invoices">Invoices</RouterLink>
           </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" v-if="loggedIn" to="/products">Products</RouterLink>
+          <li v-if="loggedIn" class="nav-item">
+            <RouterLink class="nav-link" to="/products">Products</RouterLink>
           </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" v-if="!loggedIn" to="/login">Login</RouterLink>
+          <li v-if="!loggedIn" class="nav-item">
+            <RouterLink class="nav-link" to="/login">Login</RouterLink>
           </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" v-if="!loggedIn" to="/register">Register</RouterLink>
+          <li v-if="!loggedIn" class="nav-item">
+            <RouterLink class="nav-link" to="/register">Register</RouterLink>
           </li>
-          <li class="nav-item dropdown">
-            <a v-if="loggedIn" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+          <li v-if="loggedIn" class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
               {{ username }}
             </a>
             <ul class="dropdown-menu">
               <li>
-                <RouterLink v-if="loggedIn" class="dropdown-item" to="/profile">Profile</RouterLink>
+                <RouterLink class="dropdown-item" to="/profile">Profile</RouterLink>
               </li>
               <li>
-                <a v-if="loggedIn" class="dropdown-item" @click="logout">Logout</a>
+                <a class="dropdown-item" @click="logout">Logout</a>
               </li>
             </ul>
           </li>

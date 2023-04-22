@@ -1,32 +1,3 @@
-<script>
-import { RouterLink, RouterView } from 'vue-router'
-import { computed } from 'vue'
-import { useAuthenticationStore } from '@/stores/authentication'
-
-export default {
-  setup() {
-    const authenticationStore = useAuthenticationStore()
-
-    // Compute whether the user is logged in or not
-    const loggedIn = computed(() => authenticationStore.isAuthenticated)
-
-    return {
-      loggedIn
-    }
-  },
-  methods: {
-    logout() {
-      // perform logout logic, e.g. clear user session, redirect to login page
-      console.log('Logging out...')
-      const authenticationStore = useAuthenticationStore()
-      authenticationStore.removeToken()
-      authenticationStore.removeUsername()
-      this.$router.push("/")
-    }
-  }
-}
-</script>
-
 <template>
   <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
     <div class="container-fluid">
@@ -62,10 +33,10 @@ export default {
             </a>
             <ul class="dropdown-menu">
               <li>
-                <RouterLink class="dropdown-item" to="/profile">Profile</RouterLink>
+                <RouterLink v-if="loggedIn" class="dropdown-item" to="/profile">Profile</RouterLink>
               </li>
               <li>
-                <a class="dropdown-item" @click="logout">Logout</a>
+                <a v-if="loggedIn" class="dropdown-item" @click="logout">Logout</a>
               </li>
             </ul>
           </li>
@@ -77,6 +48,32 @@ export default {
   <RouterView />
 </template>
 
-<style scoped>
+<script>
+import { RouterLink, RouterView } from 'vue-router'
+import { computed } from 'vue'
+import { useAuthenticationStore } from '@/stores/authentication'
 
-@media (min-width: 1024px) {}</style>
+export default {
+  setup() {
+    const authenticationStore = useAuthenticationStore()
+
+    // Compute whether the user is logged in or not
+    const loggedIn = computed(() => authenticationStore.isAuthenticated)
+    const username = computed(() => authenticationStore.getUsername)
+
+    return {
+      loggedIn,
+      username
+    }
+  },
+  methods: {
+    logout() {
+      console.log('Logging out...')
+      const authenticationStore = useAuthenticationStore()
+      authenticationStore.removeToken()
+      authenticationStore.removeUsername()
+      this.$router.push("/login")
+    }
+  }
+}
+</script>

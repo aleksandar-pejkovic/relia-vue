@@ -18,6 +18,7 @@
 <script>
 import { defineComponent } from 'vue'
 import { useAuthenticationStore } from '@/stores/authentication'
+import { useBaseUrlStore } from '@/stores/baseUrl'
 
 export default defineComponent({
     name: "Login",
@@ -29,24 +30,24 @@ export default defineComponent({
     },
     methods: {
         async login() {
-            const response = await fetch("http://localhost:8080/api/auth/login", {
+            const baseUrlStore = useBaseUrlStore()
+            const url = baseUrlStore.getUrl('auth/login')
+            const authHeader = 'Basic ' + btoa(this.username + ':' + this.password)
+            const response = await fetch(url, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    username: this.username,
-                    password: this.password,
-                }),
+                    "Authorization": authHeader
+                }
             });
-            const data = await response.json();
+            const responseData = response.clone();
             if (response.ok) {
+                const token = await responseData.text()
                 const authenticationStore = useAuthenticationStore();
-                authenticationStore.setToken(data.jwt);
+                authenticationStore.setToken(token);
                 authenticationStore.setUsername(this.username)
                 this.$router.push("/");
             } else {
-                console.error(data.message);
+                console.error('login error');
             }
         },
     },

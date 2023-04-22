@@ -31,6 +31,7 @@
 <script>
 import { defineComponent } from 'vue'
 import Swal from 'sweetalert2'
+import { useBaseUrlStore } from '@/stores/baseUrl'
 
 export default defineComponent({
     name: "Register",
@@ -44,10 +45,13 @@ export default defineComponent({
     },
     methods: {
         async register() {
-            const response = await fetch("http://localhost:8080/api/users", {
+            const baseUrlStore = useBaseUrlStore()
+            const url = baseUrlStore.getUrl('users/register')
+            const response = await fetch(url, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Origin": "http://localhost:5173"
                 },
                 body: JSON.stringify({
                     username: this.username,

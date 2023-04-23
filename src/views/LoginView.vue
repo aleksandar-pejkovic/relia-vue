@@ -19,6 +19,7 @@
 import { defineComponent } from 'vue'
 import { useAuthenticationStore } from '@/stores/authentication'
 import { useBaseUrlStore } from '@/stores/baseUrl'
+import Swal from 'sweetalert2'
 
 export default defineComponent({
     name: "Login",
@@ -45,8 +46,21 @@ export default defineComponent({
                 const authenticationStore = useAuthenticationStore();
                 authenticationStore.setToken(token);
                 authenticationStore.setUsername(this.username)
-                this.$router.push("/");
+                Swal.fire({
+                    title: 'Welcome!',
+                    text: 'You successfully logged in to your account.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    this.$router.push("/")
+                })
             } else {
+                Swal.fire({
+                    title: 'Login unsuccessful!',
+                    text: 'Wrong credentials!',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                })
                 console.error('login error');
             }
         },

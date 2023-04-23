@@ -71,7 +71,14 @@ export default defineComponent({
                     this.$router.push('/login')
                 })
             } else {
-                console.error(data.message);
+                let messages = Object.values(data).map(error => `*** ${error}`);
+                let msg = messages.join('\n');
+                Swal.fire({
+                    title: 'Registration unsuccessful!',
+                    text: msg,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
             }
         },
     },

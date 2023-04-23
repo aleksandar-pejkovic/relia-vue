@@ -11,7 +11,7 @@
           <li v-if="loggedIn" class="nav-item">
             <RouterLink class="nav-link" to="/">Home</RouterLink>
           </li>
-          <li  v-if="loggedIn" class="nav-item">
+          <li v-if="loggedIn" class="nav-item">
             <RouterLink class="nav-link" to="/customers">Customers</RouterLink>
           </li>
           <li v-if="loggedIn" class="nav-item">
@@ -27,8 +27,7 @@
             <RouterLink class="nav-link" to="/register">Register</RouterLink>
           </li>
           <li v-if="loggedIn" class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               {{ username }}
             </a>
             <ul class="dropdown-menu">
@@ -52,6 +51,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import { computed } from 'vue'
 import { useAuthenticationStore } from '@/stores/authentication'
+import Swal from 'sweetalert2'
 
 export default {
   setup() {
@@ -72,7 +72,14 @@ export default {
       const authenticationStore = useAuthenticationStore()
       authenticationStore.removeToken()
       authenticationStore.removeUsername()
-      this.$router.push("/login")
+      Swal.fire({
+        title: 'Goodbye!',
+        text: 'Logout successful!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        this.$router.push("/login")
+      })
     }
   }
 }

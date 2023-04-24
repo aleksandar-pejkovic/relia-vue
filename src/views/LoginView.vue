@@ -30,41 +30,51 @@ export default defineComponent({
         };
     },
     methods: {
-        async login() {
-            const baseUrlStore = useBaseUrlStore()
-            const url = baseUrlStore.getUrl('auth/login')
-            const authHeader = 'Basic ' + btoa(this.username + ':' + this.password)
-            const response = await fetch(url, {
-                method: "POST",
-                headers: {
-                    "Authorization": authHeader
-                }
-            });
-            const responseData = response.clone();
-            if (response.ok) {
-                const token = await responseData.text()
-                const authenticationStore = useAuthenticationStore();
-                authenticationStore.setToken(token);
-                authenticationStore.setUsername(this.username)
-                Swal.fire({
-                    title: 'Welcome!',
-                    text: 'You successfully logged in to your account.',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                }).then(() => {
-                    this.$router.push("/")
-                })
-            } else {
-                Swal.fire({
-                    title: 'Login unsuccessful!',
-                    text: 'Wrong credentials!',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                })
-                console.error('login error');
-            }
-        },
+    async login() {
+        const response = await this.authenticate();
+        if (response.ok) {
+            await this.updateStore(response);
+            await this.showSuccessMessage();
+            this.$router.push("/");
+        } else {
+            await this.showErrorMessage();
+            console.error("login error");
+        }
     },
+    async authenticate() {
+        const baseUrlStore = useBaseUrlStore();
+        const url = baseUrlStore.getUrl("auth/login");
+        const authHeader = "Basic " + btoa(this.username + ":" + this.password);
+        return fetch(url, {
+            method: "POST",
+            headers: {
+                Authorization: authHeader,
+            },
+        });
+    },
+    async updateStore(response) {
+        const token = await response.text();
+        const authenticationStore = useAuthenticationStore();
+        authenticationStore.setToken(token);
+        authenticationStore.setUsername(this.username);
+    },
+    async showSuccessMessage() {
+        await Swal.fire({
+            title: "Welcome!",
+            text: "You successfully logged in to your account.",
+            icon: "success",
+            confirmButtonText: "OK",
+        });
+    },
+    async showErrorMessage() {
+        await Swal.fire({
+            title: "Login unsuccessful!",
+            text: "Wrong credentials!",
+            icon: "error",
+            confirmButtonText: "OK",
+        });
+    },
+},
 })
 </script>
 

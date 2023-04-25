@@ -4,22 +4,21 @@
         <form @submit.prevent="register">
             <label>
                 Username:
-                <input type="text" v-model="username" @input="validateUsername">
+                <input type="text" v-model="user.username" @input="validateUsername">
                 <span v-if="usernameError" class="error">{{ usernameError }}</span>
             </label>
             <label>
                 Email:
-                <input type="email" v-model="email" @input="validateEmail">
+                <input type="email" v-model="user.email" @input="validateEmail">
                 <span v-if="emailError" class="error">{{ emailError }}</span>
             </label>
             <label>
                 Full Name:
-                <input type="text" v-model="name" @input="validateName">
+                <input type="text" v-model="user.name" @input="validateName" autocomplete="off">
                 <span v-if="nameError" class="error">{{ nameError }}</span>
             </label>
-            <label>
-                Password:
-                <input type="password" v-model="password" @input="validatePassword">
+            <label>Password:
+                <input type="password" v-model="user.password" @input="validatePassword">
                 <span v-if="passwordError" class="error">{{ passwordError }}</span>
             </label>
             <label>
@@ -43,10 +42,12 @@ export default defineComponent({
     name: "Register",
     data() {
         return {
-            username: "",
-            password: "",
-            email: "",
-            name: "",
+            user: {
+                username: "",
+                password: "",
+                email: "",
+                name: "",
+            },
             repeatPassword: "",
             usernameError: "",
             passwordError: "",
@@ -81,15 +82,13 @@ export default defineComponent({
             const baseUrlStore = useBaseUrlStore()
             const url = baseUrlStore.getUrl('users/register')
             try {
-                await axios.post(url, {
-                    username: this.username,
-                    password: this.password,
-                    email: this.email,
-                    name: this.name,
-                },
+                await axios.post(
+                    url,
+                    this.user,
                     {
-                        "Content-Type": "application/json",
-                        "Origin": "http://localhost:5173"
+                        headers: {
+                            "Content-Type": "application/json",
+                        }
                     }
                 );
                 this.loading = false;
@@ -112,9 +111,9 @@ export default defineComponent({
         },
         validateUsername() {
             const usernameRegex = /^[a-zA-Z0-9_-]{3,35}$/;
-            if (!this.username) {
+            if (!this.user.username) {
                 this.usernameError = 'Username is required.';
-            } else if (!usernameRegex.test(this.username)) {
+            } else if (!usernameRegex.test(this.user.username)) {
                 this.usernameError = 'Username must be 3-35 characters long and can only contain letters, numbers, underscores, and hyphens.';
             } else {
                 this.usernameError = '';
@@ -122,8 +121,8 @@ export default defineComponent({
         },
         validateEmail() {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            const isValidEmail = emailRegex.test(this.email);
-            if (!this.email) {
+            const isValidEmail = emailRegex.test(this.user.email);
+            if (!this.user.email) {
                 this.emailError = 'Email is required.'
             } else if (!isValidEmail) {
                 this.emailError = 'Please enter a valid email address.';
@@ -133,7 +132,7 @@ export default defineComponent({
         },
         validateName() {
             const nameRegex = /^[A-Z][a-zA-Z]*([ \u002D][A-Z][a-zA-Z]*)*$/;
-            const isValidName = nameRegex.test(this.name)
+            const isValidName = nameRegex.test(this.user.name)
             if (!isValidName) {
                 this.nameError = 'Please enter a valid name'
             } else {
@@ -142,8 +141,8 @@ export default defineComponent({
         },
         validatePassword() {
             const passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}/;
-            const isValidPassword = passwordRegex.test(this.password)
-            if (!this.password) {
+            const isValidPassword = passwordRegex.test(this.user.password)
+            if (!this.user.password) {
                 this.passwordError = 'Password is required.';
             } else if (!isValidPassword) {
                 this.passwordError = 'Password must be 6-12 characters long and contain at least one lowercase letter, one uppercase letter, and one digit.';
@@ -155,7 +154,7 @@ export default defineComponent({
         validateRepeatPassword() {
             if (!this.repeatPassword) {
                 this.repeatPasswordError = 'Please repeat your password.';
-            } else if (this.repeatPassword !== this.password) {
+            } else if (this.repeatPassword !== this.user.password) {
                 this.repeatPasswordError = 'Passwords do not match.';
             } else {
                 this.repeatPasswordError = '';

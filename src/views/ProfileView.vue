@@ -60,6 +60,7 @@
 <script>
 import { useAuthenticationStore } from '../stores/authentication'
 import { useBaseUrlStore } from '@/stores/baseUrl'
+import axios from 'axios';
 
 export default {
     name: 'UserDetails',
@@ -78,12 +79,12 @@ export default {
             const baseUrlStore = useBaseUrlStore()
             const url = baseUrlStore.getUrl('users')
             const username = authenticationStore.getUsername;
-            fetch(`${url}/username/${username}`, {
+            axios.get(`${url}/username/${username}`, {
                 headers: {
                     Authorization: `Bearer ${authenticationStore.token}`
                 }
             })
-                .then(response => response.json())
+                .then(response => response.data)
                 .then(data => {
                     this.user = data;
                 })

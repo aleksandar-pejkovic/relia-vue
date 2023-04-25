@@ -81,7 +81,7 @@ export default defineComponent({
             const baseUrlStore = useBaseUrlStore()
             const url = baseUrlStore.getUrl('users/register')
             try {
-                const response = await axios.post(url, {
+                await axios.post(url, {
                     username: this.username,
                     password: this.password,
                     email: this.email,

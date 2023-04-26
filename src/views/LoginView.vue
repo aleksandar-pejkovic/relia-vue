@@ -38,7 +38,7 @@ export default defineComponent({
                 const data = await this.authenticate();
                 await this.updateStore(data);
                 await this.showSuccessMessage();
-                this.$router.push("/");
+                this.$router.push("/dashboard");
             } catch (error) {
                 Swal.fire({
                     title: 'Login unsuccessful!',

@@ -11,6 +11,99 @@
     min-height: 93vh;
     display: flex;
     align-items: center;
-    color: royalblue;
+}
+
+td {
+    vertical-align: middle;
+}
+
+label {
+    background-color: gainsboro;
+    border-radius: 10px;
+    padding: 5px;
+    width: 200px;
+}
+
+.container {
+    background-color: #F8F8F8;
+    padding: 20px;
   }
+  
+  .card {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-header {
+    background-color: #F5F5F5;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 15px;
+  }
+  
+  .card-title {
+    color: #000000;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .form-control {
+    background-color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    color: #000000;
+    font-size: 16px;
+    padding: 10px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .form-control:hover,
+  .form-control:focus {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .col-form-label {
+    color: #000000;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .btn {
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .btn-primary {
+    background-color: #007BFF;
+    border: none;
+    color: #FFFFFF;
+  }
+  
+  .btn-primary:hover,
+  .btn-primary:focus {
+    background-color: #0062CC;
+  }
+  
+  .btn-secondary {
+    background-color: #6C757D;
+    border: none;
+    color: #FFFFFF;
+  }
+  
+  .btn-secondary:hover,
+  .btn-secondary:focus {
+    background-color: #5A6268;
+  }
+  
   

@@ -8,25 +8,19 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
-                    <li v-if="loggedIn" class="nav-item">
-                        <RouterLink class="nav-link" to="/">Home</RouterLink>
+                    <li class="nav-item">
+                        <RouterLink class="nav-link" to="/dashboard">Dashboard</RouterLink>
                     </li>
-                    <li v-if="loggedIn" class="nav-item">
+                    <li class="nav-item">
                         <RouterLink class="nav-link" to="/customers">Customers</RouterLink>
                     </li>
-                    <li v-if="loggedIn" class="nav-item">
+                    <li class="nav-item">
                         <RouterLink class="nav-link" to="/invoices">Invoices</RouterLink>
                     </li>
-                    <li v-if="loggedIn" class="nav-item">
+                    <li class="nav-item">
                         <RouterLink class="nav-link" to="/products">Products</RouterLink>
                     </li>
-                    <li v-if="!loggedIn" class="nav-item">
-                        <RouterLink class="nav-link" to="/login">Login</RouterLink>
-                    </li>
-                    <li v-if="!loggedIn" class="nav-item">
-                        <RouterLink class="nav-link" to="/register">Register</RouterLink>
-                    </li>
-                    <li v-if="loggedIn" class="nav-item dropdown">
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             {{ username }}
@@ -77,7 +71,7 @@ export default {
                 icon: 'success',
                 confirmButtonText: 'OK'
             }).then(() => {
-                this.$router.push("/login")
+                this.$router.push("/")
             })
         }
     }

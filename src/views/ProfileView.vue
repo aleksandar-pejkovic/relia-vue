@@ -29,8 +29,7 @@
                         <div class="row mb-3">
                             <label for="creation-date" class="col-sm-2 col-form-label">Creation Date</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="creation-date" v-model="user.creationDate"
-                                    :readonly="readOnly">
+                                <input type="text" class="form-control" id="creation-date" v-model="user.creationDate" readonly>
                             </div>
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -126,8 +125,43 @@ export default {
 </script>
   
 <style scoped>
-label {
-    background-color: gainsboro;
-    border-radius: 10px;
+/* Style the input fields when not editing */
+.form-control[readonly] {
+  background-color: #f8f9fa;
+  border: none;
+  position: relative;
+  animation-name: slide;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
+
+/* Style the input fields when editing */
+.form-control:not([readonly]):focus {
+  background-color: #ffffff;
+  border: 1px solid #ced4da;
+  outline: none;
+  box-shadow: none;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(0%);
+  }
+  50% {
+    transform: translateX(5%);
+    opacity: 0;
+  }
+  51% {
+    transform: translateX(-5%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+
 </style>

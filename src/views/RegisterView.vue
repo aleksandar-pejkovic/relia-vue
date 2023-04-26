@@ -1,32 +1,34 @@
 <template>
-    <div class="login">
+    <div class="d-flex flex-column align-items-center">
         <h2>Register</h2>
-        <form @submit.prevent="register">
-            <label>
-                Username:
-                <input type="text" v-model="user.username" @input="validateUsername">
+        <form @submit.prevent="register" class="w-50">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" class="form-control" id="username" v-model="user.username" @input="validateUsername">
                 <span v-if="usernameError" class="error">{{ usernameError }}</span>
-            </label>
-            <label>
-                Email:
-                <input type="email" v-model="user.email" @input="validateEmail">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" class="form-control" id="email" v-model="user.email" @input="validateEmail">
                 <span v-if="emailError" class="error">{{ emailError }}</span>
-            </label>
-            <label>
-                Full Name:
-                <input type="text" v-model="user.name" @input="validateName" autocomplete="off">
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Full Name:</label>
+                <input type="text" class="form-control" id="name" v-model="user.name" @input="validateName">
                 <span v-if="nameError" class="error">{{ nameError }}</span>
-            </label>
-            <label>Password:
-                <input type="password" v-model="user.password" @input="validatePassword">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" class="form-control" id="password" v-model="user.password" @input="validatePassword">
                 <span v-if="passwordError" class="error">{{ passwordError }}</span>
-            </label>
-            <label>
-                Repeat Password:
-                <input type="password" v-model="repeatPassword" @input="validateRepeatPassword">
+            </div>
+            <div class="mb-3">
+                <label for="repeatPassword" class="form-label">Repeat Password:</label>
+                <input type="password" class="form-control" id="repeatPassword" v-model="repeatPassword"
+                    @input="validateRepeatPassword">
                 <span v-if="repeatPasswordError" class="error">{{ repeatPasswordError }}</span>
-            </label>
-            <button class="submit-button" type="submit">Register</button>
+            </div>
+            <button class="btn btn-primary" type="submit">Register</button>
         </form>
     </div>
 </template>
@@ -171,4 +173,4 @@ export default defineComponent({
 })
 </script>
   
-<style src="../assets/login.css"></style>
+<style></style>

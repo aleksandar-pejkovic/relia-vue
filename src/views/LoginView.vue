@@ -1,16 +1,18 @@
 <template>
-    <div class="login">
+    <div class="container mt-3">
         <h2>Login</h2>
-        <form @submit.prevent="login">
-            <label>
-                Username:
-                <input type="text" v-model="username">
-            </label>
-            <label>
-                Password:
-                <input type="password" v-model="password">
-            </label>
-            <button class="submit-button" type="submit">Login</button>
+        <form @submit.prevent="login" class="row justify-content-center align-items-center flex-column">
+            <div class="col-md-6">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" v-model="username">
+            </div>
+            <div class="col-md-6">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" v-model="password">
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary mt-2" type="submit">Login</button>
+            </div>
         </form>
     </div>
 </template>
@@ -84,4 +86,4 @@ export default defineComponent({
 })
 </script>
 
-<style src="../assets/login.css"></style>
+<style></style>

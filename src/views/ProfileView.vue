@@ -2,11 +2,11 @@
     <div class="container mt-3">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title">User details</h5>
+                <h5 class="card-title">Profile</h5>
             </div>
             <div class="card-body">
                 <div v-if="user">
-                    <form>
+                    <form  @submit.prevent="saveDetails">
                         <div class="row mb-3 ">
                             <label for="username" class="col-sm-2 col-form-label">Username</label>
                             <div class="col-sm-10">
@@ -41,7 +41,7 @@
                                 <button @click.prevent="cancelEditing" class="btn btn-secondary me-md-2">
                                     Cancel
                                 </button>
-                                <button type="submit" @click.prevent="saveDetails" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary">
                                     Save
                                 </button>
                             </div>

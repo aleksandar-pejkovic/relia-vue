@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">ReliaBill</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -83,4 +83,8 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+
+</style>
   

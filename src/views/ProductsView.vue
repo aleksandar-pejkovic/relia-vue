@@ -2,7 +2,7 @@
     <div class="main">
         <div>
             <h1>Products</h1>
-            <DataTable url="companies" :headers="headers"></DataTable>
+            <DataTable url="companies" :fields="fields" :headers="headers"></DataTable>
         </div>
     </div>
 </template>
@@ -16,7 +16,8 @@ export default {
     },
     data() {
         return {
-            headers: ['Name', 'City', 'Email']
+            fields: ['Name', 'City', 'Email', 'Phone'],
+            headers: ['name', 'city', 'email', 'phone']
         }
     }
 }

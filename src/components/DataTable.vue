@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <table class="table table-striped table-hover">
       <thead>
         <tr>
@@ -8,7 +8,12 @@
       </thead>
       <tbody>
         <tr v-for="(item, index) in data" :key="index">
-          <td v-for="(value, key) in item" :key="key">{{ value }}</td>
+          <td v-for="(header, index) in headers" :key="index">
+            {{ item[header] }}
+          </td>
+          <td>
+            <button class="btn btn-primary" @click="openModal(company.id)">Edit</button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -46,11 +51,11 @@ export default {
       const url = baseUrlStore.getUrl(this.url)
       const token = authenticationStore.token
       axios.get(url, {
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                }
-            }).then(response => response.data)
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      }).then(response => response.data)
         .then(data => this.data = data)
         .catch(error => console.error(error))
     }

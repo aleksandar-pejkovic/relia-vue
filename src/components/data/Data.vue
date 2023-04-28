@@ -10,11 +10,13 @@
                 </thead>
                 <tbody>
                     <tr v-for="(item, index) in data" :key="index">
-                        <td v-for="(header, index) in headers" :key="index">
+                        <td v-for="(header, index) in headers" :key="index" @click="openModal(item)">
                             {{ item[header.key] }}
                         </td>
                         <td>
-                            <button class="btn btn-primary" @click="openModal(company.id)">Edit</button>
+                            <button @click="openModal(item)" type="button" class="btn btn-primary">
+                                Edit
+                            </button>
                         </td>
                     </tr>
                 </tbody>
@@ -25,12 +27,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 col-md-4 col-lg-3" v-for="(item, index) in data" :key="index">
-                    <div class="card">
-                        <div class="card-body">
-                            <div v-for="(header, index) in headers" :key="index">
-                                {{ header.value + ': ' + item[header.key] }}
+                    <div class="card mt-2">
+                        <div class="card-body p-3" @click="openModal(item)">
+                            <div v-for="(header, index) in headers" :key="index" class="mb-2">
+                                <div class="fw-bold">{{ header.value }}</div>
+                                <div>{{ item[header.key] }}</div>
                             </div>
-                            <button class="btn btn-primary" @click="openModal(company.id)">Edit</button>
+                            <button type="button" class="btn btn-primary">Edit</button>
                         </div>
                     </div>
                 </div>
@@ -59,7 +62,7 @@ export default defineComponent({
     data() {
         return {
             data: [],
-            isSmallScreen: window.innerWidth <= 768
+            isSmallScreen: window.innerWidth <= 768,
         }
     },
     created() {
@@ -86,8 +89,12 @@ export default defineComponent({
             }).then(response => response.data)
                 .then(data => this.data = data)
                 .catch(error => console.error(error))
-        }
+        },
+        openModal(item) {
+            this.$emit('edit-modal', item)
+        },
     },
+    emits: ['edit-modal']
 })
 </script>
 
@@ -95,6 +102,15 @@ export default defineComponent({
 thead {
     background-color: darkslateblue;
     color: wheat;
+}
+
+td,
+.card {
+    cursor: pointer;
+}
+
+.card {
+    color: darkslateblue;
 }
 </style>
 

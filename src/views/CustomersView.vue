@@ -9,7 +9,12 @@
             </div>
         </div>
         <div class="mt-2">
-            <Data url="companies" :headers="itemsWithKeys" ref="customers"></Data>
+            <Data @edit-modal="openModal(item)" url="companies" :headers="itemsWithKeys" ref="customers"></Data>
+        </div>
+        <div class="mt-2">
+            <!-- Button trigger modal -->
+            <div type="button" data-bs-toggle="modal" data-bs-target="#editModal" ref="toggleEditModalBtn"></div>
+            <EditCustomerModal :company="company" />
         </div>
     </div>
 </template>
@@ -18,15 +23,30 @@
 import { defineComponent } from 'vue';
 import Data from '../components/data/Data.vue';
 import CreateCustomer from "../components/customer/CreateCustomer.vue";
+import EditCustomerModal from '../components/customer/EditCustomerModal.vue';
 
 export default defineComponent({
     components: {
-        Data, CreateCustomer
+        Data, CreateCustomer, EditCustomerModal
     },
     data() {
         return {
             values: ['Name', 'Tax number', 'Director', 'Address', 'City', 'Phone'],
-            keys: ['name', 'taxNumber', 'director', 'street', 'city', 'phone']
+            keys: ['name', 'taxNumber', 'director', 'street', 'city', 'phone'],
+            company: {
+                id: '',
+                name: '',
+                city: '',
+                zip: '',
+                street: '',
+                registrationNumber: '',
+                taxNumber: '',
+                bankAccount: '',
+                phone: '',
+                email: '',
+                website: '',
+                director: ''
+            }
         }
     },
     computed: {
@@ -38,7 +58,11 @@ export default defineComponent({
     },
     methods: {
         reloadCustomers() {
-            this.$refs.customers.fetchData()
+            this.$refs.company.fetchData()
+        },
+        openModal(item) {
+            this.customer = item
+            this.$refs.toggleEditModalBtn.click()
         }
     }
 })

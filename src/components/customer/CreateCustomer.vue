@@ -35,5 +35,6 @@ export default {
             this.$emit('customerCreated')
         }
     },
+    emits: ['customerCreated']
 }
 </script>

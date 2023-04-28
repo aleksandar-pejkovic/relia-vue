@@ -1,5 +1,7 @@
 <template>
     <div class="main">
-        <h1>This is an invices page</h1>
+        <div>
+            <h1>Invoices</h1>
+        </div>
     </div>
 </template>

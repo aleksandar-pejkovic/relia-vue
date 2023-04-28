@@ -1,52 +1,50 @@
 <template>
-    <div class="container">
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">City</th>
-                    <th scope="col">Zip number</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Registration number</th>
-                    <th scope="col">Tax number</th>
-                    <th scope="col">Bank account</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Website</th>
-                    <th scope="col">Director</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(company, index) in companies" :key="index">
-                    <td>{{ company.name }}</td>
-                    <td>{{ company.city }}</td>
-                    <td>{{ company.zip }}</td>
-                    <td>{{ company.address }}</td>
-                    <td>{{ company.registrationNumber }}</td>
-                    <td>{{ company.taxNumber }}</td>
-                    <td>{{ company.bankAccount }}</td>
-                    <td>{{ company.phone }}</td>
-                    <td>{{ company.email }}</td>
-                    <td>{{ company.website }}</td>
-                    <td>{{ company.director }}</td>
-                    <td>
-                        <button class="btn btn-primary" @click="openModal(company.id)">Edit</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="modal" tabindex="-1" role="dialog" v-show="showModal">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Edit Company</h5>
-                        <button type="button" class="close" @click="showModal = false">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Modal content goes here.</p>
-                    </div>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">City</th>
+                <th scope="col">Zip number</th>
+                <th scope="col">Address</th>
+                <th scope="col">Registration number</th>
+                <th scope="col">Tax number</th>
+                <th scope="col">Bank account</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Email</th>
+                <th scope="col">Website</th>
+                <th scope="col">Director</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="(company, index) in companies" :key="index">
+                <td>{{ company.name }}</td>
+                <td>{{ company.city }}</td>
+                <td>{{ company.zip }}</td>
+                <td>{{ company.address }}</td>
+                <td>{{ company.registrationNumber }}</td>
+                <td>{{ company.taxNumber }}</td>
+                <td>{{ company.bankAccount }}</td>
+                <td>{{ company.phone }}</td>
+                <td>{{ company.email }}</td>
+                <td>{{ company.website }}</td>
+                <td>{{ company.director }}</td>
+                <td>
+                    <button class="btn btn-primary" @click="openModal(company.id)">Edit</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="modal" tabindex="-1" role="dialog" v-show="showModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Company</h5>
+                    <button type="button" class="close" @click="showModal = false">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal content goes here.</p>
                 </div>
             </div>
         </div>

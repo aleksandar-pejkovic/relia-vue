@@ -28,6 +28,7 @@
                     @input="validateRepeatPassword">
                 <span v-if="repeatPasswordError" class="error">{{ repeatPasswordError }}</span>
             </div>
+            <router-link to="/" class="btn btn-secondary btn-lg m-2">Cancel</router-link>
             <button class="btn btn-primary" type="submit">Register</button>
         </form>
     </div>

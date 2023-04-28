@@ -11,7 +11,8 @@
                 <input type="password" class="form-control" id="password" v-model="password">
             </div>
             <div class="col-12">
-                <button class="btn btn-primary mt-2" type="submit">Login</button>
+                <router-link to="/" class="btn btn-secondary btn-lg m-2">Cancel</router-link>
+                <button class="btn btn-primary m-2" type="submit">Login</button>
             </div>
         </form>
     </div>
@@ -39,12 +40,13 @@ export default defineComponent({
                 await this.updateStore(data);
                 await this.showSuccessMessage();
                 this.$router.push("/dashboard");
-            } catch (error) {
+            }
+            catch (error) {
                 Swal.fire({
-                    title: 'Login unsuccessful!',
+                    title: "Login unsuccessful!",
                     text: error.message,
-                    icon: 'error',
-                    confirmButtonText: 'OK'
+                    icon: "error",
+                    confirmButtonText: "OK"
                 });
             }
         },

@@ -50,7 +50,11 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary mt-2">Create</button>
+        <button type="reset" class="btn btn-secondary m-2" data-bs-dismiss="modal" ref="closeBtn">Cancel</button>
+        <div v-if="loading" class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <button v-else type="submit" class="btn btn-success m-2">Create</button>
     </form>
 </template>
   
@@ -76,7 +80,8 @@ export default {
                 email: '',
                 website: '',
                 director: ''
-            }
+            },
+            loading: false
         }
     },
     methods: {
@@ -107,14 +112,16 @@ export default {
                 );
                 this.loading = false;
                 Swal.fire({
-                    title: 'New company created!',
+                    title: `${this.company.name} was created`,
                     text: 'You can find it on Customers page.',
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then(() => {
-                    this.$emit('customerCreated')
+                    this.$refs.closeBtn.click()
+                    this.$emit('customer-created')
                 })
             } catch (error) {
+                this.loading = false;
                 let errorMessages = null
                 if (error.response && error.response.data) {
                     errorMessages = Object.values(error.response.data).join("\n");
@@ -128,8 +135,9 @@ export default {
                     confirmButtonText: 'OK'
                 });
             }
-        }
+        },
     },
+    emits: ['customer-created']
 }
 </script>
   

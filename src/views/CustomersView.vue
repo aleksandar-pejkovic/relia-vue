@@ -1,52 +1,35 @@
 <template>
     <div class="container mt-2">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-10">
                 <h1 clas>Customers</h1>
             </div>
-            <div class="col-md-3">
-                <CreateCustomer @customerCreated="reloadCustomers()" />
+            <div class="col-md-2">
+                <button type="button" class="btn btn-success m-2" data-bs-toggle="modal" data-bs-target="#createCustomerModal">
+                    Add customer
+                </button>
+                <CreateCustomer @customer-created="reloadCustomers" />
             </div>
         </div>
-        <div class="mt-2">
-            <Data @edit-modal="openModal(item)" url="companies" :headers="itemsWithKeys" ref="customers"></Data>
-        </div>
-        <div class="mt-2">
-            <!-- Button trigger modal -->
-            <div type="button" data-bs-toggle="modal" data-bs-target="#editModal" ref="toggleEditModalBtn"></div>
-            <EditCustomerModal :company="company" />
+        <div class="row">
+            <ReadCustomers ref="customers" />
         </div>
     </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
-import Data from '../components/data/Data.vue';
 import CreateCustomer from "../components/customer/CreateCustomer.vue";
-import EditCustomerModal from '../components/customer/EditCustomerModal.vue';
+import ReadCustomers from '../components/customer/ReadCustomers.vue';
 
 export default defineComponent({
     components: {
-        Data, CreateCustomer, EditCustomerModal
+        CreateCustomer, ReadCustomers
     },
     data() {
         return {
             values: ['Name', 'Tax number', 'Director', 'Address', 'City', 'Phone'],
-            keys: ['name', 'taxNumber', 'director', 'street', 'city', 'phone'],
-            company: {
-                id: '',
-                name: '',
-                city: '',
-                zip: '',
-                street: '',
-                registrationNumber: '',
-                taxNumber: '',
-                bankAccount: '',
-                phone: '',
-                email: '',
-                website: '',
-                director: ''
-            }
+            keys: ['name', 'taxNumber', 'director', 'street', 'city', 'phone']
         }
     },
     computed: {
@@ -58,12 +41,8 @@ export default defineComponent({
     },
     methods: {
         reloadCustomers() {
-            this.$refs.company.fetchData()
+            this.$refs.customers.fetchData()
         },
-        openModal(item) {
-            this.customer = item
-            this.$refs.toggleEditModalBtn.click()
-        }
     }
 })
 </script>

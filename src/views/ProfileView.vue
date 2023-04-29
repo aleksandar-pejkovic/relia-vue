@@ -60,8 +60,9 @@
 import { useAuthenticationStore } from '../stores/authentication'
 import { useBaseUrlStore } from '@/stores/baseUrl'
 import axios from 'axios';
+import { defineComponent } from 'vue';
 
-export default {
+export default defineComponent({
     name: 'UserDetails',
     data() {
         return {
@@ -121,47 +122,6 @@ export default {
             this.readOnly = false;
         }
     }
-};
+});
 </script>
   
-<style scoped>
-/* Style the input fields when not editing */
-.form-control[readonly] {
-  background-color: #f8f9fa;
-  border: none;
-  position: relative;
-  animation-name: slide;
-  animation-duration: 1s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-}
-
-/* Style the input fields when editing */
-.form-control:not([readonly]):focus {
-  background-color: #ffffff;
-  border: 1px solid #ced4da;
-  outline: none;
-  box-shadow: none;
-}
-
-@keyframes slide {
-  0% {
-    transform: translateX(0%);
-  }
-  50% {
-    transform: translateX(5%);
-    opacity: 0;
-  }
-  51% {
-    transform: translateX(-5%);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0%);
-    opacity: 1;
-  }
-}
-
-
-</style>

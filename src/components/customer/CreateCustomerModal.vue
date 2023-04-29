@@ -1,0 +1,156 @@
+<template>
+    <!-- Modal -->
+    <div class="modal fade" id="createCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Customer</h1>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" ref="closeBtn">Close</button>
+                </div>
+                <div class="modal-body">
+                    <form @submit.prevent="createCompany">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input type="text" class="form-control" id="name" v-model="company.name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="city">City</label>
+                                    <input type="text" class="form-control" id="city" v-model="company.city">
+                                </div>
+                                <div class="form-group">
+                                    <label for="zip">Zip number</label>
+                                    <input type="text" class="form-control" id="zip" v-model="company.zip">
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Address</label>
+                                    <input type="text" class="form-control" id="address" v-model="company.street">
+                                </div>
+                                <div class="form-group">
+                                    <label for="regNum">Registration number</label>
+                                    <input type="text" class="form-control" id="regNum"
+                                        v-model="company.registrationNumber">
+                                </div>
+                                <div class="form-group">
+                                    <label for="taxNum">Tax number</label>
+                                    <input type="text" class="form-control" id="taxNum" v-model="company.taxNumber">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="bankAcc">Bank account</label>
+                                    <input type="text" class="form-control" id="bankAcc" v-model="company.bankAccount">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone</label>
+                                    <input type="text" class="form-control" id="phone" v-model="company.phone">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" v-model="company.email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="website">Website</label>
+                                    <input type="text" class="form-control" id="website" v-model="company.website">
+                                </div>
+                                <div class="form-group">
+                                    <label for="director">Director</label>
+                                    <input type="text" class="form-control" id="director" v-model="company.director">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="reset" class="btn btn-secondary m-2">Reset</button>
+                        <div v-if="loading" class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <button v-else type="submit" class="btn btn-success m-2">Create</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+import { defineComponent } from 'vue'
+import Swal from 'sweetalert2'
+import { useBaseUrlStore } from '@/stores/baseUrl'
+import { useAuthenticationStore } from '@/stores/authentication'
+import axios from 'axios'
+
+export default defineComponent({
+    data() {
+        return {
+            company: {
+                name: '',
+                city: '',
+                zip: '',
+                street: '',
+                registrationNumber: '',
+                taxNumber: '',
+                bankAccount: '',
+                phone: '',
+                email: '',
+                website: '',
+                director: ''
+            },
+            loading: false
+        }
+    },
+    methods: {
+        async createCompany() {
+            this.loading = true
+            if (this.formError) {
+                Swal.fire({
+                    title: 'Registration unsuccessful!',
+                    text: 'Please fix the errors in the form.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+            const baseUrlStore = useBaseUrlStore()
+            const url = baseUrlStore.getUrl('companies/client')
+            const token = `Bearer ${useAuthenticationStore().token}`
+            try {
+                await axios.post(
+                    url,
+                    this.company,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: token
+                        }
+                    }
+                );
+                this.loading = false
+                this.$refs.closeBtn.click()
+                this.$emit('customer-created')
+                Swal.fire({
+                    title: `${this.company.name} was created`,
+                    text: 'You can find it on Customers page.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                })
+            } catch (error) {
+                this.loading = false;
+                let errorMessages = null
+                if (error.response && error.response.data) {
+                    errorMessages = Object.values(error.response.data).join("\n");
+                } else {
+                    errorMessages = error.message
+                }
+                Swal.fire({
+                    title: 'Registration unsuccessful!',
+                    text: errorMessages,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        },
+    },
+    emits: ['customer-created']
+})
+</script>

@@ -8,7 +8,7 @@
                 <button type="button" class="btn btn-success m-2" data-bs-toggle="modal" data-bs-target="#createCustomerModal">
                     Add customer
                 </button>
-                <CreateCustomer @customer-created="reloadCustomers" />
+                <CreateCustomerModal @customer-created="reloadCustomers" />
             </div>
         </div>
         <div class="row">
@@ -19,12 +19,12 @@
 
 <script>
 import { defineComponent } from 'vue';
-import CreateCustomer from "../components/customer/CreateCustomer.vue";
+import CreateCustomerModal from "../components/customer/CreateCustomerModal.vue";
 import ReadCustomers from '../components/customer/ReadCustomers.vue';
 
 export default defineComponent({
     components: {
-        CreateCustomer, ReadCustomers
+        CreateCustomerModal, ReadCustomers
     },
     data() {
         return {

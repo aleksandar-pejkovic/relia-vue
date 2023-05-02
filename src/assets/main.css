@@ -7,14 +7,18 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+body {
+  height: 100vh;
+}
+
 .main {
   min-height: 93vh;
   display: flex;
   align-items: center;
 }
 
-.btn {
-  width: 150px;
+.error {
+  color: red;
 }
 
 td {
@@ -119,6 +123,7 @@ label {
 }
 
 .btn {
+  width: 150px;
   border-radius: 5px;
   font-size: 16px;
   font-weight: bold;

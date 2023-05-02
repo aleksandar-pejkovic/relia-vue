@@ -6,7 +6,7 @@
             </div>
             <div class="card-body">
                 <div v-if="user">
-                    <form  @submit.prevent="saveDetails">
+                    <form @submit.prevent="saveDetails">
                         <div class="row mb-3 ">
                             <label for="username" class="col-sm-2 col-form-label">Username</label>
                             <div class="col-sm-10">
@@ -17,19 +17,23 @@
                             <label for="email" class="col-sm-2 col-form-label">Email</label>
                             <div class="col-sm-10">
                                 <input type="email" class="form-control" id="email" v-model="user.email"
-                                    :readonly="readOnly">
+                                    :readonly="readOnly" @input="validateEmail">
+                                <span v-if="emailError" class="error">{{ emailError }}</span>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="name" class="col-sm-2 col-form-label">Name</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="name" v-model="user.name" :readonly="readOnly">
+                                <input type="text" class="form-control" id="name" v-model="user.name" :readonly="readOnly"
+                                    @input="validateName">
+                                <span v-if="nameError" class="error">{{ nameError }}</span>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="creation-date" class="col-sm-2 col-form-label">Creation Date</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="creation-date" v-model="user.creationDate" readonly>
+                                <input type="text" class="form-control" id="creation-date" v-model="user.creationDate"
+                                    readonly>
                             </div>
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -117,11 +121,33 @@ export default defineComponent({
         cancelEditing() {
             this.readOnly = true;
             this.getUserDetails()
+            this.emailError = ''
+            this.nameError = ''
         },
         editDetails() {
             this.readOnly = false;
-        }
-    }
+        },
+        validateEmail() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const isValidEmail = emailRegex.test(this.user.email);
+            if (!this.user.email) {
+                this.emailError = 'Email is required.'
+            } else if (!isValidEmail) {
+                this.emailError = 'Please enter a valid email address.';
+            } else {
+                this.emailError = '';
+            }
+        },
+        validateName() {
+            const nameRegex = /^[A-Z][a-zA-Z]*([ \u002D][A-Z][a-zA-Z]*)*$/;
+            const isValidName = nameRegex.test(this.user.name)
+            if (!isValidName) {
+                this.nameError = 'Please enter a valid name'
+            } else {
+                this.nameError = ''
+            }
+        },
+    },
 });
 </script>
   

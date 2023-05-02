@@ -44,7 +44,8 @@
                                 <button @click.prevent="cancelEditing" class="btn btn-secondary me-md-2">
                                     Cancel
                                 </button>
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary"
+                                    :class="{ 'disabled': emailError || nameError }" :disabled="hasErrors">
                                     Save
                                 </button>
                             </div>
@@ -73,6 +74,11 @@ export default defineComponent({
             user: null,
             readOnly: true
         };
+    },
+    computed: {
+        hasErrors() {
+            return Boolean(this.emailError || this.nameError);
+        },
     },
     mounted() {
         this.getUserDetails()
@@ -147,6 +153,10 @@ export default defineComponent({
                 this.nameError = ''
             }
         },
+    },
+    watch: {
+        email: 'validateEmail',
+        name: 'validateName',
     },
 });
 </script>

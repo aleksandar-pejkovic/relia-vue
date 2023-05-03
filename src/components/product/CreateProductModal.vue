@@ -46,8 +46,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="price">Price</label>
-                                    <input type="number" class="form-control" id="price" v-model="product.price"
-                                        @input="validatePrice" placeholder="0.00" step="0.01">
+                                    <input type="text" class="form-control" id="price" v-model="product.price"
+                                        @input="validatePrice">
                                     <span v-if="priceError" class="error">{{ priceError }}</span>
                                 </div>
                             </div>
@@ -76,12 +76,12 @@ export default defineComponent({
     data() {
         return {
             product: {
-                plu: undefined,
+                plu: '',
                 name: '',
                 unit: '',
                 description: '',
                 taxRate: 20,
-                price: undefined,
+                price: Number(0).toFixed(2),
             },
             pluError: '',
             nameError: '',
@@ -118,10 +118,14 @@ export default defineComponent({
                     }
                 );
                 this.loading = false
+                const name = this.product.name
+                this.product = {}
+                this.product.taxRate = 20
+                this.product.price = Number(0).toFixed(2)
                 this.$refs.closeBtn.click()
                 this.$emit('product-created')
                 Swal.fire({
-                    title: `${this.product.name} was created`,
+                    title: `${name} was created`,
                     text: 'You can find it on Products page.',
                     icon: 'success',
                     confirmButtonText: 'OK'
@@ -187,7 +191,6 @@ export default defineComponent({
                 if (price < minPrice || price > maxPrice) {
                     this.priceError = `Please enter a price between ${minPrice.toFixed(2)} and ${maxPrice.toFixed(2)}`;
                 } else {
-                    this.product.price = price.toFixed(2); // Round to 2 decimal places
                     this.priceError = "";
                 }
             }

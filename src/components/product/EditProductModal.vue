@@ -46,8 +46,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="price">Price</label>
-                                    <input @input="validatePrice" type="number" class="form-control" id="price"
-                                        v-model="product.price" :readonly="readOnly" step="0.01">
+                                    <input @input="validatePrice" type="text" class="form-control" id="price"
+                                        v-model="product.price" :readonly="readOnly">
                                     <span v-if="priceError" class="error">{{ priceError }}</span>
                                 </div>
                             </div>
@@ -130,7 +130,7 @@ export default defineComponent({
         },
         deleteProduct() {
             const name = this.product.name
-            axios.delete(this.url, this.product, {
+            axios.delete(this.url + '/' + this.product.id, {
                 headers: {
                     "Authorization": `Bearer ${this.token}`
                 }
@@ -163,7 +163,6 @@ export default defineComponent({
                 if (price < minPrice || price > maxPrice) {
                     this.priceError = `Please enter a price between ${minPrice.toFixed(2)} and ${maxPrice.toFixed(2)}`;
                 } else {
-                    this.product.price = price.toFixed(2); // Round to 2 decimal places
                     this.priceError = "";
                 }
             }

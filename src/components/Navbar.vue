@@ -30,6 +30,9 @@
                                 <RouterLink class="dropdown-item" to="/profile">Profile</RouterLink>
                             </li>
                             <li>
+                                <RouterLink class="dropdown-item" to="/my-company">My company</RouterLink>
+                            </li>
+                            <li>
                                 <a class="dropdown-item" style="cursor: pointer" @click="logout">Logout</a>
                             </li>
                         </ul>

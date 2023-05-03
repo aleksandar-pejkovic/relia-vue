@@ -34,12 +34,8 @@ export default defineComponent({
         return {
             username: "",
             password: "",
+            loading: false
         };
-    },
-    computed: {
-        loading() {
-            return false
-        }
     },
     methods: {
         async login() {

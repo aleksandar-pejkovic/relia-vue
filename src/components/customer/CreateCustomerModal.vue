@@ -159,10 +159,12 @@ export default defineComponent({
                     }
                 );
                 this.loading = false
+                const name = this.company.name
+                this.company = {}
                 this.$refs.closeBtn.click()
                 this.$emit('customer-created')
                 Swal.fire({
-                    title: `${this.company.name} was created`,
+                    title: `${name} was created`,
                     text: 'You can find it on Customers page.',
                     icon: 'success',
                     confirmButtonText: 'OK'
@@ -235,7 +237,7 @@ export default defineComponent({
 
         // Function to validate tax number
         validateTaxNumber: function () {
-            const regex = /^[0-9]{10}$/; // Only allows 10 digits
+            const regex = /^[0-9]{9}$/; // Only allows 9 digits
             if (!regex.test(this.company.taxNumber)) {
                 this.taxNumError = "Please enter a valid tax number";
             } else {
@@ -245,7 +247,7 @@ export default defineComponent({
 
         // Function to validate bank account
         validateBankAccount: function () {
-            const regex = /^[0-9]{12}$/; // Only allows 12 digits
+            const regex = /^(?:\d{3})-(?:0*(\d{1,13})|\1)-(\d{2})$/; // Only allows 12 digits
             if (!regex.test(this.company.bankAccount)) {
                 this.bankAccError = "Please enter a valid bank account number";
             } else {
@@ -255,7 +257,7 @@ export default defineComponent({
 
         // Function to validate phone number
         validatePhoneNumber: function () {
-            const regex = /^[0-9]{9}$/; // Only allows 9 digits
+            const regex = /^([+\d{1,3}])?[\d\-/]{6,15}$/;
             if (!regex.test(this.company.phone)) {
                 this.phoneError = "Please enter a valid phone number";
             } else {
@@ -275,7 +277,7 @@ export default defineComponent({
 
         // Function to validate website
         validateWebsite: function () {
-            const regex = /^((http[s]?):\/\/)([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?$/; // Checks if input is in website format
+            const regex = /^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}\/?[a-zA-Z0-9-]*$/; // Checks if input is in website format
             if (!regex.test(this.company.website)) {
                 this.websiteError = "Please enter a valid website address";
             } else {
@@ -284,7 +286,7 @@ export default defineComponent({
         },
 
         validateDirector: function () {
-            const regex = /^((http[s]?):\/\/)([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?$/; // Checks if input is in website format
+            const regex = /^[a-zA-Z\s]*$/; // Checks if input is in website format
             if (!regex.test(this.company.director)) {
                 this.directorError = "Please enter a valid director name";
             } else {

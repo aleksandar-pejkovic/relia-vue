@@ -29,6 +29,9 @@
                 <span v-if="repeatPasswordError" class="error">{{ repeatPasswordError }}</span>
             </div>
             <router-link to="/" class="btn btn-secondary btn-lg m-2">Cancel</router-link>
+            <div v-if="loading" class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
             <button class="btn btn-primary" type="submit">Register</button>
         </form>
     </div>
@@ -69,6 +72,9 @@ export default defineComponent({
                 this.repeatPasswordError
             );
         },
+        loading() {
+            return false
+        }
     },
     methods: {
         async register() {
@@ -104,6 +110,7 @@ export default defineComponent({
                     this.$router.push('/login')
                 })
             } catch (error) {
+                this.loading = false;
                 Swal.fire({
                     title: 'Registration unsuccessful!',
                     text: error.message,

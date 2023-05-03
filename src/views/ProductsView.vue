@@ -27,7 +27,7 @@ export default defineComponent({
         CreateProductModal, ReadProducts
     },
     methods: {
-        reloadCustomers() {
+        reloadProducts() {
             this.$refs.products.readProducts()
         },
     }

@@ -1,84 +1,54 @@
 <template>
     <!-- Modal -->
-    <div class="modal fade" id="createCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <div class="modal fade" id="createProductModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Customer</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Product</h1>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" ref="closeBtn">Close</button>
                 </div>
                 <div class="modal-body">
-                    <form @submit.prevent="createCompany">
+                    <form @submit.prevent="createProduct">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="plu">PLU</label>
+                                    <input type="number" class="form-control" id="plu" v-model="product.plu"
+                                        @input="validatePlu" placeholder="0">
+                                    <span v-if="pluError" class="error">{{ pluError }}</span>
+                                </div>
+                                <div class="form-group">
                                     <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name" v-model="company.name"
+                                    <input type="text" class="form-control" id="name" v-model="product.name"
                                         @input="validateName">
                                     <span v-if="nameError" class="error">{{ nameError }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="city">City</label>
-                                    <input type="text" class="form-control" id="city" v-model="company.city"
-                                        @input="validateCity">
-                                    <span v-if="cityError" class="error">{{ cityError }}</span>
+                                    <label for="unit">Unit</label>
+                                    <input type="text" class="form-control" id="unit" v-model="product.unit"
+                                        @input="validateUnit">
+                                    <span v-if="unitError" class="error">{{ unitError }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="zip">Zip number</label>
-                                    <input type="text" class="form-control" id="zip" v-model="company.zip"
-                                        @input="validateZip">
-                                    <span v-if="zipError" class="error">{{ zipError }}</span>
+                                    <label for="description">Description</label>
+                                    <input type="text" class="form-control" id="description" v-model="product.description"
+                                        @input="validateDescription">
+                                    <span v-if="descriptionError" class="error">{{ descriptionError }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="address">Address</label>
-                                    <input type="text" class="form-control" id="address" v-model="company.street"
-                                        @input="validateAddress">
-                                    <span v-if="addressError" class="error">{{ addressError }}</span>
+                                    <label for="taxRate">Tax rate</label>
+                                    <select class="form-control" id="taxRate" v-model="product.taxRate">
+                                        <option value="0">0%</option>
+                                        <option value="10">10%</option>
+                                        <option value="20">20%</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="regNum">Registration number</label>
-                                    <input type="text" class="form-control" id="regNum" v-model="company.registrationNumber"
-                                        @input="validateRegistrationNumber">
-                                    <span v-if="regNumError" class="error">{{ regNumError }}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="taxNum">Tax number</label>
-                                    <input type="text" class="form-control" id="taxNum" v-model="company.taxNumber"
-                                        @input="validateTaxNumber">
-                                    <span v-if="taxNumError" class="error">{{ taxNumError }}</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="bankAcc">Bank account</label>
-                                    <input type="text" class="form-control" id="bankAcc" v-model="company.bankAccount"
-                                        @input="validateBankAccount">
-                                    <span v-if="bankAccError" class="error">{{ bankAccError }}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="phone">Phone</label>
-                                    <input type="text" class="form-control" id="phone" v-model="company.phone"
-                                        @input="validatePhoneNumber">
-                                    <span v-if="phoneError" class="error">{{ phoneError }}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="email" class="form-control" id="email" v-model="company.email"
-                                        @input="validateEmail">
-                                    <span v-if="emailError" class="error">{{ emailError }}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="website">Website</label>
-                                    <input type="text" class="form-control" id="website" v-model="company.website"
-                                        @input="validateWebsite">
-                                    <span v-if="websiteError" class="error">{{ websiteError }}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="director">Director</label>
-                                    <input type="text" class="form-control" id="director" v-model="company.director"
-                                        @input="validateDirector">
-                                    <span v-if="zipError" class="error">{{ zipError }}</span>
+                                    <label for="price">Price</label>
+                                    <input type="number" class="form-control" id="price" v-model="product.price"
+                                        @input="validatePrice" placeholder="0.00" step="0.01">
+                                    <span v-if="priceError" class="error">{{ priceError }}</span>
                                 </div>
                             </div>
                         </div>
@@ -86,7 +56,8 @@
                         <div v-if="loading" class="spinner-border text-primary" role="status">
                             <span class="visually-hidden">Loading...</span>
                         </div>
-                        <button v-else type="submit" class="btn btn-success m-2" :class="{ 'disabled': hasErrors }">Create</button>
+                        <button v-else type="submit" class="btn btn-success m-2"
+                            :class="{ 'disabled': !validateInputs }">Create</button>
                     </form>
                 </div>
             </div>
@@ -104,46 +75,41 @@ import axios from 'axios'
 export default defineComponent({
     data() {
         return {
-            company: {
+            product: {
+                plu: undefined,
                 name: '',
-                city: '',
-                zip: '',
-                street: '',
-                registrationNumber: '',
-                taxNumber: '',
-                bankAccount: '',
-                phone: '',
-                email: '',
-                website: '',
-                director: ''
+                unit: '',
+                description: '',
+                taxRate: 20,
+                price: undefined,
             },
+            pluError: '',
+            nameError: '',
+            unitError: '',
+            descriptionError: '',
+            priceError: '',
             loading: false
         }
     },
-    computed: {
-        hasErrors() {
-            return validateInputs()
-        }
-    },
     methods: {
-        async createCompany() {
-            this.loading = true
-            if (this.formError) {
+        async createProduct() {
+            if (!this.validateInputs()) {
                 Swal.fire({
-                    title: 'Creating customer unsuccessful!',
+                    title: 'Creating product unsuccessful!',
                     text: 'Please fix the errors in the form.',
                     icon: 'error',
                     confirmButtonText: 'OK'
                 });
                 return;
             }
+            this.loading = true
             const baseUrlStore = useBaseUrlStore()
-            const url = baseUrlStore.getUrl('companies/client')
+            const url = baseUrlStore.getUrl('products')
             const token = `Bearer ${useAuthenticationStore().token}`
             try {
                 await axios.post(
                     url,
-                    this.company,
+                    this.product,
                     {
                         headers: {
                             "Content-Type": "application/json",
@@ -153,10 +119,10 @@ export default defineComponent({
                 );
                 this.loading = false
                 this.$refs.closeBtn.click()
-                this.$emit('customer-created')
+                this.$emit('product-created')
                 Swal.fire({
-                    title: `${this.company.name} was created`,
-                    text: 'You can find it on Customers page.',
+                    title: `${this.product.name} was created`,
+                    text: 'You can find it on Products page.',
                     icon: 'success',
                     confirmButtonText: 'OK'
                 })
@@ -176,119 +142,66 @@ export default defineComponent({
                 });
             }
         },
-        // Function to validate company name
+        // Function to validate product name
         validateName: function () {
-            const regex = /^[a-zA-Z\s]*$/; // Only allows letters and spaces
-            if (!regex.test(this.company.name)) {
+            const regex = /^[a-zA-Z0-9\s-]{2,50}/; // Only allows letters and spaces
+            if (!regex.test(this.product.name)) {
                 this.nameError = "Please enter a valid name";
             } else {
                 this.nameError = "";
             }
         },
 
-        // Function to validate city
-        validateCity: function () {
-            const regex = /^[a-zA-Z\s]*$/; // Only allows letters and spaces
-            if (!regex.test(this.company.city)) {
-                this.cityError = "Please enter a valid city";
+        validateUnit: function () {
+            if (this.product.unit.length > 5) {
+                this.unitError = "Unit can be up to 5 characters long";
             } else {
-                this.cityError = "";
+                this.unitError = "";
             }
         },
 
-        // Function to validate zip number
-        validateZip: function () {
-            const regex = /^[0-9]{5}$/; // Only allows 5 digits
-            if (!regex.test(this.company.zip)) {
-                this.zipError = "Please enter a valid zip number";
+        validatePlu: function () {
+            if (this.product.plu < 0 || this.product.plu > 10000) {
+                this.pluError = "Plu must be a number between 0 and 10000";
             } else {
-                this.zipError = "";
+                this.pluError = "";
             }
         },
 
-        // Function to validate address
-        validateAddress: function () {
-            const regex = /^[a-zA-Z0-9\s]*$/; // Allows letters, numbers, and spaces
-            if (!regex.test(this.company.street)) {
-                this.addressError = "Please enter a valid address";
+        validateDescription: function () {
+            const regex = /^[a-zA-Z0-9ČĆŠĐŽčćšđž,.!? \u0027-]{1,300}/;
+            if (!regex.test(this.product.description)) {
+                this.descriptionError = "Please enter a valid description";
             } else {
-                this.addressError = "";
+                this.descriptionError = "";
             }
         },
 
-        // Function to validate registration number
-        validateRegistrationNumber: function () {
-            const regex = /^[0-9]{8}$/; // Only allows 8 digits
-            if (!regex.test(this.company.registrationNumber)) {
-                this.regNumError = "Please enter a valid registration number";
+        validatePrice: function () {
+            const price = parseFloat(this.product.price);
+            if (isNaN(price)) {
+                this.priceError = "Please enter a valid price";
             } else {
-                this.regNumError = "";
+                const minPrice = 0;
+                const maxPrice = 100000000.00;
+                if (price < minPrice || price > maxPrice) {
+                    this.priceError = `Please enter a price between ${minPrice.toFixed(2)} and ${maxPrice.toFixed(2)}`;
+                } else {
+                    this.product.price = price.toFixed(2); // Round to 2 decimal places
+                    this.priceError = "";
+                }
             }
         },
 
-        // Function to validate tax number
-        validateTaxNumber: function () {
-            const regex = /^[0-9]{10}$/; // Only allows 10 digits
-            if (!regex.test(this.company.taxNumber)) {
-                this.taxNumError = "Please enter a valid tax number";
-            } else {
-                this.taxNumError = "";
-            }
-        },
-
-        // Function to validate bank account
-        validateBankAccount: function () {
-            const regex = /^[0-9]{12}$/; // Only allows 12 digits
-            if (!regex.test(this.company.bankAccount)) {
-                this.bankAccError = "Please enter a valid bank account number";
-            } else {
-                this.bankAccError = "";
-            }
-        },
-
-        // Function to validate phone number
-        validatePhoneNumber: function () {
-            const regex = /^[0-9]{9}$/; // Only allows 9 digits
-            if (!regex.test(this.company.phone)) {
-                this.phoneError = "Please enter a valid phone number";
-            } else {
-                this.phoneError = "";
-            }
-        },
-
-        // Function to validate email
-        validateEmail: function () {
-            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Checks if input is in email format
-            if (!regex.test(this.company.email)) {
-                this.emailError = "Please enter a valid email address";
-            } else {
-                this.emailError = "";
-            }
-        },
-
-        // Function to validate website
-        validateWebsite: function () {
-            const regex = /^((http[s]?):\/\/)([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?$/; // Checks if input is in website format
-            if (!regex.test(this.company.website)) {
-                this.websiteError = "Please enter a valid website address";
-            } else {
-                this.websiteError = "";
-            }
-        },
         // Function to validate all inputs
         validateInputs: function () {
             this.validateName();
-            this.validateCity();
-            this.validateZip();
-            this.validateAddress();
-            this.validateRegistrationNumber();
-            this.validateTaxNumber();
-            this.validateBankAccount();
-            this.validatePhoneNumber();
-            this.validateEmail();
-            this.validateWebsite();
+            this.validateUnit();
+            this.validatePlu();
+            this.validateDescription();
+            this.validatePrice();
             // Check if there are any errors
-            const errors = [this.nameError, this.cityError, this.zipError, this.addressError, this.regNumError, this.taxNumError, this.bankAccError, this.phoneError, this.emailError, this.websiteError];
+            const errors = [this.nameError, this.pluError, this.descriptionError, this.priceError];
             if (errors.every((error) => error === "")) {
                 return true
             } else {
@@ -299,6 +212,6 @@ export default defineComponent({
     // Usage:
     // Call validateInputs() function on submit button click event or any other relevant event.
 
-    emits: ['customer-created']
+    emits: ['product-created']
 })
 </script>

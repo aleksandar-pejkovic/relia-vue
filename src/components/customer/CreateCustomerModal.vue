@@ -78,7 +78,7 @@
                                     <label for="director">Director</label>
                                     <input type="text" class="form-control" id="director" v-model="company.director"
                                         @input="validateDirector">
-                                    <span v-if="zipError" class="error">{{ zipError }}</span>
+                                    <span v-if="directorError" class="error">{{ directorError }}</span>
                                 </div>
                             </div>
                         </div>
@@ -86,7 +86,8 @@
                         <div v-if="loading" class="spinner-border text-primary" role="status">
                             <span class="visually-hidden">Loading...</span>
                         </div>
-                        <button v-else type="submit" class="btn btn-success m-2" :class="{ 'disabled': hasErrors }">Create</button>
+                        <button v-else type="submit" class="btn btn-success m-2"
+                            :class="{ 'disabled': !validateInputs }">Create</button>
                     </form>
                 </div>
             </div>
@@ -117,18 +118,23 @@ export default defineComponent({
                 website: '',
                 director: ''
             },
-            loading: false
-        }
-    },
-    computed: {
-        hasErrors() {
-            return validateInputs()
+            loading: false,
+            nameError: '',
+            cityError: '',
+            zipError: '',
+            addressError: '',
+            regNumError: '',
+            taxNumError: '',
+            bankAccError: '',
+            phoneError: '',
+            emailError: '',
+            websiteError: '',
+            directorError: '',
         }
     },
     methods: {
         async createCompany() {
-            this.loading = true
-            if (this.formError) {
+            if (!this.validateInputs()) {
                 Swal.fire({
                     title: 'Creating customer unsuccessful!',
                     text: 'Please fix the errors in the form.',
@@ -137,6 +143,7 @@ export default defineComponent({
                 });
                 return;
             }
+            this.loading = true
             const baseUrlStore = useBaseUrlStore()
             const url = baseUrlStore.getUrl('companies/client')
             const token = `Bearer ${useAuthenticationStore().token}`
@@ -275,6 +282,15 @@ export default defineComponent({
                 this.websiteError = "";
             }
         },
+
+        validateDirector: function () {
+            const regex = /^((http[s]?):\/\/)([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w\.-]*)*\/?$/; // Checks if input is in website format
+            if (!regex.test(this.company.director)) {
+                this.directorError = "Please enter a valid director name";
+            } else {
+                this.directorError = "";
+            }
+        },
         // Function to validate all inputs
         validateInputs: function () {
             this.validateName();
@@ -287,8 +303,9 @@ export default defineComponent({
             this.validatePhoneNumber();
             this.validateEmail();
             this.validateWebsite();
+            this.validateDirector();
             // Check if there are any errors
-            const errors = [this.nameError, this.cityError, this.zipError, this.addressError, this.regNumError, this.taxNumError, this.bankAccError, this.phoneError, this.emailError, this.websiteError];
+            const errors = [this.nameError, this.cityError, this.zipError, this.addressError, this.regNumError, this.taxNumError, this.bankAccError, this.phoneError, this.emailError, this.websiteError, this.directorError];
             if (errors.every((error) => error === "")) {
                 return true
             } else {

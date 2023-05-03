@@ -12,6 +12,9 @@
             </div>
             <div class="col-12">
                 <router-link to="/" class="btn btn-secondary btn-lg m-2">Cancel</router-link>
+                <div v-if="loading" class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
                 <button class="btn btn-primary m-2" type="submit">Login</button>
             </div>
         </form>
@@ -33,15 +36,23 @@ export default defineComponent({
             password: "",
         };
     },
+    computed: {
+        loading() {
+            return false
+        }
+    },
     methods: {
         async login() {
+            this.loading = true
             try {
                 const data = await this.authenticate();
                 await this.updateStore(data);
+                this.loading = false
                 await this.showSuccessMessage();
                 this.$router.push("/dashboard");
             }
             catch (error) {
+                this.loading = false
                 Swal.fire({
                     title: "Login unsuccessful!",
                     text: error.message,

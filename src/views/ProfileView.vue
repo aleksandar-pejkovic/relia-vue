@@ -72,7 +72,9 @@ export default defineComponent({
     data() {
         return {
             user: null,
-            readOnly: true
+            readOnly: true,
+            emailError: '',
+            nameError: ''
         };
     },
     computed: {

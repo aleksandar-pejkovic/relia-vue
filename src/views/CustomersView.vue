@@ -26,19 +26,6 @@ export default defineComponent({
     components: {
         CreateCustomerModal, ReadCustomers
     },
-    data() {
-        return {
-            values: ['Name', 'Tax number', 'Director', 'Address', 'City', 'Phone'],
-            keys: ['name', 'taxNumber', 'director', 'street', 'city', 'phone']
-        }
-    },
-    computed: {
-        itemsWithKeys() {
-            return this.keys.map((key, index) => {
-                return { key: key, value: this.values[index] };
-            });
-        }
-    },
     methods: {
         reloadCustomers() {
             this.$refs.customers.fetchData()
@@ -46,9 +33,3 @@ export default defineComponent({
     }
 })
 </script>
-
-<style>
-th {
-    width: 250px;
-}
-</style>

@@ -6,7 +6,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="staticBackdropLabel">{{ customer.name }}</h1>
-                    <button @click="cancelEditing" type="button" class="btn btn-secondary" data-bs-dismiss="modal" ref="closeBtn">Close</button>
+                    <button @click="cancelEditing" type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        ref="closeBtn">Close</button>
                 </div>
                 <div class="modal-body">
                     <form @submit.prevent="updateCustomer">
@@ -76,8 +77,7 @@
                             <button type="submit" class="btn btn-success m-2">Update</button>
                         </div>
                         <div v-else>
-                            <button @click="deleteCustomer" type="button"
-                                class="btn btn-danger m-2">Delete</button>
+                            <button @click="deleteCustomer" type="button" class="btn btn-danger m-2">Delete</button>
                             <button @click="enableEditing" type="button" class="btn btn-primary m-2">Edit</button>
                         </div>
                     </form>
@@ -124,7 +124,19 @@ export default defineComponent({
                 }
             }).then(response => response.data)
                 .then(data => this.customer = data)
-                .catch(error => console.error(error));
+                .catch(error => {
+                    console.error(error);
+                    let errorMessages = error.message;
+                    if (error.response && error.response.data) {
+                        errorMessages = error.response.data.error || error.response.data.message || errorMessages;
+                    }
+                    Swal.fire({
+                        title: error,
+                        text: errorMessages,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                });
         },
         updateCustomer() {
             const name = this.customer.name
@@ -145,6 +157,16 @@ export default defineComponent({
                 })
             }).catch(error => {
                 console.error(error);
+                let errorMessages = error.message;
+                if (error.response && error.response.data) {
+                    errorMessages = error.response.data.error || error.response.data.message || errorMessages;
+                }
+                Swal.fire({
+                    title: 'Update customer unsuccessful!',
+                    text: errorMessages,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
             });
         },
         deleteCustomer() {
@@ -164,12 +186,16 @@ export default defineComponent({
                 })
             }).catch(error => {
                 console.error(error);
+                let errorMessages = error.message;
+                if (error.response && error.response.data) {
+                    errorMessages = error.response.data.error || error.response.data.message || errorMessages;
+                }
                 Swal.fire({
-                    title: `Customer not found`,
-                    text: `${error}`,
+                    title: 'Delete customer unsuccessful!',
+                    text: errorMessages,
                     icon: 'error',
                     confirmButtonText: 'OK'
-                })
+                });
             });
         }
     },

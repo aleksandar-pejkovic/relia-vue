@@ -54,6 +54,7 @@ export default defineComponent({
                 email: "",
                 name: "",
             },
+            loading: false,
             repeatPassword: "",
             usernameError: "",
             passwordError: "",
@@ -72,13 +73,9 @@ export default defineComponent({
                 this.repeatPasswordError
             );
         },
-        loading() {
-            return false
-        }
     },
     methods: {
         async register() {
-            this.loading = true
             if (this.formError) {
                 Swal.fire({
                     title: 'Registration unsuccessful!',
@@ -88,6 +85,7 @@ export default defineComponent({
                 });
                 return;
             }
+            this.loading = true
             const baseUrlStore = useBaseUrlStore()
             const url = baseUrlStore.getUrl('users/register')
             try {
@@ -111,9 +109,13 @@ export default defineComponent({
                 })
             } catch (error) {
                 this.loading = false;
+                let errorMessages = error.message;
+                if (error.response && error.response.data) {
+                    errorMessages = error.response.data.error || error.response.data.message || errorMessages;
+                }
                 Swal.fire({
                     title: 'Registration unsuccessful!',
-                    text: error.message,
+                    text: errorMessages,
                     icon: 'error',
                     confirmButtonText: 'OK'
                 });

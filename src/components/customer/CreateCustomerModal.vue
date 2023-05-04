@@ -171,14 +171,12 @@ export default defineComponent({
                 })
             } catch (error) {
                 this.loading = false;
-                let errorMessages = null
+                let errorMessages = error.message;
                 if (error.response && error.response.data) {
-                    errorMessages = Object.values(error.response.data).join("\n");
-                } else {
-                    errorMessages = error.message
+                    errorMessages = error.response.data.error || error.response.data.message || errorMessages;
                 }
                 Swal.fire({
-                    title: 'Registration unsuccessful!',
+                    title: 'Request unsuccessful!',
                     text: errorMessages,
                     icon: 'error',
                     confirmButtonText: 'OK'

@@ -92,7 +92,19 @@ export default defineComponent({
                 }
             }).then(response => response.data)
                 .then(data => this.products = data)
-                .catch(error => console.error(error));
+                .catch(error => {
+                    console.error(error);
+                    let errorMessages = error.message;
+                    if (error.response && error.response.data) {
+                        errorMessages = error.response.data.error || error.response.data.message || errorMessages;
+                    }
+                    Swal.fire({
+                        title: error,
+                        text: errorMessages,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                });
         },
         openEditProductModal(product) {
             this.productToEdit = product

@@ -126,6 +126,16 @@ export default defineComponent({
                 })
             }).catch(error => {
                 console.error(error);
+                let errorMessages = error.message;
+                if (error.response && error.response.data) {
+                    errorMessages = error.response.data.error || error.response.data.message || errorMessages;
+                }
+                Swal.fire({
+                    title: 'Update unsuccessful!',
+                    text: errorMessages,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
             });
         },
         deleteProduct() {
@@ -145,12 +155,16 @@ export default defineComponent({
                 })
             }).catch(error => {
                 console.error(error);
+                let errorMessages = error.message;
+                if (error.response && error.response.data) {
+                    errorMessages = error.response.data.error || error.response.data.message || errorMessages;
+                }
                 Swal.fire({
-                    title: `Product not found`,
-                    text: `${error}`,
+                    title: 'Delete unsuccessful!',
+                    text: errorMessages,
                     icon: 'error',
                     confirmButtonText: 'OK'
-                })
+                });
             });
         },
         validatePrice: function () {

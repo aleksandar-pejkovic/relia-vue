@@ -105,7 +105,19 @@ export default defineComponent({
                 }
             }).then(response => response.data)
                 .then(data => this.customers = data)
-                .catch(error => console.error(error));
+                .catch(error => {
+                    console.error(error);
+                    let errorMessages = error.message;
+                    if (error.response && error.response.data) {
+                        errorMessages = error.response.data.error || error.response.data.message || errorMessages;
+                    }
+                    Swal.fire({
+                        title: 'Registration unsuccessful!',
+                        text: errorMessages,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                });
         },
         openEditCustomerModal(customer) {
             this.customerToEdit = customer

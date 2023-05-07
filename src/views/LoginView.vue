@@ -24,9 +24,10 @@
 <script>
 import { defineComponent } from 'vue'
 import { useAuthenticationStore } from '@/stores/authentication'
-import { useBaseUrlStore } from '@/stores/baseUrl'
+import { useCompaniesStore } from '../stores/companies'
+import { useProductsStore } from '../stores/products'
+import { useUserStore } from '../stores/user'
 import Swal from 'sweetalert2'
-import axios from 'axios'
 
 export default defineComponent({
     name: "Login",
@@ -41,8 +42,17 @@ export default defineComponent({
         async login() {
             this.loading = true
             try {
-                const data = await this.authenticate();
-                await this.updateStore(data);
+                const authStore = useAuthenticationStore()
+                const userStore = useUserStore()
+                const companiesStore = useCompaniesStore()
+                const productsStore = useProductsStore()
+
+                await authStore.login(this.username, this.password)
+                await userStore.fetchUser()
+                await companiesStore.fetchCompanies()
+                await companiesStore.fetchOwnCompany()
+                await productsStore.fetchProducts()
+
                 this.loading = false
                 await this.showSuccessMessage();
                 this.$router.push("/dashboard");
@@ -57,24 +67,6 @@ export default defineComponent({
                 });
             }
         },
-        async authenticate() {
-            const baseUrlStore = useBaseUrlStore();
-            const url = baseUrlStore.getUrl("auth/login");
-            const authHeader = "Basic " + btoa(this.username + ":" + this.password);
-            const response = await axios.post(url, null, {
-                headers: {
-                    Authorization: authHeader
-                }
-            });
-            const data = response.data;
-            return data;
-        },
-        async updateStore(data) {
-            const token = await data;
-            const authenticationStore = useAuthenticationStore();
-            authenticationStore.setToken(token);
-            authenticationStore.setUsername(this.username);
-        },
         async showSuccessMessage() {
             await Swal.fire({
                 title: "Welcome!",
@@ -86,7 +78,7 @@ export default defineComponent({
         async showErrorMessage() {
             await Swal.fire({
                 title: "Login unsuccessful!",
-                text: "Wrong credentials!",
+                text: error.message,
                 icon: "error",
                 confirmButtonText: "OK",
             });

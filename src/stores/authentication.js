@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import axios from 'axios'
 
 export const useAuthenticationStore = defineStore({
   id: 'authentication',
@@ -15,6 +16,24 @@ export const useAuthenticationStore = defineStore({
     })
   },
   actions: {
+    async login(username, password) {
+      try {
+        const authHeader = "Basic " + btoa(username + ":" + password);
+        const response = await axios.post('http://localhost:8080/api/auth/login', null, {
+          headers: {
+            Authorization: authHeader
+          }
+        })
+        const token = response.data
+
+        // Update the store's state with the response data
+        this.setToken(token)
+        this.setUsername(username)
+      } catch (error) {
+        console.error(error)
+        throw new Error('Login failed')
+      }
+    },
     setToken(token) {
       this.token = token;
       localStorage.setItem('token', token);

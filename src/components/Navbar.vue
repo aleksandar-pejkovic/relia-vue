@@ -68,6 +68,7 @@ export default {
             const authenticationStore = useAuthenticationStore()
             authenticationStore.removeToken()
             authenticationStore.removeUsername()
+            localStorage.clear()
             Swal.fire({
                 title: 'Goodbye!',
                 text: 'Logout successful!',

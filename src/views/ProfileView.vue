@@ -6,7 +6,7 @@
             </div>
             <div class="card-body">
                 <div v-if="user">
-                    <form @submit.prevent="saveDetails">
+                    <form @submit.prevent="updateUser">
                         <div class="row mb-3 ">
                             <label for="username" class="col-sm-2 col-form-label">Username</label>
                             <div class="col-sm-10">
@@ -37,7 +37,7 @@
                             </div>
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button v-if="readOnly" @click.prevent="editDetails" class="btn btn-primary">
+                            <button v-if="readOnly" @click.prevent="startEditing" class="btn btn-primary">
                                 Edit
                             </button>
                             <div v-else>
@@ -62,9 +62,7 @@
   
   
 <script>
-import { useAuthenticationStore } from '../stores/authentication'
-import { useBaseUrlStore } from '@/stores/baseUrl'
-import axios from 'axios';
+import { useUserStore } from '../stores/user';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -72,6 +70,7 @@ export default defineComponent({
     data() {
         return {
             user: null,
+            temp: null,
             readOnly: true,
             emailError: '',
             nameError: ''
@@ -83,57 +82,31 @@ export default defineComponent({
         },
     },
     mounted() {
-        this.getUserDetails()
-    },
-    methods: {
-        getUserDetails() {
-            const authenticationStore = useAuthenticationStore();
-            const baseUrlStore = useBaseUrlStore()
-            const url = baseUrlStore.getUrl('users')
-            const username = authenticationStore.getUsername;
-            axios.get(`${url}/username/${username}`, {
-                headers: {
-                    Authorization: `Bearer ${authenticationStore.token}`
-                }
-            })
-                .then(response => response.data)
-                .then(data => {
-                    this.user = data;
-                })
-                .catch(error => console.error(error));
-        },
-        async saveDetails() {
-            const authenticationStore = useAuthenticationStore();
-            const baseUrlStore = useBaseUrlStore()
-            const url = baseUrlStore.getUrl('users')
-            try {
-                const response = await fetch(url, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${authenticationStore.token}`
-                    },
-                    body: JSON.stringify(this.user)
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to update user details');
-                }
-                const data = response.json();
-                this.user = data;
-                this.readOnly = true;
-                this.getUserDetails()
-            } catch (error) {
-                console.error(error);
+        const userStore = useUserStore()
+        this.user = { ...userStore.user } // create a new object with the same properties as userStore.user
+
+        userStore.$subscribe((mutation, state) => {
+            if (mutation.type === 'updateUser') {
+                this.user = { ...state.user } // create a new object with the same properties as state.user
             }
+        })
+    },
+
+    methods: {
+        async updateUser() {
+            this.readOnly = true
+            const userStore = useUserStore()
+            userStore.updateUser(this.user)
         },
         cancelEditing() {
             this.readOnly = true;
-            this.getUserDetails()
             this.emailError = ''
             this.nameError = ''
+            this.user = { ...this.temp };
         },
-        editDetails() {
+        startEditing() {
             this.readOnly = false;
+            this.temp = { ...this.user };
         },
         validateEmail() {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

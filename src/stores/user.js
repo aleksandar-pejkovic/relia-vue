@@ -65,5 +65,9 @@ export const useUserStore = defineStore({
                 console.error(error)
             }
         },
+        reset() {
+            this.user = null
+            localStorage.removeItem('user')
+        }
     },
 })

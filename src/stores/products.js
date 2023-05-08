@@ -5,7 +5,7 @@ import axios from 'axios'
 export const useProductsStore = defineStore({
     id: 'products',
     state: () => ({
-        products: null
+        products: JSON.parse(localStorage.getItem('products')) || null,
     }),
     actions: {
         async fetchProducts() {
@@ -17,6 +17,7 @@ export const useProductsStore = defineStore({
                     }
                 })
                 this.products = response.data
+                localStorage.setItem('products', JSON.stringify(this.products))
             } catch (error) {
                 console.error(error)
             }
@@ -30,6 +31,7 @@ export const useProductsStore = defineStore({
                     }
                 })
                 this.products.push(response.data)
+                localStorage.setItem('products', JSON.stringify(this.products))
             } catch (error) {
                 console.error(error)
             }
@@ -45,6 +47,7 @@ export const useProductsStore = defineStore({
                 const index = this.products.findIndex(product => product.id === productData.id)
                 if (index >= 0) {
                     this.products[index] = response.data
+                    localStorage.setItem('products', JSON.stringify(this.products))
                 }
             } catch (error) {
                 console.error(error)
@@ -59,9 +62,14 @@ export const useProductsStore = defineStore({
                     }
                 })
                 this.products = this.products.filter(product => product.id !== productId)
+                localStorage.setItem('products', JSON.stringify(this.products))
             } catch (error) {
                 console.error(error)
             }
+        },
+        reset() {
+            this.products = null
+            localStorage.removeItem('products')
         }
     }
 })

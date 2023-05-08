@@ -125,13 +125,16 @@ export default defineComponent({
     },
     computed: {
         companyExists() {
-            return this.company.id !== null
+            return this.company.id > 0
+        },
+        readOnly() {
+            return this.companyExists && this.readOnlyCondition
         }
     },
     data() {
         return {
             company: {},
-            readOnly: true,
+            readOnlyCondition: true,
             loading: false,
             nameError: '',
             cityError: '',
@@ -173,8 +176,10 @@ export default defineComponent({
             this.loading = true
             try {
                 const companiesStore = useCompaniesStore()
-                companiesStore.createOwnCompany(this.company)
+                await companiesStore.createOwnCompany(this.company)
+                this.company = { ...companiesStore.ownCompany }
                 this.loading = false
+                this.readOnlyCondition = true;
                 Swal.fire({
                     title: `Company was created!`,
                     text: `You can find it on 'My company' page.`,
@@ -197,12 +202,12 @@ export default defineComponent({
             }
         },
         cancelEditing() {
-            this.readOnly = true;
+            this.readOnlyCondition = true;
             this.resetErrors()
             this.company = { ...this.temp };
         },
         startEditing() {
-            this.readOnly = false;
+            this.readOnlyCondition = false;
             this.temp = { ...this.company };
         },
         async updateOwnCompany() {
@@ -221,9 +226,9 @@ export default defineComponent({
             const companiesStore = useCompaniesStore();
             await companiesStore.updateOwnCompany(this.company);
 
-            this.readOnly = true;
             this.loading = false;
-            this.resetErrors();
+            this.readOnlyCondition = true;
+            this.resetErrors()
             Swal.fire({
                 title: `Company updated`,
                 text: 'Company was successfully updated',

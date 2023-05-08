@@ -5,7 +5,7 @@ import axios from 'axios'
 export const useCompaniesStore = defineStore({
     id: 'companies',
     state: () => ({
-        companies: null,
+        companies: JSON.parse(localStorage.getItem('companies')) || null,
         ownCompany: JSON.parse(localStorage.getItem('ownCompany')) || null,
     }),
     actions: {
@@ -18,6 +18,7 @@ export const useCompaniesStore = defineStore({
                     }
                 })
                 this.companies = response.data
+                localStorage.setItem('companies', JSON.stringify(this.companies));
             } catch (error) {
                 console.error(error)
             }
@@ -45,6 +46,7 @@ export const useCompaniesStore = defineStore({
                     }
                 })
                 this.companies.push(response.data)
+                localStorage.setItem('companies', JSON.stringify(this.companies));
             } catch (error) {
                 console.error(error)
             }
@@ -74,6 +76,7 @@ export const useCompaniesStore = defineStore({
                 const index = this.companies.findIndex(company => company.id === companyData.id)
                 if (index >= 0) {
                     this.companies[index] = response.data
+                    localStorage.setItem('companies', JSON.stringify(this.companies));
                 }
             } catch (error) {
                 console.error(error)
@@ -102,9 +105,16 @@ export const useCompaniesStore = defineStore({
                     }
                 })
                 this.companies = this.companies.filter(company => company.id !== companyId)
+                localStorage.setItem('companies', JSON.stringify(this.companies))
             } catch (error) {
                 console.error(error)
             }
+        },
+        reset() {
+            this.companies = null
+            this.ownCompany = null
+            localStorage.removeItem('companies')
+            localStorage.removeItem('ownCompany')
         }
     }
 })

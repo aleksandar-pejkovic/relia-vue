@@ -47,6 +47,9 @@
 import { RouterLink } from 'vue-router'
 import { computed } from 'vue'
 import { useAuthenticationStore } from '@/stores/authentication'
+import { useCompaniesStore } from '../stores/companies'
+import { useProductsStore } from '../stores/products'
+import { useUserStore } from '../stores/user'
 import Swal from 'sweetalert2'
 
 export default {
@@ -66,8 +69,16 @@ export default {
         logout() {
             console.log('Logging out...')
             const authenticationStore = useAuthenticationStore()
+            const userStore = useUserStore()
+            const companiesStore = useCompaniesStore()
+            const productsStore = useProductsStore()
+
             authenticationStore.removeToken()
             authenticationStore.removeUsername()
+            userStore.reset()
+            companiesStore.reset()
+            productsStore.reset()
+            
             localStorage.clear()
             Swal.fire({
                 title: 'Goodbye!',
@@ -82,7 +93,5 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
   

@@ -1,12 +1,14 @@
 import { defineStore } from 'pinia'
 import { useAuthenticationStore } from '@/stores/authentication'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export const useCompaniesStore = defineStore({
     id: 'companies',
     state: () => ({
         companies: JSON.parse(localStorage.getItem('companies')) || null,
         ownCompany: JSON.parse(localStorage.getItem('ownCompany')) || null,
+        editCompany: JSON.parse(localStorage.getItem('editCompany')) || {},
     }),
     actions: {
         async fetchCompanies() {
@@ -78,8 +80,24 @@ export const useCompaniesStore = defineStore({
                     this.companies[index] = response.data
                     localStorage.setItem('companies', JSON.stringify(this.companies));
                 }
+                Swal.fire({
+                    title: `${companyData.name} updated`,
+                    text: 'Customer was successfully updated',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                })
             } catch (error) {
                 console.error(error)
+                let errorMessages = error.message;
+                if (error.response && error.response.data) {
+                    errorMessages = error.response.data.error || error.response.data.message || errorMessages;
+                }
+                Swal.fire({
+                    title: 'Update customer unsuccessful!',
+                    text: errorMessages,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
             }
         },
         async updateOwnCompany(companyData) {
@@ -96,18 +114,18 @@ export const useCompaniesStore = defineStore({
                 console.error(error)
             }
         },
-        async deleteCompany(companyId) {
+        async deleteCompany(company) {
             try {
-                const authStore = useAuthenticationStore()
-                await axios.delete(`http://localhost:8080/api/companies/${companyId}`, {
+                const authStore = useAuthenticationStore();
+                await axios.delete(`http://localhost:8080/api/companies/${company.id}`, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
-                })
-                this.companies = this.companies.filter(company => company.id !== companyId)
-                localStorage.setItem('companies', JSON.stringify(this.companies))
+                });
+                this.companies = this.companies.filter(c => c.id !== company.id);
+                localStorage.setItem('companies', JSON.stringify(this.companies));
             } catch (error) {
-                console.error(error)
+                console.error(error);
             }
         },
         reset() {
@@ -116,5 +134,5 @@ export const useCompaniesStore = defineStore({
             localStorage.removeItem('companies')
             localStorage.removeItem('ownCompany')
         }
-    }
+    },
 })

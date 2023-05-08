@@ -6,7 +6,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Customer</h1>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" ref="closeBtn">Close</button>
+                    <button @click="reset()" type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        ref="closeBtn">Close</button>
                 </div>
                 <div class="modal-body">
                     <form @submit.prevent="createCompany">
@@ -82,7 +83,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="reset" class="btn btn-secondary m-2">Reset</button>
+                        <button @click="reset()" type="reset" class="btn btn-secondary m-2">Reset</button>
                         <div v-if="loading" class="spinner-border text-primary" role="status">
                             <span class="visually-hidden">Loading...</span>
                         </div>
@@ -97,27 +98,18 @@
 
 <script>
 import { defineComponent } from 'vue'
+import { useCompaniesStore } from '@/stores/companies'
 import Swal from 'sweetalert2'
-import { useBaseUrlStore } from '@/stores/baseUrl'
-import { useAuthenticationStore } from '@/stores/authentication'
-import axios from 'axios'
+import {
+    validateName, validateCity, validateZip, validateAddress,
+    validateRegistrationNumber, validateTaxNumber, validateBankAccount,
+    validatePhoneNumber, validateEmail, validateWebsite, validateDirector
+} from '@/components/validation/companyValidation';
 
 export default defineComponent({
     data() {
         return {
-            company: {
-                name: '',
-                city: '',
-                zip: '',
-                street: '',
-                registrationNumber: '',
-                taxNumber: '',
-                bankAccount: '',
-                phone: '',
-                email: '',
-                website: '',
-                director: ''
-            },
+            company: {},
             loading: false,
             nameError: '',
             cityError: '',
@@ -136,7 +128,7 @@ export default defineComponent({
         async createCompany() {
             if (!this.validateInputs()) {
                 Swal.fire({
-                    title: 'Creating customer unsuccessful!',
+                    title: 'Validation failed!',
                     text: 'Please fix the errors in the form.',
                     icon: 'error',
                     confirmButtonText: 'OK'
@@ -144,152 +136,81 @@ export default defineComponent({
                 return;
             }
             this.loading = true
-            const baseUrlStore = useBaseUrlStore()
-            const url = baseUrlStore.getUrl('companies/client')
-            const token = `Bearer ${useAuthenticationStore().token}`
-            try {
-                await axios.post(
-                    url,
-                    this.company,
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: token
-                        }
-                    }
-                );
-                this.loading = false
-                const name = this.company.name
-                this.company = {}
-                this.$refs.closeBtn.click()
-                this.$emit('customer-created')
-                Swal.fire({
-                    title: `${name} was created`,
-                    text: 'You can find it on Customers page.',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                })
-            } catch (error) {
-                this.loading = false;
-                let errorMessages = error.message;
-                if (error.response && error.response.data) {
-                    errorMessages = error.response.data.error || error.response.data.message || errorMessages;
-                }
-                Swal.fire({
-                    title: 'Request unsuccessful!',
-                    text: errorMessages,
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            }
+            const companiesStore = useCompaniesStore()
+            await companiesStore.createCompany(this.company)
+            this.loading = false
+            this.company = {}
+            this.$refs.closeBtn.click()
+        },
+        reset() {
+            this.company = {}
+            this.resetErrors()
+        },
+        resetErrors() {
+            this.nameError = "";
+            this.cityError = "";
+            this.zipError = "";
+            this.addressError = "";
+            this.regNumError = "";
+            this.taxNumError = "";
+            this.bankAccError = "";
+            this.phoneError = "";
+            this.emailError = "";
+            this.websiteError = "";
+            this.directorError = "";
         },
         // Function to validate company name
         validateName: function () {
-            const regex = /^[a-zA-Z\s]*$/; // Only allows letters and spaces
-            if (!regex.test(this.company.name)) {
-                this.nameError = "Please enter a valid name";
-            } else {
-                this.nameError = "";
-            }
+            this.nameError = validateName(this.company.name);
         },
 
         // Function to validate city
         validateCity: function () {
-            const regex = /^[a-zA-Z\s]*$/; // Only allows letters and spaces
-            if (!regex.test(this.company.city)) {
-                this.cityError = "Please enter a valid city";
-            } else {
-                this.cityError = "";
-            }
+            this.cityError = validateCity(this.company.city);
         },
 
         // Function to validate zip number
         validateZip: function () {
-            const regex = /^[0-9]{5}$/; // Only allows 5 digits
-            if (!regex.test(this.company.zip)) {
-                this.zipError = "Please enter a valid zip number";
-            } else {
-                this.zipError = "";
-            }
+            this.zipError = validateZip(this.company.zip);
         },
 
         // Function to validate address
         validateAddress: function () {
-            const regex = /^[a-zA-Z0-9\s]*$/; // Allows letters, numbers, and spaces
-            if (!regex.test(this.company.street)) {
-                this.addressError = "Please enter a valid address";
-            } else {
-                this.addressError = "";
-            }
+            this.addressError = validateAddress(this.company.street);
         },
 
         // Function to validate registration number
         validateRegistrationNumber: function () {
-            const regex = /^[0-9]{8}$/; // Only allows 8 digits
-            if (!regex.test(this.company.registrationNumber)) {
-                this.regNumError = "Please enter a valid registration number";
-            } else {
-                this.regNumError = "";
-            }
+            this.regNumError = validateRegistrationNumber(this.company.registrationNumber);
         },
 
         // Function to validate tax number
         validateTaxNumber: function () {
-            const regex = /^[0-9]{9}$/; // Only allows 9 digits
-            if (!regex.test(this.company.taxNumber)) {
-                this.taxNumError = "Please enter a valid tax number";
-            } else {
-                this.taxNumError = "";
-            }
+            this.taxNumError = validateTaxNumber(this.company.taxNumber);
         },
 
         // Function to validate bank account
         validateBankAccount: function () {
-            const regex = /^(?:\d{3})-(?:0*(\d{1,13})|\1)-(\d{2})$/; // Only allows 12 digits
-            if (!regex.test(this.company.bankAccount)) {
-                this.bankAccError = "Please enter a valid bank account number";
-            } else {
-                this.bankAccError = "";
-            }
+            this.bankAccError = validateBankAccount(this.company.bankAccount);
         },
 
         // Function to validate phone number
         validatePhoneNumber: function () {
-            const regex = /^([+\d{1,3}])?[\d\-/]{6,15}$/;
-            if (!regex.test(this.company.phone)) {
-                this.phoneError = "Please enter a valid phone number";
-            } else {
-                this.phoneError = "";
-            }
+            this.phoneError = validatePhoneNumber(this.company.phone);
         },
 
         // Function to validate email
         validateEmail: function () {
-            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Checks if input is in email format
-            if (!regex.test(this.company.email)) {
-                this.emailError = "Please enter a valid email address";
-            } else {
-                this.emailError = "";
-            }
+            this.emailError = validateEmail(this.company.email);
         },
 
         // Function to validate website
         validateWebsite: function () {
-            const regex = /^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}\/?[a-zA-Z0-9-]*$/; // Checks if input is in website format
-            if (!regex.test(this.company.website)) {
-                this.websiteError = "Please enter a valid website address";
-            } else {
-                this.websiteError = "";
-            }
+            this.websiteError = validateWebsite(this.company.website);
         },
 
         validateDirector: function () {
-            const regex = /^[a-zA-Z\s]*$/; // Checks if input is in website format
-            if (!regex.test(this.company.director)) {
-                this.directorError = "Please enter a valid director name";
-            } else {
-                this.directorError = "";
-            }
+            this.directorError = validateDirector(this.company.director);
         },
         // Function to validate all inputs
         validateInputs: function () {
@@ -311,11 +232,7 @@ export default defineComponent({
             } else {
                 return false
             }
-        }
+        },
     },
-    // Usage:
-    // Call validateInputs() function on submit button click event or any other relevant event.
-
-    emits: ['customer-created']
 })
 </script>

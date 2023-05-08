@@ -78,15 +78,14 @@ export default {
             userStore.reset()
             companiesStore.reset()
             productsStore.reset()
-            
+
             localStorage.clear()
+            this.$router.push("/")
             Swal.fire({
                 title: 'Goodbye!',
                 text: 'Logout successful!',
                 icon: 'success',
                 confirmButtonText: 'OK'
-            }).then(() => {
-                this.$router.push("/")
             })
         }
     }

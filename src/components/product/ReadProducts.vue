@@ -113,25 +113,3 @@ export default defineComponent({
     components: { EditProductModal }
 })
 </script>
-
-<style scoped>
-thead {
-    background-color: darkslateblue;
-    color: wheat;
-}
-
-th {
-    width: 250px;
-    max-width: 300px;
-}
-
-td,
-.card {
-    cursor: pointer;
-}
-
-.card {
-    color: darkslateblue;
-}
-</style>
-

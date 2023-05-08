@@ -54,8 +54,8 @@ export default defineComponent({
                 await productsStore.fetchProducts()
 
                 this.loading = false
-                await this.showSuccessMessage();
                 this.$router.push("/dashboard");
+                await this.showSuccessMessage();
             }
             catch (error) {
                 this.loading = false

@@ -64,27 +64,32 @@
             </div>
         </div>
     </div>
-    <EditCustomerModal @cancel-editing="fetchData" :customer="customerToEdit" />
+    <EditCustomerModal />
 </template>
 
 <script>
 import { defineComponent } from 'vue';
-import axios from 'axios'
-import { useAuthenticationStore } from '../../stores/authentication'
-import { useBaseUrlStore } from '../../stores/baseUrl'
+import { useCompaniesStore } from '@/stores/companies'
 import EditCustomerModal from './EditCustomerModal.vue';
 
 export default defineComponent({
+    computed: {
+        customers: {
+            get() {
+                return { ...useCompaniesStore().companies };
+            },
+            set(value) {
+                useCompaniesStore().companies = { ...value };
+            }
+        },
+    },
     data() {
         return {
-            customers: [],
-            customerToEdit: {},
             isSmallScreen: window.innerWidth <= 768,
         };
     },
     created() {
         window.addEventListener("resize", this.handleResize);
-        this.fetchData();
     },
     beforeUnmount() {
         window.removeEventListener("resize", this.handleResize);
@@ -93,58 +98,12 @@ export default defineComponent({
         handleResize() {
             this.isSmallScreen = window.innerWidth <= 768;
         },
-        fetchData() {
-            const baseUrlStore = useBaseUrlStore();
-            const authenticationStore = useAuthenticationStore();
-            const url = baseUrlStore.getUrl("companies");
-            const token = authenticationStore.token;
-            axios.get(url, {
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                }
-            }).then(response => response.data)
-                .then(data => this.customers = data)
-                .catch(error => {
-                    console.error(error);
-                    let errorMessages = error.message;
-                    if (error.response && error.response.data) {
-                        errorMessages = error.response.data.error || error.response.data.message || errorMessages;
-                    }
-                    Swal.fire({
-                        title: 'Registration unsuccessful!',
-                        text: errorMessages,
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
-                });
-        },
         openEditCustomerModal(customer) {
-            this.customerToEdit = customer
+            const companiesStore = useCompaniesStore()
+            companiesStore.editCompany = customer
+            localStorage.setItem('editCompany', JSON.stringify(customer))
         }
     },
     components: { EditCustomerModal }
 })
 </script>
-
-<style scoped>
-thead {
-    background-color: darkslateblue;
-    color: wheat;
-}
-
-th {
-    width: 250px;
-    max-width: 300px;
-}
-
-td,
-.card {
-    cursor: pointer;
-}
-
-.card {
-    color: darkslateblue;
-}
-</style>
-

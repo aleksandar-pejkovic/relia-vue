@@ -110,7 +110,7 @@ import {
     validateName, validateCity, validateZip, validateAddress,
     validateRegistrationNumber, validateTaxNumber, validateBankAccount,
     validatePhoneNumber, validateEmail, validateWebsite, validateDirector
-} from '../components/mycompany/validation';
+} from '@/components/validation/companyValidation';
 
 export default defineComponent({
     mounted() {

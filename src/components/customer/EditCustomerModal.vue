@@ -1,6 +1,6 @@
 <template>
     <!-- Modal -->
-    <div v-if="customer" class="modal fade" id="editCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false"
+    <div class="modal fade" id="editCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -16,59 +16,71 @@
                                 <div class="form-group">
                                     <label for="name">Name</label>
                                     <input type="text" class="form-control" id="name" v-model="customer.name"
-                                        :readonly="readOnly">
+                                        :readonly="readOnly" @input="validateName">
+                                    <span v-if="nameError" class="error">{{ nameError }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="city">City</label>
                                     <input type="text" class="form-control" id="city" v-model="customer.city"
-                                        :readonly="readOnly">
+                                        :readonly="readOnly" @input="validateCity">
+                                    <span v-if="cityError" class="error">{{ cityError }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="zip">Zip number</label>
                                     <input type="text" class="form-control" id="zip" v-model="customer.zip"
-                                        :readonly="readOnly">
+                                        :readonly="readOnly" @input="validateZip">
+                                    <span v-if="zipError" class="error">{{ zipError }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="address">Address</label>
                                     <input type="text" class="form-control" id="address" v-model="customer.street"
-                                        :readonly="readOnly">
+                                        :readonly="readOnly" @input="validateAddress">
+                                    <span v-if="addressError" class="error">{{ addressError }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="regNum">Registration number</label>
                                     <input type="text" class="form-control" id="regNum"
-                                        v-model="customer.registrationNumber" :readonly="readOnly">
+                                        v-model="customer.registrationNumber" :readonly="readOnly"
+                                        @input="validateRegistrationNumber">
+                                    <span v-if="regNumError" class="error">{{ regNumError }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="taxNum">Tax number</label>
                                     <input type="text" class="form-control" id="taxNum" v-model="customer.taxNumber"
-                                        :readonly="readOnly">
+                                        :readonly="readOnly" @input="validateTaxNumber">
+                                    <span v-if="taxNumError" class="error">{{ taxNumError }}</span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="bankAcc">Bank account</label>
                                     <input type="text" class="form-control" id="bankAcc" v-model="customer.bankAccount"
-                                        :readonly="readOnly">
+                                        :readonly="readOnly" @input="validateBankAccount">
+                                    <span v-if="bankAccError" class="error">{{ bankAccError }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="phone">Phone</label>
                                     <input type="text" class="form-control" id="phone" v-model="customer.phone"
-                                        :readonly="readOnly">
+                                        :readonly="readOnly" @input="validatePhoneNumber">
+                                    <span v-if="phoneError" class="error">{{ phoneError }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input type="email" class="form-control" id="email" v-model="customer.email"
-                                        :readonly="readOnly">
+                                        :readonly="readOnly" @input="validateEmail">
+                                    <span v-if="emailError" class="error">{{ emailError }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="website">Website</label>
                                     <input type="text" class="form-control" id="website" v-model="customer.website"
-                                        :readonly="readOnly">
+                                        :readonly="readOnly" @input="validateWebsite">
+                                    <span v-if="websiteError" class="error">{{ websiteError }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="director">Director</label>
                                     <input type="text" class="form-control" id="director" v-model="customer.director"
-                                        :readonly="readOnly">
+                                        :readonly="readOnly" @input="validateDirector">
+                                    <span v-if="directorError" class="error">{{ directorError }}</span>
                                 </div>
                             </div>
                         </div>
@@ -89,116 +101,158 @@
 
 <script>
 import { defineComponent } from 'vue';
-import { useAuthenticationStore } from '@/stores/authentication'
-import { useBaseUrlStore } from '@/stores/baseUrl'
-import axios from 'axios';
+import { useCompaniesStore } from '@/stores/companies'
 import Swal from 'sweetalert2'
+import {
+    validateName, validateCity, validateZip, validateAddress,
+    validateRegistrationNumber, validateTaxNumber, validateBankAccount,
+    validatePhoneNumber, validateEmail, validateWebsite, validateDirector
+} from '@/components/validation/companyValidation';
 
 export default defineComponent({
-    props: {
+    computed: {
         customer: {
-            type: Object,
-            required: true
+            get() {
+                return { ...useCompaniesStore().editCompany };
+            },
+            set(value) {
+                useCompaniesStore().editCompany = { ...value };
+            }
         },
     },
     data() {
         return {
             readOnly: true,
-            url: useBaseUrlStore().getUrl('companies'),
-            token: useAuthenticationStore().token
+            loading: false,
+            nameError: '',
+            cityError: '',
+            zipError: '',
+            addressError: '',
+            regNumError: '',
+            taxNumError: '',
+            bankAccError: '',
+            phoneError: '',
+            emailError: '',
+            websiteError: '',
+            directorError: '',
         }
     },
     methods: {
         cancelEditing() {
-            this.$emit('cancel-editing')
+            this.customer = { ...useCompaniesStore().editCompany };
             this.readOnly = true;
+            this.resetErrors()
         },
         enableEditing() {
             this.readOnly = false;
         },
-        loadCustomer() {
-            axios.get(this.url + `/${this.customer.id}`, {
-                headers: {
-                    "Authorization": `Bearer ${this.token}`,
-                    "Content-Type": "application/json"
-                }
-            }).then(response => response.data)
-                .then(data => this.customer = data)
-                .catch(error => {
-                    console.error(error);
-                    let errorMessages = error.message;
-                    if (error.response && error.response.data) {
-                        errorMessages = error.response.data.error || error.response.data.message || errorMessages;
-                    }
-                    Swal.fire({
-                        title: error,
-                        text: errorMessages,
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
-                });
-        },
-        updateCustomer() {
-            const name = this.customer.name
-            axios.put(this.url + `/${this.customer.id}`, this.customer, {
-                headers: {
-                    "Authorization": `Bearer ${this.token}`,
-                    "Content-Type": "application/json"
-                }
-            }).then(() => {
-                this.$emit('cancel-editing')
-                this.readOnly = true;
-                this.$refs.closeBtn.click()
+        async updateCustomer() {
+            if (!this.validateInputs()) {
                 Swal.fire({
-                    title: `${name} updated`,
-                    text: 'Customer was successfully updated',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                })
-            }).catch(error => {
-                console.error(error);
-                let errorMessages = error.message;
-                if (error.response && error.response.data) {
-                    errorMessages = error.response.data.error || error.response.data.message || errorMessages;
-                }
-                Swal.fire({
-                    title: 'Update customer unsuccessful!',
-                    text: errorMessages,
+                    title: 'Validation failed!',
+                    text: 'Please fix the errors in the form.',
                     icon: 'error',
                     confirmButtonText: 'OK'
                 });
-            });
+                return;
+            }
+            const companiesStore = useCompaniesStore()
+            await companiesStore.updateCompany(this.customer)
+            this.readOnly = true;
+            this.$refs.closeBtn.click()
         },
-        deleteCustomer() {
-            const name = this.customer.name
-            axios.delete(this.url + `/${this.customer.id}`, {
-                headers: {
-                    "Authorization": `Bearer ${this.token}`
-                }
-            }).then(() => {
-                this.$emit('cancel-editing')
-                this.$refs.closeBtn.click()
-                Swal.fire({
-                    title: `${name} deleted`,
-                    text: 'Customer was successfully deleted',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                })
-            }).catch(error => {
-                console.error(error);
-                let errorMessages = error.message;
-                if (error.response && error.response.data) {
-                    errorMessages = error.response.data.error || error.response.data.message || errorMessages;
-                }
-                Swal.fire({
-                    title: 'Delete customer unsuccessful!',
-                    text: errorMessages,
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            });
-        }
+        async deleteCustomer() {
+            const companiesStore = useCompaniesStore()
+            await companiesStore.deleteCompany(this.customer)
+            this.$refs.closeBtn.click()
+        },
+        resetErrors() {
+            this.nameError = "";
+            this.cityError = "";
+            this.zipError = "";
+            this.addressError = "";
+            this.regNumError = "";
+            this.taxNumError = "";
+            this.bankAccError = "";
+            this.phoneError = "";
+            this.emailError = "";
+            this.websiteError = "";
+            this.directorError = "";
+        },
+        // Function to validate company name
+        validateName: function () {
+            this.nameError = validateName(this.customer.name);
+        },
+
+        // Function to validate city
+        validateCity: function () {
+            this.cityError = validateCity(this.customer.city);
+        },
+
+        // Function to validate zip number
+        validateZip: function () {
+            this.zipError = validateZip(this.customer.zip);
+        },
+
+        // Function to validate address
+        validateAddress: function () {
+            this.addressError = validateAddress(this.customer.street);
+        },
+
+        // Function to validate registration number
+        validateRegistrationNumber: function () {
+            this.regNumError = validateRegistrationNumber(this.customer.registrationNumber);
+        },
+
+        // Function to validate tax number
+        validateTaxNumber: function () {
+            this.taxNumError = validateTaxNumber(this.customer.taxNumber);
+        },
+
+        // Function to validate bank account
+        validateBankAccount: function () {
+            this.bankAccError = validateBankAccount(this.customer.bankAccount);
+        },
+
+        // Function to validate phone number
+        validatePhoneNumber: function () {
+            this.phoneError = validatePhoneNumber(this.customer.phone);
+        },
+
+        // Function to validate email
+        validateEmail: function () {
+            this.emailError = validateEmail(this.customer.email);
+        },
+
+        // Function to validate website
+        validateWebsite: function () {
+            this.websiteError = validateWebsite(this.customer.website);
+        },
+
+        validateDirector: function () {
+            this.directorError = validateDirector(this.customer.director);
+        },
+        // Function to validate all inputs
+        validateInputs: function () {
+            this.validateName();
+            this.validateCity();
+            this.validateZip();
+            this.validateAddress();
+            this.validateRegistrationNumber();
+            this.validateTaxNumber();
+            this.validateBankAccount();
+            this.validatePhoneNumber();
+            this.validateEmail();
+            this.validateWebsite();
+            this.validateDirector();
+            // Check if there are any errors
+            const errors = [this.nameError, this.cityError, this.zipError, this.addressError, this.regNumError, this.taxNumError, this.bankAccError, this.phoneError, this.emailError, this.websiteError, this.directorError];
+            if (errors.every((error) => error === "")) {
+                return true
+            } else {
+                return false
+            }
+        },
     },
-    emits: ['cancel-editing']
 })
 </script>

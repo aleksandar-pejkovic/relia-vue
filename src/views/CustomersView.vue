@@ -8,11 +8,11 @@
                 <button type="button" class="btn btn-success m-2" data-bs-toggle="modal" data-bs-target="#createCustomerModal">
                     Add customer
                 </button>
-                <CreateCustomerModal @customer-created="reloadCustomers" />
+                <CreateCustomerModal />
             </div>
         </div>
         <div class="row">
-            <ReadCustomers ref="customers" />
+            <ReadCustomers />
         </div>
     </div>
 </template>
@@ -26,10 +26,5 @@ export default defineComponent({
     components: {
         CreateCustomerModal, ReadCustomers
     },
-    methods: {
-        reloadCustomers() {
-            this.$refs.customers.fetchData()
-        },
-    }
 })
 </script>

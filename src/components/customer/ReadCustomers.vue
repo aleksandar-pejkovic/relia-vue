@@ -64,13 +64,13 @@
             </div>
         </div>
     </div>
-    <EditCustomerModal />
+    <CustomerModal />
 </template>
 
 <script>
 import { defineComponent } from 'vue';
 import { useCompaniesStore } from '@/stores/companies'
-import EditCustomerModal from './EditCustomerModal.vue';
+import CustomerModal from './CustomerModal.vue';
 
 export default defineComponent({
     computed: {
@@ -104,6 +104,6 @@ export default defineComponent({
             localStorage.setItem('editCompany', JSON.stringify(customer))
         }
     },
-    components: { EditCustomerModal }
+    components: { CustomerModal }
 })
 </script>

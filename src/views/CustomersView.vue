@@ -5,10 +5,10 @@
                 <h1 clas>Customers</h1>
             </div>
             <div class="col-md-2">
-                <button type="button" class="btn btn-success m-2" data-bs-toggle="modal" data-bs-target="#createCustomerModal">
+                <button @click="openModal" type="button" class="btn btn-success m-2" data-bs-toggle="modal"
+                    data-bs-target="#editCustomerModal">
                     Add customer
                 </button>
-                <CreateCustomerModal />
             </div>
         </div>
         <div class="row">
@@ -19,12 +19,17 @@
 
 <script>
 import { defineComponent } from 'vue';
-import CreateCustomerModal from "../components/customer/CreateCustomerModal.vue";
 import ReadCustomers from '../components/customer/ReadCustomers.vue';
+import { useCompaniesStore } from '../stores/companies';
 
 export default defineComponent({
     components: {
-        CreateCustomerModal, ReadCustomers
+        ReadCustomers
     },
+    methods: {
+        openModal() {
+            useCompaniesStore().clearEditCompany()
+        }
+    }
 })
 </script>

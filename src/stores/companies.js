@@ -133,6 +133,11 @@ export const useCompaniesStore = defineStore({
             this.ownCompany = null
             localStorage.removeItem('companies')
             localStorage.removeItem('ownCompany')
+            this.clearEditCompany()
+        },
+        clearEditCompany() {
+            this.editCompany = {}
+            localStorage.removeItem('editCompany')
         }
     },
 })

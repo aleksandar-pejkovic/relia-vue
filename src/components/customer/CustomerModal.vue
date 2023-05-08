@@ -1,94 +1,110 @@
 <template>
     <!-- Modal -->
-    <div class="modal fade" id="createCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <div class="modal fade" id="editCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Customer</h1>
-                    <button @click="reset()" type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">{{ customer.name }}</h1>
+                    <button @click="cancelEditing" type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                         ref="closeBtn">Close</button>
                 </div>
                 <div class="modal-body">
-                    <form @submit.prevent="createCompany">
+                    <form>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name" v-model="company.name"
-                                        @input="validateName">
+                                    <input type="text" class="form-control" id="name" v-model="customer.name"
+                                        :readonly="readOnly" @input="validateName">
                                     <span v-if="nameError" class="error">{{ nameError }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="city">City</label>
-                                    <input type="text" class="form-control" id="city" v-model="company.city"
-                                        @input="validateCity">
+                                    <input type="text" class="form-control" id="city" v-model="customer.city"
+                                        :readonly="readOnly" @input="validateCity">
                                     <span v-if="cityError" class="error">{{ cityError }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="zip">Zip number</label>
-                                    <input type="text" class="form-control" id="zip" v-model="company.zip"
-                                        @input="validateZip">
+                                    <input type="text" class="form-control" id="zip" v-model="customer.zip"
+                                        :readonly="readOnly" @input="validateZip">
                                     <span v-if="zipError" class="error">{{ zipError }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="address">Address</label>
-                                    <input type="text" class="form-control" id="address" v-model="company.street"
-                                        @input="validateAddress">
+                                    <input type="text" class="form-control" id="address" v-model="customer.street"
+                                        :readonly="readOnly" @input="validateAddress">
                                     <span v-if="addressError" class="error">{{ addressError }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="regNum">Registration number</label>
-                                    <input type="text" class="form-control" id="regNum" v-model="company.registrationNumber"
+                                    <input type="text" class="form-control" id="regNum"
+                                        v-model="customer.registrationNumber" :readonly="readOnly"
                                         @input="validateRegistrationNumber">
                                     <span v-if="regNumError" class="error">{{ regNumError }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="taxNum">Tax number</label>
-                                    <input type="text" class="form-control" id="taxNum" v-model="company.taxNumber"
-                                        @input="validateTaxNumber">
+                                    <input type="text" class="form-control" id="taxNum" v-model="customer.taxNumber"
+                                        :readonly="readOnly" @input="validateTaxNumber">
                                     <span v-if="taxNumError" class="error">{{ taxNumError }}</span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="bankAcc">Bank account</label>
-                                    <input type="text" class="form-control" id="bankAcc" v-model="company.bankAccount"
-                                        @input="validateBankAccount">
+                                    <input type="text" class="form-control" id="bankAcc" v-model="customer.bankAccount"
+                                        :readonly="readOnly" @input="validateBankAccount">
                                     <span v-if="bankAccError" class="error">{{ bankAccError }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="phone">Phone</label>
-                                    <input type="text" class="form-control" id="phone" v-model="company.phone"
-                                        @input="validatePhoneNumber">
+                                    <input type="text" class="form-control" id="phone" v-model="customer.phone"
+                                        :readonly="readOnly" @input="validatePhoneNumber">
                                     <span v-if="phoneError" class="error">{{ phoneError }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" class="form-control" id="email" v-model="company.email"
-                                        @input="validateEmail">
+                                    <input type="email" class="form-control" id="email" v-model="customer.email"
+                                        :readonly="readOnly" @input="validateEmail">
                                     <span v-if="emailError" class="error">{{ emailError }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="website">Website</label>
-                                    <input type="text" class="form-control" id="website" v-model="company.website"
-                                        @input="validateWebsite">
+                                    <input type="text" class="form-control" id="website" v-model="customer.website"
+                                        :readonly="readOnly" @input="validateWebsite">
                                     <span v-if="websiteError" class="error">{{ websiteError }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="director">Director</label>
-                                    <input type="text" class="form-control" id="director" v-model="company.director"
-                                        @input="validateDirector">
+                                    <input type="text" class="form-control" id="director" v-model="customer.director"
+                                        :readonly="readOnly" @input="validateDirector">
                                     <span v-if="directorError" class="error">{{ directorError }}</span>
                                 </div>
                             </div>
                         </div>
-                        <button @click="reset()" type="reset" class="btn btn-secondary m-2">Reset</button>
-                        <div v-if="loading" class="spinner-border text-primary" role="status">
-                            <span class="visually-hidden">Loading...</span>
+                        <!-- conditional buttons -->
+                        <div v-if="!companyExists">
+                            <button @click="resetErrors" type="reset" class="btn btn-secondary m-2">Reset</button>
+                            <div v-if="loading" class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <button @click.prevent="createCustomer" v-else type="submit" class="btn btn-success m-2"
+                                :class="{ 'disabled': !validateInputs }">Create</button>
                         </div>
-                        <button v-else type="submit" class="btn btn-success m-2"
-                            :class="{ 'disabled': !validateInputs }">Create</button>
+                        <div v-else>
+                            <div v-if="!readOnly">
+                                <button @click="cancelEditing" type="button" class="btn btn-secondary m-2">Cancel</button>
+                                <button @click.prevent="updateCustomer" type="submit"
+                                    class="btn btn-success m-2">Update</button>
+                            </div>
+                            <div v-else>
+                                <button @click.prevent="deleteCustomer" type="button"
+                                    class="btn btn-danger m-2">Delete</button>
+                                <button @click="enableEditing" type="button" class="btn btn-primary m-2">Edit</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -97,7 +113,7 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 import { useCompaniesStore } from '@/stores/companies'
 import Swal from 'sweetalert2'
 import {
@@ -107,9 +123,25 @@ import {
 } from '@/components/validation/companyValidation';
 
 export default defineComponent({
+    computed: {
+        customer: {
+            get() {
+                return { ...useCompaniesStore().editCompany };
+            },
+            set(value) {
+                useCompaniesStore().editCompany = { ...value };
+            }
+        },
+        companyExists() {
+            return this.customer.id > 0
+        },
+        readOnly() {
+            return this.companyExists && this.readOnlyCondition
+        }
+    },
     data() {
         return {
-            company: {},
+            readOnlyCondition: true,
             loading: false,
             nameError: '',
             cityError: '',
@@ -125,7 +157,34 @@ export default defineComponent({
         }
     },
     methods: {
-        async createCompany() {
+        cancelEditing() {
+            this.customer = { ...useCompaniesStore().editCompany };
+            this.readOnlyCondition = true;
+            this.resetErrors()
+        },
+        enableEditing() {
+            this.readOnlyCondition = false;
+        },
+        async updateCustomer() {
+            if (!this.validateInputs()) {
+                Swal.fire({
+                    title: 'Validation failed!',
+                    text: 'Please fix the errors in the form.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+            const companiesStore = useCompaniesStore()
+            await companiesStore.updateCompany(this.customer)
+            this.$refs.closeBtn.click()
+        },
+        async deleteCustomer() {
+            const companiesStore = useCompaniesStore()
+            await companiesStore.deleteCompany(this.customer)
+            this.$refs.closeBtn.click()
+        },
+        async createCustomer() {
             if (!this.validateInputs()) {
                 Swal.fire({
                     title: 'Validation failed!',
@@ -137,14 +196,9 @@ export default defineComponent({
             }
             this.loading = true
             const companiesStore = useCompaniesStore()
-            await companiesStore.createCompany(this.company)
+            await companiesStore.createCompany(this.customer)
             this.loading = false
-            this.company = {}
             this.$refs.closeBtn.click()
-        },
-        reset() {
-            this.company = {}
-            this.resetErrors()
         },
         resetErrors() {
             this.nameError = "";
@@ -161,56 +215,56 @@ export default defineComponent({
         },
         // Function to validate company name
         validateName: function () {
-            this.nameError = validateName(this.company.name);
+            this.nameError = validateName(this.customer.name);
         },
 
         // Function to validate city
         validateCity: function () {
-            this.cityError = validateCity(this.company.city);
+            this.cityError = validateCity(this.customer.city);
         },
 
         // Function to validate zip number
         validateZip: function () {
-            this.zipError = validateZip(this.company.zip);
+            this.zipError = validateZip(this.customer.zip);
         },
 
         // Function to validate address
         validateAddress: function () {
-            this.addressError = validateAddress(this.company.street);
+            this.addressError = validateAddress(this.customer.street);
         },
 
         // Function to validate registration number
         validateRegistrationNumber: function () {
-            this.regNumError = validateRegistrationNumber(this.company.registrationNumber);
+            this.regNumError = validateRegistrationNumber(this.customer.registrationNumber);
         },
 
         // Function to validate tax number
         validateTaxNumber: function () {
-            this.taxNumError = validateTaxNumber(this.company.taxNumber);
+            this.taxNumError = validateTaxNumber(this.customer.taxNumber);
         },
 
         // Function to validate bank account
         validateBankAccount: function () {
-            this.bankAccError = validateBankAccount(this.company.bankAccount);
+            this.bankAccError = validateBankAccount(this.customer.bankAccount);
         },
 
         // Function to validate phone number
         validatePhoneNumber: function () {
-            this.phoneError = validatePhoneNumber(this.company.phone);
+            this.phoneError = validatePhoneNumber(this.customer.phone);
         },
 
         // Function to validate email
         validateEmail: function () {
-            this.emailError = validateEmail(this.company.email);
+            this.emailError = validateEmail(this.customer.email);
         },
 
         // Function to validate website
         validateWebsite: function () {
-            this.websiteError = validateWebsite(this.company.website);
+            this.websiteError = validateWebsite(this.customer.website);
         },
 
         validateDirector: function () {
-            this.directorError = validateDirector(this.company.director);
+            this.directorError = validateDirector(this.customer.director);
         },
         // Function to validate all inputs
         validateInputs: function () {

@@ -6,6 +6,7 @@ export const useProductsStore = defineStore({
     id: 'products',
     state: () => ({
         products: JSON.parse(localStorage.getItem('products')) || null,
+        editProduct: JSON.parse(localStorage.getItem('editProduct')) || {},
     }),
     actions: {
         async fetchProducts() {
@@ -70,6 +71,11 @@ export const useProductsStore = defineStore({
         reset() {
             this.products = null
             localStorage.removeItem('products')
+            this.clearEditProduct()
+        },
+        clearEditProduct() {
+            this.editProduct = {}
+            localStorage.removeItem('editProduct')
         }
     }
 })

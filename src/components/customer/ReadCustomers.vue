@@ -14,8 +14,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="customer in customers" :key="customer.id" @click="openEditCustomerModal(customer)"
-                        data-bs-toggle="modal" data-bs-target="#editCustomerModal">
+                    <tr v-for="customer in customers" :key="customer.id" @click="openCustomerModal(customer)"
+                        data-bs-toggle="modal" data-bs-target="#customerModal">
                         <td>
                             {{ customer.name }}
                         </td>
@@ -35,8 +35,8 @@
                             {{ customer.phone }}
                         </td>
                         <td>
-                            <button @click="openEditCustomerModal(customer)" type="button" class="btn btn-primary"
-                                data-bs-toggle="modal" data-bs-target="#editCustomerModal">
+                            <button @click="openCustomerModal(customer)" type="button" class="btn btn-primary"
+                                data-bs-toggle="modal" data-bs-target="#customerModal">
                                 View
                             </button>
                         </td>
@@ -49,7 +49,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 col-md-4 col-lg-3" v-for="customer in customers" :key="customer.id">
-                    <div @click="openEditCustomerModal(customer)" data-bs-toggle="modal" data-bs-target="#editCustomerModal"
+                    <div @click="openCustomerModal(customer)" data-bs-toggle="modal" data-bs-target="#customerModal"
                         class="card mt-2">
                         <div class="card-body p-3">
                             <div class="mb-2">
@@ -98,7 +98,7 @@ export default defineComponent({
         handleResize() {
             this.isSmallScreen = window.innerWidth <= 768;
         },
-        openEditCustomerModal(customer) {
+        openCustomerModal(customer) {
             const companiesStore = useCompaniesStore()
             companiesStore.editCompany = customer
             localStorage.setItem('editCompany', JSON.stringify(customer))

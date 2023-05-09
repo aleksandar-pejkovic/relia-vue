@@ -5,30 +5,30 @@
                 <h1 clas>Products</h1>
             </div>
             <div class="col-md-2">
-                <button type="button" class="btn btn-success m-2" data-bs-toggle="modal" data-bs-target="#createProductModal">
+                <button @click="openProductModal" type="button" class="btn btn-success m-2" data-bs-toggle="modal"
+                    data-bs-target="#productModal">
                     Add Product
                 </button>
-                <CreateProductModal @product-created="reloadProducts" />
             </div>
         </div>
         <div class="row">
-            <ReadProducts ref="products" />
+            <ReadProducts />
         </div>
     </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
-import CreateProductModal from "../components/product/CreateProductModal.vue";
 import ReadProducts from '../components/product/ReadProducts.vue';
+import { useProductsStore } from '../stores/products'; 
 
 export default defineComponent({
     components: {
-        CreateProductModal, ReadProducts
+        ReadProducts
     },
     methods: {
-        reloadProducts() {
-            this.$refs.products.readProducts()
+        openProductModal() {
+            useProductsStore().clearEditProduct()
         },
     }
 })

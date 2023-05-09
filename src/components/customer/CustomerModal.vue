@@ -1,6 +1,6 @@
 <template>
     <!-- Modal -->
-    <div class="modal fade" id="editCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <div class="modal fade" id="customerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -90,8 +90,8 @@
                             <div v-if="loading" class="spinner-border text-primary" role="status">
                                 <span class="visually-hidden">Loading...</span>
                             </div>
-                            <button @click.prevent="createCustomer" v-else type="submit" class="btn btn-success m-2"
-                                :class="{ 'disabled': !validateInputs }">Create</button>
+                            <button @click.prevent="createCustomer" v-else type="submit"
+                                class="btn btn-success m-2">Create</button>
                         </div>
                         <div v-else>
                             <div v-if="!readOnly">
@@ -214,60 +214,60 @@ export default defineComponent({
             this.directorError = "";
         },
         // Function to validate company name
-        validateName: function () {
+        validateName() {
             this.nameError = validateName(this.customer.name);
         },
 
         // Function to validate city
-        validateCity: function () {
+        validateCity() {
             this.cityError = validateCity(this.customer.city);
         },
 
         // Function to validate zip number
-        validateZip: function () {
+        validateZip() {
             this.zipError = validateZip(this.customer.zip);
         },
 
         // Function to validate address
-        validateAddress: function () {
+        validateAddress() {
             this.addressError = validateAddress(this.customer.street);
         },
 
         // Function to validate registration number
-        validateRegistrationNumber: function () {
+        validateRegistrationNumber() {
             this.regNumError = validateRegistrationNumber(this.customer.registrationNumber);
         },
 
         // Function to validate tax number
-        validateTaxNumber: function () {
+        validateTaxNumber() {
             this.taxNumError = validateTaxNumber(this.customer.taxNumber);
         },
 
         // Function to validate bank account
-        validateBankAccount: function () {
+        validateBankAccount() {
             this.bankAccError = validateBankAccount(this.customer.bankAccount);
         },
 
         // Function to validate phone number
-        validatePhoneNumber: function () {
+        validatePhoneNumber() {
             this.phoneError = validatePhoneNumber(this.customer.phone);
         },
 
         // Function to validate email
-        validateEmail: function () {
+        validateEmail() {
             this.emailError = validateEmail(this.customer.email);
         },
 
         // Function to validate website
-        validateWebsite: function () {
+        validateWebsite() {
             this.websiteError = validateWebsite(this.customer.website);
         },
 
-        validateDirector: function () {
+        validateDirector() {
             this.directorError = validateDirector(this.customer.director);
         },
         // Function to validate all inputs
-        validateInputs: function () {
+        validateInputs() {
             this.validateName();
             this.validateCity();
             this.validateZip();

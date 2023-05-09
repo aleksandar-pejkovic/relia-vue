@@ -5,8 +5,8 @@
                 <h1 clas>Customers</h1>
             </div>
             <div class="col-md-2">
-                <button @click="openModal" type="button" class="btn btn-success m-2" data-bs-toggle="modal"
-                    data-bs-target="#editCustomerModal">
+                <button @click="openCustomerModal" type="button" class="btn btn-success m-2" data-bs-toggle="modal"
+                    data-bs-target="#customerModal">
                     Add customer
                 </button>
             </div>
@@ -27,7 +27,7 @@ export default defineComponent({
         ReadCustomers
     },
     methods: {
-        openModal() {
+        openCustomerModal() {
             useCompaniesStore().clearEditCompany()
         }
     }

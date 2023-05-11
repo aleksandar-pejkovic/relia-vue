@@ -51,6 +51,7 @@ import { useCompaniesStore } from '../stores/companies'
 import { useProductsStore } from '../stores/products'
 import { useUserStore } from '../stores/user'
 import Swal from 'sweetalert2'
+import { useInvoiceStore } from '../stores/invoice'
 
 export default {
     setup() {
@@ -72,12 +73,14 @@ export default {
             const userStore = useUserStore()
             const companiesStore = useCompaniesStore()
             const productsStore = useProductsStore()
+            const invoiceStore = useInvoiceStore()
 
             authenticationStore.removeToken()
             authenticationStore.removeUsername()
             userStore.reset()
             companiesStore.reset()
             productsStore.reset()
+            invoiceStore.reset()
 
             localStorage.clear()
             this.$router.push("/")

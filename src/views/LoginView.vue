@@ -28,6 +28,7 @@ import { useCompaniesStore } from '../stores/companies'
 import { useProductsStore } from '../stores/products'
 import { useUserStore } from '../stores/user'
 import Swal from 'sweetalert2'
+import { useInvoiceStore } from '../stores/invoice'
 
 export default defineComponent({
     name: "Login",
@@ -46,12 +47,14 @@ export default defineComponent({
                 const userStore = useUserStore()
                 const companiesStore = useCompaniesStore()
                 const productsStore = useProductsStore()
+                const invoiceStore = useInvoiceStore()
 
                 await authStore.login(this.username, this.password)
                 await userStore.fetchUser()
                 await companiesStore.fetchCompanies()
                 await companiesStore.fetchOwnCompany()
                 await productsStore.fetchProducts()
+                await invoiceStore.fetchInvoices()
 
                 this.loading = false
                 this.$router.push("/dashboard");

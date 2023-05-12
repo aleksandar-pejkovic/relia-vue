@@ -12,10 +12,10 @@
                         <RouterLink class="nav-link" to="/dashboard">Dashboard</RouterLink>
                     </li>
                     <li class="nav-item">
-                        <RouterLink class="nav-link" to="/customers">Customers</RouterLink>
+                        <RouterLink class="nav-link" to="/invoices">Invoices</RouterLink>
                     </li>
                     <li class="nav-item">
-                        <RouterLink class="nav-link" to="/invoices">Invoices</RouterLink>
+                        <RouterLink class="nav-link" to="/customers">Partners</RouterLink>
                     </li>
                     <li class="nav-item">
                         <RouterLink class="nav-link" to="/products">Products</RouterLink>
@@ -47,11 +47,12 @@
 import { RouterLink } from 'vue-router'
 import { computed } from 'vue'
 import { useAuthenticationStore } from '@/stores/authentication'
-import { useCompaniesStore } from '../stores/companies'
-import { useProductsStore } from '../stores/products'
-import { useUserStore } from '../stores/user'
+import { useCompaniesStore } from '@/stores/companies'
+import { useProductsStore } from '@/stores/products'
+import { useUserStore } from '@/stores/user'
 import Swal from 'sweetalert2'
-import { useInvoiceStore } from '../stores/invoice'
+import { useInvoicesStore } from '@/stores/invoices'
+import { useItemsStore } from '@/stores/items'
 
 export default {
     setup() {
@@ -73,14 +74,16 @@ export default {
             const userStore = useUserStore()
             const companiesStore = useCompaniesStore()
             const productsStore = useProductsStore()
-            const invoiceStore = useInvoiceStore()
+            const invoicesStore = useInvoicesStore()
+            const itemsStore = useItemsStore()
 
             authenticationStore.removeToken()
             authenticationStore.removeUsername()
             userStore.reset()
             companiesStore.reset()
             productsStore.reset()
-            invoiceStore.reset()
+            invoicesStore.reset()
+            itemsStore.reset()
 
             localStorage.clear()
             this.$router.push("/")

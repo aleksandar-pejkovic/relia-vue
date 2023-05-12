@@ -20,7 +20,7 @@
 <script>
 import { defineComponent } from 'vue';
 import ReadProducts from '../components/product/ReadProducts.vue';
-import { useProductsStore } from '../stores/products'; 
+import { useProductsStore } from '@/stores/products'; 
 
 export default defineComponent({
     components: {

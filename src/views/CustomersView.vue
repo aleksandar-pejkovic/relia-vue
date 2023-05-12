@@ -2,12 +2,12 @@
     <div class="container mt-2">
         <div class="row">
             <div class="col-md-10">
-                <h1 clas>Customers</h1>
+                <h1 clas>Partners</h1>
             </div>
             <div class="col-md-2">
                 <button @click="openCustomerModal" type="button" class="btn btn-success m-2" data-bs-toggle="modal"
                     data-bs-target="#customerModal">
-                    Add customer
+                    Add partner
                 </button>
             </div>
         </div>

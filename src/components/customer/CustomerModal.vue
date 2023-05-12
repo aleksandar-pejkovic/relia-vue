@@ -5,7 +5,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Customer</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Partner</h1>
                     <button @click="cancelEditing" type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                         ref="closeBtn">Close</button>
                 </div>

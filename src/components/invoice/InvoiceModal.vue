@@ -13,6 +13,19 @@
                     <form>
                         <div class="row">
                             <div class="col-md-6">
+                                <input class="form-control" type="text" v-model="searchQuery" placeholder="Search..."
+                                    @focus="isFocused = true" @blur="isFocused = false">
+                                <ul class="list-group mt-3" v-show="isFocused">
+                                    <li v-for="company in filteredCompanies" :key="company.id" class="list-group-item"
+                                        @click="selectedCompany = company">{{ company.name }}</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <p v-if="selectedCompany">Selected Company: {{ selectedCompany.name }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="documentType">Document type</label>
                                     <select class="form-control" id="documentType" v-model="invoice.documentType"
@@ -68,6 +81,7 @@
 <script>
 import { defineComponent } from 'vue';
 import { useInvoicesStore } from '@/stores/invoices'
+import { useCompaniesStore } from '@/stores/companies';
 import ConditionalButtons from '../conditional/ConditionalButtons.vue';
 import Swal from 'sweetalert2'
 // import {
@@ -89,6 +103,11 @@ export default defineComponent({
                 useInvoicesStore().editInvoice = { ...value };
             }
         },
+        filteredCompanies: {
+            get() {
+                return useCompaniesStore().filterCompanies(this.searchQuery)
+            }
+        },
         invoiceExists() {
             return this.invoice.id > 0
         },
@@ -98,6 +117,9 @@ export default defineComponent({
     },
     data() {
         return {
+            isFocused: false,
+            searchQuery: '',
+            selectedCompany: null,
             readOnlyCondition: true,
             loading: false,
             invoiceNumberError: '',
@@ -157,3 +179,16 @@ export default defineComponent({
     },
 })
 </script>
+
+<style scoped>
+.list-group {
+    position: absolute;
+    z-index: 999;
+    width: 80%;
+    border: solid;
+}
+.list-group-item {
+    background-color: wheat;
+    color: darkslateblue;
+}
+</style>

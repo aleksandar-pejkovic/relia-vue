@@ -11,6 +11,15 @@ export const useCompaniesStore = defineStore({
         editCompany: JSON.parse(localStorage.getItem('editCompany')) || {},
     }),
     actions: {
+        filterCompanies(searchInput) {
+            if (!searchInput) {
+                return this.companies;
+            }
+            const searchQuery = searchInput.toLowerCase();
+            return this.companies.filter((company) =>
+                company.name.toLowerCase().includes(searchQuery)
+            );
+        },
         async fetchCompanies() {
             try {
                 const authStore = useAuthenticationStore()

@@ -1,0 +1,66 @@
+<template>
+    <!-- conditional buttons -->
+    <div v-if="!objectExists">
+        <button @click="resetErrors" type="reset" class="btn btn-secondary m-2">Reset</button>
+        <div v-if="loading" class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <button @click.prevent="create" v-else type="submit" class="btn btn-success m-2">Create</button>
+    </div>
+    <div v-else>
+        <div v-if="!readOnly">
+            <button @click="cancelEditing" type="button" class="btn btn-secondary m-2">Cancel</button>
+            <button @click.prevent="update" type="submit" class="btn btn-success m-2">Update</button>
+        </div>
+        <div v-else>
+            <button @click="deleteObject" type="button" class="btn btn-danger m-2">Delete</button>
+            <button @click="enableEditing" type="button" class="btn btn-primary m-2">Edit</button>
+        </div>
+    </div>
+</template>
+
+<script>
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+    props: {
+        object: {
+            type: Object,
+            required: true
+        },
+        readOnly: {
+            type: Boolean,
+            required: true
+        },
+        objectExists: {
+            type: Boolean,
+            required: true
+        },
+        loading: {
+            type: Boolean,
+            required: true
+        }
+    },
+    methods: {
+        resetErrors() {
+            this.$emit('reset-errors')
+        },
+        cancelEditing() {
+            this.$emit('cancel-editing')
+        },
+        enableEditing() {
+            this.$emit('enable-editing')
+        },
+        create() {
+            this.$emit('create')
+        },
+        update() {
+            this.$emit('update')
+        },
+        deleteObject() {
+            this.$emit('delete')
+        }
+    },
+    emits: ['reset-errors', 'cancel-editing', 'enable-editing', 'create', 'update', 'delete']
+})
+</script>

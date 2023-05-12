@@ -84,27 +84,10 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- conditional buttons -->
-                        <div v-if="!companyExists">
-                            <button @click="resetErrors" type="reset" class="btn btn-secondary m-2">Reset</button>
-                            <div v-if="loading" class="spinner-border text-primary" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                            <button @click.prevent="createCustomer" v-else type="submit"
-                                class="btn btn-success m-2">Create</button>
-                        </div>
-                        <div v-else>
-                            <div v-if="!readOnly">
-                                <button @click="cancelEditing" type="button" class="btn btn-secondary m-2">Cancel</button>
-                                <button @click.prevent="updateCustomer" type="submit"
-                                    class="btn btn-success m-2">Update</button>
-                            </div>
-                            <div v-else>
-                                <button @click.prevent="deleteCustomer" type="button"
-                                    class="btn btn-danger m-2">Delete</button>
-                                <button @click="enableEditing" type="button" class="btn btn-primary m-2">Edit</button>
-                            </div>
-                        </div>
+                        <ConditionalButtons @reset-errors="resetErrors" @cancel-editing="cancelEditing"
+                            @enable-editing="enableEditing" @create="createCustomer"
+                            @update="updateCustomer" @delete="deleteCustomer" :object="customer"
+                            :readOnly="readOnly" :objectExists="companyExists" :loading="loading" />
                     </form>
                 </div>
             </div>
@@ -121,8 +104,12 @@ import {
     validateRegistrationNumber, validateTaxNumber, validateBankAccount,
     validatePhoneNumber, validateEmail, validateWebsite, validateDirector
 } from '@/components/validation/companyValidation';
+import ConditionalButtons from '../conditional/ConditionalButtons.vue';
 
 export default defineComponent({
+    components: {
+        ConditionalButtons
+    },
     computed: {
         customer: {
             get() {

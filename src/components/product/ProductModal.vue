@@ -56,27 +56,10 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- conditional buttons -->
-                        <div v-if="!productExists">
-                            <button @click="resetErrors" type="reset" class="btn btn-secondary m-2">Reset</button>
-                            <div v-if="loading" class="spinner-border text-primary" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                            <button @click.prevent="createProduct" v-else type="submit"
-                                class="btn btn-success m-2">Create</button>
-                        </div>
-                        <div v-else>
-                            <div v-if="!readOnly">
-                                <button @click="cancelEditing" type="button" class="btn btn-secondary m-2">Cancel</button>
-                                <button @click.prevent="updateProduct" type="submit"
-                                    class="btn btn-success m-2">Update</button>
-                            </div>
-                            <div v-else>
-                                <button @click.prevent="deleteProduct" type="button"
-                                    class="btn btn-danger m-2">Delete</button>
-                                <button @click="enableEditing" type="button" class="btn btn-primary m-2">Edit</button>
-                            </div>
-                        </div>
+                        <ConditionalButtons @reset-errors="resetErrors" @cancel-editing="cancelEditing"
+                            @enable-editing="enableEditing" @create="createProduct"
+                            @update="updateProduct" @delete="deleteProduct" :object="product"
+                            :readOnly="readOnly" :objectExists="productExists" :loading="loading" />
                     </form>
                 </div>
             </div>
@@ -88,9 +71,13 @@
 import { defineComponent } from 'vue';
 import { useProductsStore } from '@/stores/products';
 import Swal from 'sweetalert2'
+import ConditionalButtons from '../conditional/ConditionalButtons.vue';
 import { validateName, validateUnit, validatePlu, validateDescription, validatePrice } from '@/components/validation/productValidation';
 
 export default defineComponent({
+    components: {
+        ConditionalButtons
+    },
     computed: {
         product: {
             get() {

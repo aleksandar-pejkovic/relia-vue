@@ -7,7 +7,7 @@
             <div class="col-md-2">
                 <button @click="openCustomerModal" type="button" class="btn btn-success m-2" data-bs-toggle="modal"
                     data-bs-target="#customerModal">
-                    Add partner
+                    Add Partner
                 </button>
             </div>
         </div>

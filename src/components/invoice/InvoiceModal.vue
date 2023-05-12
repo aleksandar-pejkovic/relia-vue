@@ -14,67 +14,50 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="taxRate">Document type</label>
-                                    <select class="form-control" id="taxRate" v-model="invoice.documentType"
+                                    <label for="documentType">Document type</label>
+                                    <select class="form-control" id="documentType" v-model="invoice.documentType"
                                         :readonly="readOnly">
-                                        <option value="INVOICE">Invoice</option>
-                                        <option value="ESTIMATE">Estimate</option>
+                                        <option value="INVOICE">INVOICE</option>
+                                        <option value="ESTIMATE">ESTIMATE</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="zip">Creation date</label>
-                                    <input type="date" class="form-control" id="zip" v-model="invoice.creationDate"
+                                    <label for="creationDate">Creation date</label>
+                                    <input type="date" class="form-control" id="creationDate" v-model="invoice.creationDate"
                                         :readonly="readOnly">
                                 </div>
                                 <div class="form-group">
-                                    <label for="address">Due date</label>
-                                    <input type="date" class="form-control" id="address" v-model="invoice.dueDate"
+                                    <label for="dueDate">Due date</label>
+                                    <input type="date" class="form-control" id="dueDate" v-model="invoice.dueDate"
                                         :readonly="readOnly">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Invoice number</label>
-                                    <input type="text" class="form-control" id="name" v-model="invoice.invoiceNumber"
-                                        :readonly="readOnly">
+                                    <label for="invoiceNumber">Invoice number</label>
+                                    <input type="text" class="form-control" id="invoiceNumber"
+                                        v-model="invoice.invoiceNumber" :readonly="readOnly">
                                     <span v-if="invoiceNumberError" class="error">{{ invoiceNumberError }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="taxRate">Status</label>
-                                    <select class="form-control" id="taxRate" v-model="invoice.documentType"
+                                    <label for="invoiceStatus">Status</label>
+                                    <select class="form-control" id="invoiceStatus" v-model="invoice.invoiceStatus"
                                         :readonly="readOnly">
-                                        <option value="Pending">Pending</option>
+                                        <option value="PENDING">PENDING</option>
                                         <option value="PARTIALLY_PAID">PARTIALLY PAID</option>
                                         <option value="PAID">PAID</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="taxNum">Total</label>
-                                    <input type="text" class="form-control" id="taxNum" v-model="invoice.total" readonly>
+                                    <label for="total">Total</label>
+                                    <input type="text" class="form-control" id="total" v-model="invoice.total" readonly>
                                 </div>
                             </div>
                         </div>
-                        <!-- conditional buttons -->
-                        <div v-if="!invoiceExists">
-                            <button @click="resetErrors" type="reset" class="btn btn-secondary m-2">Reset</button>
-                            <div v-if="loading" class="spinner-border text-primary" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                            <button @click.prevent="createInvoice" v-else type="submit"
-                                class="btn btn-success m-2">Create</button>
-                        </div>
-                        <div v-else>
-                            <div v-if="!readOnly">
-                                <button @click="cancelEditing" type="button" class="btn btn-secondary m-2">Cancel</button>
-                                <button @click.prevent="updateInvoice" type="submit"
-                                    class="btn btn-success m-2">Update</button>
-                            </div>
-                            <div v-else>
-                                <button @click.prevent="deleteInvoice" type="button"
-                                    class="btn btn-danger m-2">Delete</button>
-                                <button @click="enableEditing" type="button" class="btn btn-primary m-2">Edit</button>
-                            </div>
-                        </div>
+                        <ConditionalButtons @reset-errors="resetErrors" @cancel-editing="cancelEditing"
+                            @enable-editing="enableEditing" @create="createInvoice" @update="updateInvoice"
+                            @delete="deleteInvoice" :object="invoice" :readOnly="readOnly" :objectExists="invoiceExists"
+                            :loading="loading" />
                     </form>
                 </div>
             </div>
@@ -85,6 +68,7 @@
 <script>
 import { defineComponent } from 'vue';
 import { useInvoicesStore } from '@/stores/invoices'
+import ConditionalButtons from '../conditional/ConditionalButtons.vue';
 import Swal from 'sweetalert2'
 // import {
 //     validateName, validateCity, validateZip, validateAddress,
@@ -93,6 +77,9 @@ import Swal from 'sweetalert2'
 // } from '@/components/validation/invoiceValidation';
 
 export default defineComponent({
+    components: {
+        ConditionalButtons
+    },
     computed: {
         invoice: {
             get() {

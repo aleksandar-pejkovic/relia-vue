@@ -37,7 +37,7 @@ export const useInvoicesStore = defineStore({
                 this.error = 'Failed to create invoice.';
             }
         },
-        async updateProduct(invoiceData) {
+        async updateInvoice(invoiceData) {
             try {
                 const authStore = useAuthenticationStore()
                 const response = await axios.put(`http://localhost:8080/api/invoices`, invoiceData, {
@@ -48,13 +48,13 @@ export const useInvoicesStore = defineStore({
                 const index = this.invoices.findIndex(invoice => invoice.id === invoiceData.id)
                 if (index >= 0) {
                     this.invoices[index] = response.data
-                    localStorage.setItem('products', JSON.stringify(this.invoices))
+                    localStorage.setItem('invoices', JSON.stringify(this.invoices))
                 }
             } catch (error) {
                 console.error(error)
             }
         },
-        async deleteProduct(invoiceId) {
+        async deleteInvoice(invoiceId) {
             try {
                 const authStore = useAuthenticationStore()
                 await axios.delete(`http://localhost:8080/api/invoices/${invoiceId}`, {

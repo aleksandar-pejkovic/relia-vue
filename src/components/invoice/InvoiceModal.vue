@@ -11,17 +11,19 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="row">
+                        <div v-if="!invoice.id > 0" class="row">
                             <div class="col-md-6">
-                                <input class="form-control" type="text" v-model="searchQuery" placeholder="Search..."
-                                    @focus="isFocused = true" @blur="isFocused = false">
+                                <label for="documentType">Partner</label>
+                                <input class="form-control" type="search" v-model="searchQuery" placeholder="Search..."
+                                    @focus="showSearchList" @blur="hideSearchList" :readonly="selectedCompany">
                                 <ul class="list-group mt-3" v-show="isFocused">
                                     <li v-for="company in filteredCompanies" :key="company.id" class="list-group-item"
-                                        @click="selectedCompany = company">{{ company.name }}</li>
+                                        @click="selectCompany(company)">{{ company.name }} {{ company.city }}
+                                    </li>
+                                    <li v-if="filteredCompanies.length === 0" class="list-group-item">
+                                        No match
+                                    </li>
                                 </ul>
-                            </div>
-                            <div class="col-md-6 mt-3">
-                                <p v-if="selectedCompany">Selected Company: {{ selectedCompany.name }}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -126,13 +128,33 @@ export default defineComponent({
         }
     },
     methods: {
+        showSearchList() {
+            this.isFocused = true
+        },
+        hideSearchList() {
+            setTimeout(() => this.isFocused = false, 100)
+        },
+        selectCompany(company) {
+            this.selectedCompany = company;
+            this.isFocused = false;
+            this.searchQuery = company.name
+            this.invoice.companyId = company.id
+        },
         cancelEditing() {
             this.invoice = { ...useInvoicesStore().editInvoice };
             this.readOnlyCondition = true;
+            this.searchQuery = ''
+            this.selectedCompany = null
             this.resetErrors()
         },
         enableEditing() {
             this.readOnlyCondition = false;
+        },
+        resetErrors() {
+            this.invoiceNumberError = "";
+            this.selectedCompany = null
+            this.searchQuery = ''
+            this.invoice.companyId = undefined
         },
         async updateInvoice() {
             if (!this.validateInputs()) {
@@ -150,7 +172,7 @@ export default defineComponent({
         },
         async deleteInvoice() {
             const invoicesStore = useInvoicesStore()
-            await invoicesStore.deleteInvoice(this.invoice)
+            await invoicesStore.deleteInvoice(this.invoice.id)
             this.$refs.closeBtn.click()
         },
         async createInvoice() {
@@ -169,9 +191,6 @@ export default defineComponent({
             this.loading = false
             this.$refs.closeBtn.click()
         },
-        resetErrors() {
-            this.invoiceNumberError = "";
-        },
         // // Function to validate invoice name
         // validateName() {
         //     this.nameError = validateName(this.invoice.name);
@@ -184,11 +203,14 @@ export default defineComponent({
 .list-group {
     position: absolute;
     z-index: 999;
-    width: 80%;
-    border: solid;
+    width: 50%;
+    overflow-y: scroll;
+    max-height: 50vh;
 }
+
 .list-group-item {
-    background-color: wheat;
-    color: darkslateblue;
+    background-color: slategray;
+    color: white;
+    cursor: pointer;
 }
 </style>

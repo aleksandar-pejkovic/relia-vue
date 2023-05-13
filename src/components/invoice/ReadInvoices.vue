@@ -52,7 +52,7 @@
                                 <div class="fw-bold">{{ invoice.documentType }} - {{ invoice.invoiceNumber }}</div>
                                 <div>Partner: {{ getCompanyName(invoice.companyId) }}</div>
                                 <div>Creation date: {{ invoice.creationDate }}</div>
-                                <div>Total: {{ invoice.total }}</div>
+                                <div>Total: {{ Number(invoice.total).toFixed(2) }}</div>
                             </div>
                         </div>
                     </div>
@@ -67,6 +67,7 @@
 import { defineComponent } from 'vue';
 import { useInvoicesStore } from '@/stores/invoices'
 import { useCompaniesStore } from '@/stores/companies'
+import { useItemsStore } from '@/stores/items';
 import InvoiceModal from './InvoiceModal.vue';
 
 export default defineComponent({
@@ -106,6 +107,8 @@ export default defineComponent({
             const invoicesStore = useInvoicesStore()
             invoicesStore.editInvoice = invoice
             localStorage.setItem('editInvoice', JSON.stringify(invoice))
+            const itemsStore = useItemsStore()
+            itemsStore.filterItemsByInvoiceId(invoice.id)
         }
     },
     components: { InvoiceModal }

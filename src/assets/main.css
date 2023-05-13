@@ -176,3 +176,17 @@ label {
 .btn-secondary:focus {
   background-color: #5A6268;
 }
+
+.list-group {
+  position: absolute;
+  z-index: 999;
+  width: 50%;
+  overflow-y: scroll;
+  max-height: 50vh;
+}
+
+.list-group-item {
+  background-color: slategray;
+  color: white;
+  cursor: pointer;
+}

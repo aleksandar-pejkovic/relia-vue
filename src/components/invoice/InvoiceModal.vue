@@ -18,10 +18,7 @@
                                     @focus="showSearchList" @blur="hideSearchList" :readonly="selectedCompany">
                                 <ul class="list-group mt-3" v-show="isFocused">
                                     <li v-for="company in filteredCompanies" :key="company.id" class="list-group-item"
-                                        @click="selectCompany(company)">{{ company.name }} {{ company.city }}
-                                    </li>
-                                    <li v-if="filteredCompanies.length === 0" class="list-group-item">
-                                        No match
+                                        @click="selectCompany(company)">{{ company.name }}
                                     </li>
                                 </ul>
                             </div>
@@ -74,6 +71,7 @@
                             @delete="deleteInvoice" :object="invoice" :readOnly="readOnly" :objectExists="invoiceExists"
                             :loading="loading" />
                     </form>
+                    <ReadItems />
                 </div>
             </div>
         </div>
@@ -86,6 +84,7 @@ import { useInvoicesStore } from '@/stores/invoices'
 import { useCompaniesStore } from '@/stores/companies';
 import ConditionalButtons from '../conditional/ConditionalButtons.vue';
 import Swal from 'sweetalert2'
+import ReadItems from '../item/ReadItems.vue';
 // import {
 //     validateName, validateCity, validateZip, validateAddress,
 //     validateRegistrationNumber, validateTaxNumber, validateBankAccount,
@@ -94,7 +93,7 @@ import Swal from 'sweetalert2'
 
 export default defineComponent({
     components: {
-        ConditionalButtons
+        ConditionalButtons, ReadItems
     },
     computed: {
         invoice: {
@@ -198,19 +197,3 @@ export default defineComponent({
     },
 })
 </script>
-
-<style scoped>
-.list-group {
-    position: absolute;
-    z-index: 999;
-    width: 50%;
-    overflow-y: scroll;
-    max-height: 50vh;
-}
-
-.list-group-item {
-    background-color: slategray;
-    color: white;
-    cursor: pointer;
-}
-</style>

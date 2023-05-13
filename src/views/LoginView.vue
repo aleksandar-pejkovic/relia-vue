@@ -29,6 +29,7 @@ import { useProductsStore } from '@/stores/products'
 import { useUserStore } from '@/stores/user'
 import Swal from 'sweetalert2'
 import { useInvoicesStore } from '@/stores/invoices'
+import { useItemsStore } from '@/stores/items'
 
 export default defineComponent({
     name: "Login",
@@ -48,6 +49,7 @@ export default defineComponent({
                 const companiesStore = useCompaniesStore()
                 const productsStore = useProductsStore()
                 const invoicesStore = useInvoicesStore()
+                const itemsStore = useItemsStore()
 
                 await authStore.login(this.username, this.password)
                 await userStore.fetchUser()
@@ -55,6 +57,7 @@ export default defineComponent({
                 await companiesStore.fetchOwnCompany()
                 await productsStore.fetchProducts()
                 await invoicesStore.fetchInvoices()
+                await itemsStore.fetchAllItems()
 
                 this.loading = false
                 this.$router.push("/dashboard");

@@ -6,10 +6,30 @@ export const useItemsStore = defineStore({
     id: 'items',
     state: () => ({
         items: JSON.parse(localStorage.getItem('items')) || null,
-        editItem: JSON.parse(localStorage.getItem('editItem')) || {},
+        itemsByInvoice: JSON.parse(localStorage.getItem('itemsByInvoice')) || null,
     }),
     actions: {
-        async fetchItems(invoiceId) {
+        filterItemsByInvoiceId(invoiceId) {
+            this.itemsByInvoice = this.items.filter((item) =>
+                item.invoiceId === invoiceId
+            );
+            localStorage.setItem('itemsByInvoice', JSON.stringify(this.itemsByInvoice));
+        },
+        async fetchAllItems() {
+            try {
+                const authStore = useAuthenticationStore();
+                const response = await axios.get(`http://localhost:8080/api/items`, {
+                    headers: {
+                        'Authorization': `Bearer ${authStore.token}`
+                    }
+                });
+                this.items = response.data;
+                localStorage.setItem('items', JSON.stringify(this.items));
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        async fetchItemsByInvoiceId(invoiceId) {
             try {
                 const authStore = useAuthenticationStore();
                 const response = await axios.get(`http://localhost:8080/api/items/invoice/${invoiceId}`, {
@@ -33,6 +53,7 @@ export const useItemsStore = defineStore({
                 });
                 this.items.push(response.data);
                 localStorage.setItem('items', JSON.stringify(this.items));
+                this.filterItemsByInvoiceId(response.data.invoiceId)
             } catch (error) {
                 console.error(error);
             }
@@ -49,21 +70,23 @@ export const useItemsStore = defineStore({
                 if (index >= 0) {
                     this.items[index] = response.data;
                     localStorage.setItem('items', JSON.stringify(this.items));
+                    this.filterItemsByInvoiceId(response.data.invoiceId)
                 }
             } catch (error) {
                 console.error(error);
             }
         },
-        async deleteItem(itemId) {
+        async deleteItem(item) {
             try {
                 const authStore = useAuthenticationStore();
-                await axios.delete(`http://localhost:8080/api/items/${itemId}`, {
+                await axios.delete(`http://localhost:8080/api/items/${item.id}`, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
                 });
-                this.items = this.items.filter(item => item.id !== itemId);
+                this.items = this.items.filter(i => i.id !== item.id);
                 localStorage.setItem('items', JSON.stringify(this.items));
+                this.filterItemsByInvoiceId(item.invoiceId)
             } catch (error) {
                 console.error(error);
             }
@@ -71,11 +94,11 @@ export const useItemsStore = defineStore({
         reset() {
             this.items = null;
             localStorage.removeItem('items');
-            this.clearEditItem();
+            this.clearItemsByInvoice()
         },
-        clearEditItem() {
-            this.editItem = {};
-            localStorage.removeItem('editItem');
+        clearItemsByInvoice() {
+            this.itemsByInvoice = null;
+            localStorage.removeItem('itemsByInvoice');
         }
     }
 });

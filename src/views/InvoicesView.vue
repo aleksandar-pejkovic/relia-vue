@@ -20,7 +20,8 @@
 <script>
 import { defineComponent } from 'vue';
 import ReadInvoices from '../components/invoice/ReadInvoices.vue';
-import { useInvoicesStore } from '@/stores/invoices'; 
+import { useInvoicesStore } from '@/stores/invoices';
+import { useItemsStore } from '@/stores/items';
 
 export default defineComponent({
     components: {
@@ -29,6 +30,7 @@ export default defineComponent({
     methods: {
         openInvoiceModal() {
             useInvoicesStore().clearEditInvoice()
+            useItemsStore().clearItemsByInvoice()
         },
     }
 })

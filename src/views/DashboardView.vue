@@ -81,10 +81,10 @@ import { useCompaniesStore } from '@/stores/companies';
 export default defineComponent({
   computed: {
     totalInvoices() {
-      return useInvoicesStore().invoices.length
+      return useInvoicesStore().invoices?.length || 0
     },
     totalRevenue() {
-      return useInvoicesStore().invoices.reduce((sum, invoice) => sum + invoice.total, 0);
+      return useInvoicesStore().invoices?.reduce((sum, invoice) => sum + invoice.total, 0) || 0;
     },
     topCustomers() {
       return useCompaniesStore().top3Companies;

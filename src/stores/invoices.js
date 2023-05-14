@@ -9,6 +9,16 @@ export const useInvoicesStore = defineStore({
         editInvoice: JSON.parse(localStorage.getItem('editInvoice')) || {},
     }),
     actions: {
+        reduceTotal(item) {
+            this.editInvoice.total -= item.total
+            this.invoices.map(invoice => invoice.id === item.invoiceId ? this.editInvoice : invoice);
+            localStorage.setItem('invoices', JSON.stringify(this.invoices))
+        },
+        increaseTotal(item) {
+            this.editInvoice.total += item.total
+            this.invoices.map(invoice => invoice.id === item.invoiceId ? this.editInvoice : invoice);
+            localStorage.setItem('invoices', JSON.stringify(this.invoices))
+        },
         async fetchInvoices() {
             try {
                 const authStore = useAuthenticationStore()

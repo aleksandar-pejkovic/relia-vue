@@ -2,10 +2,11 @@
     <!-- Modal -->
     <div class="modal fade" id="invoiceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Invoice</h1>
+                    <h1 v-if="!invoice.id > 0" class="modal-title fs-5" id="staticBackdropLabel">Invoice</h1>
+                    <h1 v-else class="modal-title fs-5" id="staticBackdropLabel">{{ invoice.documentType }} {{ invoice.invoiceNumber }}</h1>
                     <button @click="cancelEditing" type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                         ref="closeBtn">Close</button>
                 </div>
@@ -25,7 +26,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group">
+                                <div v-if="!invoice.id > 0" class="form-group">
                                     <label for="documentType">Document type</label>
                                     <select class="form-control" id="documentType" v-model="invoice.documentType"
                                         :readonly="readOnly">
@@ -45,7 +46,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
+                                <div v-if="!invoice.id > 0" class="form-group">
                                     <label for="invoiceNumber">Invoice number</label>
                                     <input type="text" class="form-control" id="invoiceNumber"
                                         v-model="invoice.invoiceNumber" :readonly="readOnly">
@@ -71,7 +72,10 @@
                             @delete="deleteInvoice" :object="invoice" :readOnly="readOnly" :objectExists="invoiceExists"
                             :loading="loading" />
                     </form>
-                    <ReadItems />
+                    <div v-if="invoice.id > 0">
+                        <CreateItemForm :invoiceId="invoice.id" />
+                        <ReadItems />
+                    </div>
                 </div>
             </div>
         </div>
@@ -84,6 +88,7 @@ import { useInvoicesStore } from '@/stores/invoices'
 import { useCompaniesStore } from '@/stores/companies';
 import ConditionalButtons from '../conditional/ConditionalButtons.vue';
 import Swal from 'sweetalert2'
+import CreateItemForm from '../item/CreateItemForm.vue';
 import ReadItems from '../item/ReadItems.vue';
 // import {
 //     validateName, validateCity, validateZip, validateAddress,
@@ -93,7 +98,7 @@ import ReadItems from '../item/ReadItems.vue';
 
 export default defineComponent({
     components: {
-        ConditionalButtons, ReadItems
+        ConditionalButtons, CreateItemForm, ReadItems
     },
     computed: {
         invoice: {

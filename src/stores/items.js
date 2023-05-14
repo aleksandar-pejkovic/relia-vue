@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { useAuthenticationStore } from '@/stores/authentication';
 import axios from 'axios';
+import { useInvoicesStore } from './invoices';
 
 export const useItemsStore = defineStore({
     id: 'items',
@@ -54,6 +55,7 @@ export const useItemsStore = defineStore({
                 this.items.push(response.data);
                 localStorage.setItem('items', JSON.stringify(this.items));
                 this.filterItemsByInvoiceId(response.data.invoiceId)
+                useInvoicesStore().increaseTotal(response.data)
             } catch (error) {
                 console.error(error);
             }

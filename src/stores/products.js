@@ -9,6 +9,15 @@ export const useProductsStore = defineStore({
         editProduct: JSON.parse(localStorage.getItem('editProduct')) || {},
     }),
     actions: {
+        filterProducts(searchInput) {
+            if (!searchInput) {
+                return this.products;
+            }
+            const searchQuery = searchInput.toLowerCase();
+            return this.products.filter((product) =>
+                product.name.toLowerCase().includes(searchQuery)
+            );
+        },
         async fetchProducts() {
             try {
                 const authStore = useAuthenticationStore()

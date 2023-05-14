@@ -4,7 +4,7 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th class="col-2">Product name</th>
+                        <th class="col-2">Product</th>
                         <th class="col-2">Quantity</th>
                         <th class="col-2">Pre Tax</th>
                         <th class="col-2">Tax Rate</th>
@@ -95,7 +95,7 @@ export default defineComponent({
         },
         deleteItem(item) {
             useItemsStore().deleteItem(item);
-            useInvoicesStore().editInvoice.total -= item.total
+            useInvoicesStore().reduceTotal(item)
         }
     },
 })

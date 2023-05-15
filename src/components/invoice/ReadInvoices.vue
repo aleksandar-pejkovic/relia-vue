@@ -31,10 +31,7 @@
                             {{ Number(invoice.total).toFixed(2) }}
                         </td>
                         <td>
-                            <button @click="openInvoiceModal(invoice)" type="button" class="btn btn-primary"
-                                data-bs-toggle="modal" data-bs-target="#invoiceModal">
-                                View
-                            </button>
+                            <InvoicePdfButton :id="invoice.id" :invoiceNumber="invoice.invoiceNumber" />
                         </td>
                     </tr>
                 </tbody>
@@ -69,6 +66,7 @@ import { useInvoicesStore } from '@/stores/invoices'
 import { useCompaniesStore } from '@/stores/companies'
 import { useItemsStore } from '@/stores/items';
 import InvoiceModal from './InvoiceModal.vue';
+import InvoicePdfButton from '@/components/InvoicePdfButton.vue'
 
 export default defineComponent({
     computed: {
@@ -111,6 +109,6 @@ export default defineComponent({
             itemsStore.filterItemsByInvoiceId(invoice.id)
         }
     },
-    components: { InvoiceModal }
+    components: { InvoiceModal, InvoicePdfButton }
 })
 </script>

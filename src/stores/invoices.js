@@ -41,7 +41,9 @@ export const useInvoicesStore = defineStore({
                         Authorization: `Bearer ${authStore.token}`,
                     },
                 });
-                this.invoices.push(response.data);
+                this.editInvoice = response.data
+                localStorage.setItem('editInvoice', JSON.stringify(this.editInvoice))
+                this.invoices.push(this.editInvoice);
                 localStorage.setItem('invoices', JSON.stringify(this.invoices))
             } catch (error) {
                 this.error = 'Failed to create invoice.';

@@ -105,6 +105,7 @@ import {
     validatePhoneNumber, validateEmail, validateWebsite, validateDirector
 } from '@/components/validation/companyValidation';
 import ConditionalButtons from '../conditional/ConditionalButtons.vue';
+import { useInvoicesStore } from '@/stores/invoices'
 
 export default defineComponent({
     components: {
@@ -169,6 +170,7 @@ export default defineComponent({
         async deleteCustomer() {
             const companiesStore = useCompaniesStore()
             await companiesStore.deleteCompany(this.customer)
+            await useInvoicesStore().fetchInvoices()
             this.$refs.closeBtn.click()
         },
         async createCustomer() {

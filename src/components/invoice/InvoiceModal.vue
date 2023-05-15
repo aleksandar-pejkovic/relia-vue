@@ -6,33 +6,24 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 v-if="!invoice.id > 0" class="modal-title fs-5" id="staticBackdropLabel">Invoice</h1>
-                    <h1 v-else class="modal-title fs-5" id="staticBackdropLabel">{{ invoice.documentType }} {{ invoice.invoiceNumber }}</h1>
+                    <h1 v-else class="modal-title fs-5" id="staticBackdropLabel">{{ invoice.documentType }} {{
+                        invoice.invoiceNumber }}</h1>
                     <button @click="cancelEditing" type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                         ref="closeBtn">Close</button>
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div v-if="!invoice.id > 0" class="row">
-                            <div class="col-md-6">
-                                <label for="documentType">Partner</label>
-                                <input class="form-control" type="search" v-model="searchQuery" placeholder="Search..."
-                                    @focus="showSearchList" @blur="hideSearchList" :readonly="selectedCompany">
-                                <ul class="list-group mt-3" v-show="isFocused">
-                                    <li v-for="company in filteredCompanies" :key="company.id" class="list-group-item"
-                                        @click="selectCompany(company)">{{ company.name }}
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div v-if="!invoice.id > 0" class="form-group">
-                                    <label for="documentType">Document type</label>
-                                    <select class="form-control" id="documentType" v-model="invoice.documentType"
-                                        :readonly="readOnly">
-                                        <option value="INVOICE">INVOICE</option>
-                                        <option value="ESTIMATE">ESTIMATE</option>
-                                    </select>
+                                    <label for="documentType">Partner</label>
+                                    <input class="form-control" type="search" v-model="searchQuery" placeholder="Search..."
+                                        @focus="showSearchList" @blur="hideSearchList" :readonly="selectedCompany">
+                                    <ul class="list-group mt-3" v-show="isFocused">
+                                        <li v-for="company in filteredCompanies" :key="company.id" class="list-group-item"
+                                            @click="selectCompany(company)">{{ company.name }}
+                                        </li>
+                                    </ul>
                                 </div>
                                 <div class="form-group">
                                     <label for="creationDate">Creation date</label>
@@ -52,6 +43,14 @@
                                         v-model="invoice.invoiceNumber" :readonly="readOnly">
                                     <span v-if="invoiceNumberError" class="error">{{ invoiceNumberError }}</span>
                                 </div>
+                                <div v-if="!invoice.id > 0" class="form-group">
+                                    <label for="documentType">Document type</label>
+                                    <select class="form-control" id="documentType" v-model="invoice.documentType"
+                                        :readonly="readOnly">
+                                        <option value="INVOICE">INVOICE</option>
+                                        <option value="ESTIMATE">ESTIMATE</option>
+                                    </select>
+                                </div>
                                 <div class="form-group">
                                     <label for="invoiceStatus">Status</label>
                                     <select class="form-control" id="invoiceStatus" v-model="invoice.invoiceStatus"
@@ -61,7 +60,7 @@
                                         <option value="PAID">PAID</option>
                                     </select>
                                 </div>
-                                <div class="form-group">
+                                <div v-if="invoice.id > 0" class="form-group">
                                     <label for="total">Total</label>
                                     <input type="text" class="form-control" id="total" v-model="invoice.total" readonly>
                                 </div>
@@ -193,7 +192,6 @@ export default defineComponent({
             const invoicesStore = useInvoicesStore()
             await invoicesStore.createInvoice(this.invoice)
             this.loading = false
-            this.$refs.closeBtn.click()
         },
         // // Function to validate invoice name
         // validateName() {

@@ -181,9 +181,16 @@ label {
 .list-group {
   position: absolute;
   z-index: 999;
-  width: 50%;
+  min-width: 400px;
+  width: 40%;
   overflow-y: scroll;
   max-height: 50vh;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .list-group-item {

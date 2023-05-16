@@ -1,5 +1,5 @@
 <template>
-    <button type="button" class="btn btn-primary" @click="downloadInvoicePdf">PDF</button>
+    <button type="button" class="btn btn-primary mb-2" @click="downloadInvoicePdf">PDF</button>
 </template>
   
 <script>
@@ -34,12 +34,10 @@ export default defineComponent({
 
             const url = window.URL.createObjectURL(blob);
 
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', `${this.invoiceNumber}.pdf`);
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
+            // Open the PDF in a new browser tab
+            window.open(url, '_blank');
+
+            // Clean up
             window.URL.revokeObjectURL(url);
         },
     },

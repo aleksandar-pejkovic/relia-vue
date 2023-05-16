@@ -70,10 +70,10 @@
                             @enable-editing="enableEditing" @create="createInvoice" @update="updateInvoice"
                             @delete="deleteInvoice" :object="invoice" :readOnly="readOnly" :objectExists="invoiceExists"
                             :loading="loading" />
-                        <InvoicePdfButton v-if="hasItems" :id="invoice.id" :invoiceNumber="invoice.invoiceNumber" />
                     </form>
                     <div v-if="invoice.id > 0">
                         <CreateItemForm :invoiceId="invoice.id" />
+                        <InvoicePdfButton v-if="hasItems" :id="invoice.id" :invoiceNumber="invoice.invoiceNumber" />
                         <ReadItems />
                     </div>
                 </div>

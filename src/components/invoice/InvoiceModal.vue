@@ -70,6 +70,7 @@
                             @enable-editing="enableEditing" @create="createInvoice" @update="updateInvoice"
                             @delete="deleteInvoice" :object="invoice" :readOnly="readOnly" :objectExists="invoiceExists"
                             :loading="loading" />
+                        <InvoicePdfButton v-if="hasItems" :id="invoice.id" :invoiceNumber="invoice.invoiceNumber" />
                     </form>
                     <div v-if="invoice.id > 0">
                         <CreateItemForm :invoiceId="invoice.id" />
@@ -85,10 +86,12 @@
 import { defineComponent } from 'vue';
 import { useInvoicesStore } from '@/stores/invoices'
 import { useCompaniesStore } from '@/stores/companies';
+import { useItemsStore } from '@/stores/items';
 import ConditionalButtons from '../conditional/ConditionalButtons.vue';
 import Swal from 'sweetalert2'
 import CreateItemForm from '../item/CreateItemForm.vue';
 import ReadItems from '../item/ReadItems.vue';
+import InvoicePdfButton from '@/components/InvoicePdfButton.vue'
 // import {
 //     validateName, validateCity, validateZip, validateAddress,
 //     validateRegistrationNumber, validateTaxNumber, validateBankAccount,
@@ -97,7 +100,7 @@ import ReadItems from '../item/ReadItems.vue';
 
 export default defineComponent({
     components: {
-        ConditionalButtons, CreateItemForm, ReadItems
+        ConditionalButtons, CreateItemForm, ReadItems, InvoicePdfButton
     },
     computed: {
         invoice: {
@@ -118,6 +121,9 @@ export default defineComponent({
         },
         readOnly() {
             return this.invoiceExists && this.readOnlyCondition
+        },
+        hasItems() {
+            return useItemsStore().itemsByInvoice?.length > 0
         }
     },
     data() {

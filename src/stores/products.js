@@ -7,6 +7,7 @@ export const useProductsStore = defineStore({
     state: () => ({
         products: JSON.parse(localStorage.getItem('products')) || null,
         editProduct: JSON.parse(localStorage.getItem('editProduct')) || {},
+        paginatedProducts: JSON.parse(localStorage.getItem('paginatedProducts')) || [],
     }),
     actions: {
         filterProducts(searchInput) {
@@ -17,6 +18,12 @@ export const useProductsStore = defineStore({
             return this.products.filter((product) =>
                 product.name.toLowerCase().includes(searchQuery)
             );
+        },
+        updatePaginatedProducts(page, pageSize) {
+            const start = (page - 1) * pageSize
+            const end = start + pageSize
+            this.paginatedProducts = this.products.slice(start, end)
+            localStorage.setItem('paginatedProducts', JSON.stringify(this.paginatedProducts))
         },
         async fetchProducts() {
             try {
@@ -80,6 +87,8 @@ export const useProductsStore = defineStore({
         reset() {
             this.products = null
             localStorage.removeItem('products')
+            this.paginatedProducts = null
+            localStorage.removeItem('paginatedProducts')
             this.clearEditProduct()
         },
         clearEditProduct() {

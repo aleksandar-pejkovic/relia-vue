@@ -51,6 +51,7 @@
             </div>
         </div>
     </div>
+    <Pagination />
     <ProductModal />
 </template>
 
@@ -58,6 +59,7 @@
 import { defineComponent } from 'vue';
 import { useProductsStore } from '@/stores/products'; 
 import ProductModal from './ProductModal.vue';
+import Pagination from '../Pagination.vue';
 
 export default defineComponent({
     computed: {
@@ -91,6 +93,6 @@ export default defineComponent({
             localStorage.setItem('editProduct', JSON.stringify(product))
         }
     },
-    components: { ProductModal }
+    components: { ProductModal, Pagination }
 })
 </script>

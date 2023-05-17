@@ -32,7 +32,7 @@
                         </td>
                         <td>
                             <button @click="openInvoiceModal(invoice)" data-bs-toggle="modal" data-bs-target="#invoiceModal"
-                                class="btn btn-primary m-2">View</button>
+                                class="btn btn-primary">View</button>
                         </td>
                     </tr>
                 </tbody>

@@ -11,6 +11,7 @@
                 </button>
             </div>
         </div>
+        <UploadProductsFromAFile class="m-2" />
         <div class="row">
             <ReadProducts />
         </div>
@@ -21,11 +22,13 @@
 import { defineComponent } from 'vue';
 import ReadProducts from '../components/product/ReadProducts.vue';
 import { useProductsStore } from '@/stores/products'; 
+import UploadProductsFromAFile from '../components/product/UploadProductsFromAFile.vue';
 
 export default defineComponent({
     components: {
-        ReadProducts
-    },
+    ReadProducts,
+    UploadProductsFromAFile
+},
     methods: {
         openProductModal() {
             useProductsStore().clearEditProduct()

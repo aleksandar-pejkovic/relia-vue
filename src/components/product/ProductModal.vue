@@ -138,6 +138,7 @@ export default defineComponent({
             const productStore = useProductsStore()
             await productStore.deleteProduct(this.product.id)
             this.$refs.closeBtn.click()
+            alert(`Product ${this.product.name} deleted`)
         },
         async createProduct() {
             if (!this.validateInputs()) {

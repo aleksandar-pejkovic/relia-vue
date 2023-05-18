@@ -70,7 +70,9 @@ export default defineComponent({
             this.$emit('update')
         },
         deleteObject() {
-            this.$emit('delete')
+            if (window.confirm("Are you sure?")) {
+                this.$emit('delete')
+            }
         }
     },
     emits: ['reset-errors', 'cancel-editing', 'enable-editing', 'create', 'update', 'delete']

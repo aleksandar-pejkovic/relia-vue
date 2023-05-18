@@ -85,9 +85,9 @@
                             </div>
                         </div>
                         <ConditionalButtons @reset-errors="resetErrors" @cancel-editing="cancelEditing"
-                            @enable-editing="enableEditing" @create="createCustomer"
-                            @update="updateCustomer" @delete="deleteCustomer" :object="customer"
-                            :readOnly="readOnly" :objectExists="companyExists" :loading="loading" />
+                            @enable-editing="enableEditing" @create="createCustomer" @update="updateCustomer"
+                            @delete="deleteCustomer" :object="customer" :readOnly="readOnly" :objectExists="companyExists"
+                            :loading="loading" />
                     </form>
                 </div>
             </div>
@@ -172,6 +172,7 @@ export default defineComponent({
             await companiesStore.deleteCompany(this.customer)
             await useInvoicesStore().fetchInvoices()
             this.$refs.closeBtn.click()
+            alert(`Invoice ${this.customer.name} deleted`)
         },
         async createCustomer() {
             if (!this.validateInputs()) {

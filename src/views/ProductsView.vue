@@ -11,9 +11,12 @@
                 </button>
             </div>
         </div>
-        <UploadProductsFromAFile class="m-2" />
+        <div class="row m-2">
+            <SearchProducts class="col-md-7" @product-selected="viewProduct" ref="searchProducts" />
+            <UploadProductsFromAFile class="col-md-5" />
+        </div>
         <div class="row">
-            <ReadProducts />
+            <ReadProducts ref="readProducts" />
         </div>
     </div>
 </template>
@@ -21,18 +24,24 @@
 <script>
 import { defineComponent } from 'vue';
 import ReadProducts from '../components/product/ReadProducts.vue';
-import { useProductsStore } from '@/stores/products'; 
+import { useProductsStore } from '@/stores/products';
 import UploadProductsFromAFile from '../components/product/UploadProductsFromAFile.vue';
+import SearchProducts from '../components/product/SearchProducts.vue';
 
 export default defineComponent({
     components: {
-    ReadProducts,
-    UploadProductsFromAFile
-},
+        ReadProducts,
+        UploadProductsFromAFile,
+        SearchProducts
+    },
     methods: {
         openProductModal() {
             useProductsStore().clearEditProduct()
         },
+        viewProduct(product) {
+            this.$refs.searchProducts.searchQuery = ''
+            this.$refs.readProducts.viewProduct(product)
+        }
     }
 })
 </script>

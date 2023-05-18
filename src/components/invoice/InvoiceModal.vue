@@ -183,6 +183,7 @@ export default defineComponent({
             const invoicesStore = useInvoicesStore()
             await invoicesStore.deleteInvoice(this.invoice.id)
             this.$refs.closeBtn.click()
+            alert(`Invoice ${this.invoice.invoiceNumber} deleted`)
         },
         async createInvoice() {
             if (this.invoiceNumberError) {

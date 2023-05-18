@@ -1,5 +1,5 @@
 <template>
-    <nav aria-label="Page navigation example">
+    <nav v-if="totalPages > 1" aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item">
                 <a class="page-link" @click="goToPage(1)" :disabled="currentPage === 1" aria-label="First">

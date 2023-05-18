@@ -54,6 +54,7 @@
     <Pagination :currentPage="currentPage" :totalPages="totalPages" @previous-page="previousPage" @next-page="nextPage"
         @go-to-page="goToPage" />
     <ProductModal />
+    <button hidden ref="openModalBtn" type="button" data-bs-toggle="modal" data-bs-target="#productModal"></button>
 </template>
 
 <script>
@@ -94,6 +95,10 @@ export default defineComponent({
             const productStore = useProductsStore()
             productStore.editProduct = product
             localStorage.setItem('editProduct', JSON.stringify(product))
+        },
+        viewProduct(product) {
+            this.openProductModal(product)
+            this.$refs.openModalBtn.click()
         },
         previousPage() {
             if (this.currentPage > 1) {

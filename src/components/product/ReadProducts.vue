@@ -51,7 +51,8 @@
             </div>
         </div>
     </div>
-    <Pagination :currentPage="currentPage" :totalPages="totalPages" @previous-page="previousPage" @next-page="nextPage" @go-to-page="goToPage" />
+    <Pagination :currentPage="currentPage" :totalPages="totalPages" @previous-page="previousPage" @next-page="nextPage"
+        @go-to-page="goToPage" />
     <ProductModal />
 </template>
 
@@ -66,10 +67,10 @@ export default defineComponent({
         products() {
             const start = (this.currentPage - 1) * this.pageSize;
             const end = start + this.pageSize;
-            return useProductsStore().products.slice(start, end);
+            return useProductsStore().products?.slice(start, end)
         },
         totalPages() {
-            return Math.ceil(useProductsStore().products.length / this.pageSize)
+            return Math.ceil(useProductsStore().products?.length / this.pageSize)
         }
     },
     data() {
@@ -97,25 +98,17 @@ export default defineComponent({
         previousPage() {
             if (this.currentPage > 1) {
                 this.currentPage--;
-                this.updatePaginatedProducts(this.currentPage);
             }
         },
         nextPage() {
             if (this.currentPage < this.totalPages) {
                 this.currentPage++;
-                this.updatePaginatedProducts(this.currentPage);
             }
         },
         goToPage(page) {
             if (page >= 1 && page <= this.totalPages && page !== this.currentPage) {
                 this.currentPage = page;
-                this.updatePaginatedProducts(this.currentPage);
             }
-        },
-        updatePaginatedProducts(page) {
-            const start = (page - 1) * this.pageSize;
-            const end = start + this.pageSize;
-            this.paginatedProducts = this.products.slice(start, end);
         },
     },
     components: { ProductModal, Pagination }

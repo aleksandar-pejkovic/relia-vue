@@ -59,6 +59,8 @@
         </div>
     </div>
     <InvoiceModal />
+    <Pagination :currentPage="currentPage" :totalPages="totalPages" @previous-page="previousPage" @next-page="nextPage"
+        @go-to-page="goToPage" />
 </template>
 
 <script>
@@ -67,21 +69,30 @@ import { useInvoicesStore } from '@/stores/invoices'
 import { useCompaniesStore } from '@/stores/companies'
 import { useItemsStore } from '@/stores/items';
 import InvoiceModal from './InvoiceModal.vue';
+import Pagination from '../Pagination.vue';
 
 export default defineComponent({
+    components: { InvoiceModal, Pagination },
     computed: {
         invoices: {
             get() {
-                return { ...useInvoicesStore().invoices };
+                const start = (this.currentPage - 1) * this.pageSize;
+                const end = start + this.pageSize;
+                return useInvoicesStore().invoices?.slice(start, end)
             },
             set(value) {
                 useInvoicesStore().invoices = { ...value };
             }
         },
+        totalPages() {
+            return Math.ceil(useInvoicesStore().invoices?.length / this.pageSize)
+        }
     },
     data() {
         return {
             isSmallScreen: window.innerWidth <= 768,
+            currentPage: 1,
+            pageSize: 10,
         };
     },
     created() {
@@ -107,8 +118,22 @@ export default defineComponent({
             localStorage.setItem('editInvoice', JSON.stringify(invoice))
             const itemsStore = useItemsStore()
             itemsStore.filterItemsByInvoiceId(invoice.id)
-        }
+        },
+        previousPage() {
+            if (this.currentPage > 1) {
+                this.currentPage--;
+            }
+        },
+        nextPage() {
+            if (this.currentPage < this.totalPages) {
+                this.currentPage++;
+            }
+        },
+        goToPage(page) {
+            if (page >= 1 && page <= this.totalPages && page !== this.currentPage) {
+                this.currentPage = page;
+            }
+        },
     },
-    components: { InvoiceModal }
 })
 </script>

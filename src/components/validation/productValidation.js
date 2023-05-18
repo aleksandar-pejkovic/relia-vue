@@ -9,8 +9,9 @@ export function validateName(name) {
 }
 
 export function validateUnit(unit) {
-    if (unit.length > 5) {
-        return "Unit can be up to 5 characters long";
+    const regex = /^[A-Za-z0-9]{0,5}$/;
+    if (!regex.test(unit)) {
+        return "Unit can contain up to 5 alphanumeric characters";
     } else {
         return "";
     }
@@ -25,7 +26,7 @@ export function validatePlu(plu) {
 }
 
 export function validateDescription(description) {
-    const regex = /^[a-zA-Z0-9ČĆŠĐŽčćšđž,.!? \u0027-]{1,300}/;
+    const regex = /^[a-zA-Z0-9ČĆŠĐŽčćšđž,.!? \u0027-]{0,300}/;
     if (!regex.test(description)) {
         return "Please enter a valid description";
     } else {
@@ -34,17 +35,12 @@ export function validateDescription(description) {
 }
 
 export function validatePrice(price) {
-    const parsedPrice = parseFloat(price);
-    if (isNaN(parsedPrice)) {
-        return "Please enter a valid price";
+    const minPrice = 0;
+    const maxPrice = 100000000.00;
+    if (price < minPrice || price > maxPrice) {
+        return `Please enter a price between ${minPrice.toFixed(2)} and ${maxPrice.toFixed(2)}`;
     } else {
-        const minPrice = 0;
-        const maxPrice = 100000000.00;
-        if (parsedPrice < minPrice || parsedPrice > maxPrice) {
-            return `Please enter a price between ${minPrice.toFixed(2)} and ${maxPrice.toFixed(2)}`;
-        } else {
-            return "";
-        }
+        return "";
     }
 }
 

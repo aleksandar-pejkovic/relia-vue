@@ -50,16 +50,15 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="price">Price</label>
-                                    <input type="text" class="form-control" id="price" v-model="product.price"
-                                        :readonly="readOnly" @input="validatePrice">
-                                    <span v-if="priceError" class="error">{{ priceError }}</span>
+                                    <input type="number" step="any" min="0" max="100000000" class="form-control" id="price"
+                                        v-model="product.price" :readonly="readOnly" @input="formatPrice">
                                 </div>
                             </div>
                         </div>
                         <ConditionalButtons @reset-errors="resetErrors" @cancel-editing="cancelEditing"
-                            @enable-editing="enableEditing" @create="createProduct"
-                            @update="updateProduct" @delete="deleteProduct" :object="product"
-                            :readOnly="readOnly" :objectExists="productExists" :loading="loading" />
+                            @enable-editing="enableEditing" @create="createProduct" @update="updateProduct"
+                            @delete="deleteProduct" :object="product" :readOnly="readOnly" :objectExists="productExists"
+                            :loading="loading" />
                     </form>
                 </div>
             </div>
@@ -106,6 +105,13 @@ export default defineComponent({
         }
     },
     methods: {
+        formatPrice() {
+            const priceString = this.product.price.toString();
+            const decimalIndex = priceString.indexOf('.');
+            if (decimalIndex !== -1 && priceString.substring(decimalIndex + 1).length > 2) {
+                this.product.price = Number(this.product.price).toFixed(2);
+            }
+        },
         cancelEditing() {
             this.product = { ...useProductsStore().editProduct };
             this.readOnlyCondition = true;

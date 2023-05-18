@@ -46,7 +46,7 @@
                                 <div v-if="!invoice.id > 0" class="form-group">
                                     <label for="documentType">Document type</label>
                                     <select class="form-control" id="documentType" v-model="invoice.documentType"
-                                        :readonly="readOnly">
+                                        :disabled="readOnly">
                                         <option value="INVOICE">INVOICE</option>
                                         <option value="ESTIMATE">ESTIMATE</option>
                                     </select>

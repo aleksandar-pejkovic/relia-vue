@@ -96,7 +96,7 @@ export const useCompaniesStore = defineStore({
                     confirmButtonText: 'OK'
                 })
             } catch (error) {
-                console.error(error)
+                console.error(error.message)
                 let errorMessages = error.message;
                 if (error.response && error.response.data) {
                     errorMessages = error.response.data.error || error.response.data.message || errorMessages;

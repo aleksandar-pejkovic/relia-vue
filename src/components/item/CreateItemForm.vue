@@ -5,7 +5,7 @@
             <div class="row m-3">
                 <div class="col-md-4">
                     <input class="form-control" type="search" v-model="searchQuery" placeholder="Search product..."
-                        @focus="showSearchList" @blur="hideSearchList" :readonly="product">
+                        @focus="showSearchList" @blur="hideSearchList" >
                     <ul class="list-group mt-3" v-show="isFocused">
                         <li v-for="product in filteredProducts" :key="product.id" class="list-group-item"
                             @click="selectProduct(product)">{{ product.name }}
@@ -35,7 +35,6 @@
 import { defineComponent } from 'vue';
 import { useProductsStore } from '../../stores/products';
 import { useItemsStore } from '../../stores/items';
-import { useInvoicesStore } from '../../stores/invoices';
 
 export default defineComponent({
     props: {
@@ -72,6 +71,7 @@ export default defineComponent({
             this.item.productName = product.name;
             this.item.price = product.price;
             this.item.unit = product.unit
+            this.item.quantity = 1
             this.item.taxRate = product.taxRate
             this.item.invoiceId = this.invoiceId
         },

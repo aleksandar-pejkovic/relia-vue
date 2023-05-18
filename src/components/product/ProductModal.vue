@@ -42,7 +42,7 @@
                                 <div class="form-group">
                                     <label for="taxRate">Tax rate</label>
                                     <select class="form-control" id="taxRate" v-model="product.taxRate"
-                                        :readonly="readOnly">
+                                        :disabled="readOnly">
                                         <option value="0">0%</option>
                                         <option value="10">10%</option>
                                         <option value="20">20%</option>

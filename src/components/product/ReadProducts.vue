@@ -51,30 +51,32 @@
             </div>
         </div>
     </div>
-    <Pagination />
+    <Pagination :currentPage="currentPage" :totalPages="totalPages" @previous-page="previousPage" @next-page="nextPage" @go-to-page="goToPage" />
     <ProductModal />
 </template>
 
 <script>
 import { defineComponent } from 'vue';
-import { useProductsStore } from '@/stores/products'; 
+import { useProductsStore } from '@/stores/products';
 import ProductModal from './ProductModal.vue';
 import Pagination from '../Pagination.vue';
 
 export default defineComponent({
     computed: {
-        products: {
-            get() {
-                return { ...useProductsStore().products };
-            },
-            set(value) {
-                useProductsStore().products = { ...value };
-            }
+        products() {
+            const start = (this.currentPage - 1) * this.pageSize;
+            const end = start + this.pageSize;
+            return useProductsStore().products.slice(start, end);
         },
+        totalPages() {
+            return Math.ceil(useProductsStore().products.length / this.pageSize)
+        }
     },
     data() {
         return {
             isSmallScreen: window.innerWidth <= 768,
+            currentPage: 1,
+            pageSize: 10,
         };
     },
     created() {
@@ -91,7 +93,30 @@ export default defineComponent({
             const productStore = useProductsStore()
             productStore.editProduct = product
             localStorage.setItem('editProduct', JSON.stringify(product))
-        }
+        },
+        previousPage() {
+            if (this.currentPage > 1) {
+                this.currentPage--;
+                this.updatePaginatedProducts(this.currentPage);
+            }
+        },
+        nextPage() {
+            if (this.currentPage < this.totalPages) {
+                this.currentPage++;
+                this.updatePaginatedProducts(this.currentPage);
+            }
+        },
+        goToPage(page) {
+            if (page >= 1 && page <= this.totalPages && page !== this.currentPage) {
+                this.currentPage = page;
+                this.updatePaginatedProducts(this.currentPage);
+            }
+        },
+        updatePaginatedProducts(page) {
+            const start = (page - 1) * this.pageSize;
+            const end = start + this.pageSize;
+            this.paginatedProducts = this.products.slice(start, end);
+        },
     },
     components: { ProductModal, Pagination }
 })

@@ -11,11 +11,13 @@
                 <input type="password" class="form-control" id="password" v-model="password">
             </div>
             <div class="col-12">
-                <router-link to="/" class="btn btn-secondary btn-lg m-2">Cancel</router-link>
                 <div v-if="loading" class="spinner-border text-primary" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
-                <button class="btn btn-primary m-2" type="submit">Login</button>
+                <div v-else>
+                    <router-link to="/" class="btn btn-secondary btn-lg m-2">Cancel</router-link>
+                    <button class="btn btn-primary m-2" type="submit">Login</button>
+                </div>
             </div>
         </form>
     </div>

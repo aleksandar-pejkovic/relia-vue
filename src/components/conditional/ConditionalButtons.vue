@@ -1,20 +1,32 @@
 <template>
     <!-- conditional buttons -->
     <div v-if="!objectExists">
-        <button @click="resetErrors" type="reset" class="btn btn-secondary m-2">Reset</button>
         <div v-if="loading" class="spinner-border text-primary" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
-        <button @click.prevent="create" v-else type="submit" class="btn btn-success m-2">Create</button>
+        <div v-else>
+            <button @click="resetErrors" type="reset" class="btn btn-secondary m-2">Reset</button>
+            <button @click.prevent="create" type="submit" class="btn btn-success m-2">Create</button>
+        </div>
     </div>
     <div v-else>
         <div v-if="!readOnly">
-            <button @click="cancelEditing" type="button" class="btn btn-secondary m-2">Cancel</button>
-            <button @click.prevent="update" type="submit" class="btn btn-success m-2">Update</button>
+            <div v-if="loading" class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div v-else>
+                <button @click="cancelEditing" type="button" class="btn btn-secondary m-2">Cancel</button>
+                <button @click.prevent="update" type="submit" class="btn btn-success m-2">Update</button>
+            </div>
         </div>
         <div v-else>
-            <button @click="deleteObject" type="button" class="btn btn-danger m-2">Delete</button>
-            <button @click="enableEditing" type="button" class="btn btn-primary m-2">Edit</button>
+            <div v-if="loading" class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div v-else>
+                <button @click="deleteObject" type="button" class="btn btn-danger m-2">Delete</button>
+                <button @click="enableEditing" type="button" class="btn btn-primary m-2">Edit</button>
+            </div>
         </div>
     </div>
 </template>

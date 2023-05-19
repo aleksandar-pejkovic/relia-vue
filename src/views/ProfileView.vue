@@ -32,8 +32,9 @@
                         <div class="row mb-3">
                             <label for="creation-date" class="col-sm-2 col-form-label">Creation Date</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="creation-date" v-model="user.creationDate"
-                                    readonly>
+                                <div class="form-control" id="creation-date" readonly>
+                                    {{ formatDate(user.creationDate) }}
+                                </div>
                             </div>
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -107,6 +108,14 @@ export default defineComponent({
         startEditing() {
             this.readOnly = false;
             this.temp = { ...this.user };
+        },
+        formatDate(date) {
+            const options = {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+            };
+            return new Intl.DateTimeFormat('sr-RS', options).format(new Date(date));
         },
         validateEmail() {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

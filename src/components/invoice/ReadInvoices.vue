@@ -22,10 +22,10 @@
                             {{ getCompanyName(invoice.companyId) }}
                         </td>
                         <td>
-                            {{ invoice.creationDate }}
+                            {{ formatDate(invoice.creationDate) }}
                         </td>
                         <td>
-                            {{ invoice.dueDate }}
+                            {{ formatDate(invoice.dueDate) }}
                         </td>
                         <td>
                             {{ Number(invoice.total).toFixed(2) }}
@@ -49,7 +49,7 @@
                             <div class="mb-2">
                                 <div class="fw-bold">{{ invoice.documentType }} - {{ invoice.invoiceNumber }}</div>
                                 <div>Partner: {{ getCompanyName(invoice.companyId) }}</div>
-                                <div>Creation date: {{ invoice.creationDate }}</div>
+                                <div>Creation date: {{ formatDate(invoice.creationDate) }}</div>
                                 <div>Total: {{ Number(invoice.total).toFixed(2) }}</div>
                             </div>
                         </div>
@@ -102,6 +102,14 @@ export default defineComponent({
         window.removeEventListener("resize", this.handleResize);
     },
     methods: {
+        formatDate(date) {
+            const options = {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+            };
+            return new Intl.DateTimeFormat('sr-RS', options).format(new Date(date));
+        },
         handleResize() {
             this.isSmallScreen = window.innerWidth <= 768;
         },

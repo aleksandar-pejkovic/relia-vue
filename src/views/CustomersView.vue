@@ -11,8 +11,11 @@
                 </button>
             </div>
         </div>
+        <div class="row m-2">
+            <SearchCustomers class="col-md-7" @company-selected="viewCompany" ref="searchCompanies" />
+        </div>
         <div class="row">
-            <ReadCustomers />
+            <ReadCustomers ref="readCustomers" />
         </div>
     </div>
 </template>
@@ -21,14 +24,20 @@
 import { defineComponent } from 'vue';
 import ReadCustomers from '../components/customer/ReadCustomers.vue';
 import { useCompaniesStore } from '../stores/companies';
+import SearchCustomers from '../components/customer/SearchCustomers.vue';
 
 export default defineComponent({
     components: {
-        ReadCustomers
-    },
+    ReadCustomers,
+    SearchCustomers
+},
     methods: {
         openCustomerModal() {
             useCompaniesStore().clearEditCompany()
+        },
+        viewCompany(company) {
+            this.$refs.searchCompanies.searchQuery = ''
+            this.$refs.readCustomers.viewCompany(company)
         }
     }
 })

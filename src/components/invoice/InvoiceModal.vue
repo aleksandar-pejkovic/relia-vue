@@ -17,13 +17,7 @@
                             <div class="col-md-6">
                                 <div v-if="!invoice.id > 0" class="form-group">
                                     <label for="documentType">Partner</label>
-                                    <input class="form-control" type="search" v-model="searchQuery" placeholder="Search..."
-                                        @focus="showSearchList" @blur="hideSearchList" :readonly="selectedCompany">
-                                    <ul class="list-group mt-3" v-show="isFocused">
-                                        <li v-for="company in filteredCompanies" :key="company.id" class="list-group-item"
-                                            @click="selectCompany(company)">{{ company.name }}
-                                        </li>
-                                    </ul>
+                                    <SearchCustomers @company-selected="selectCompany" />
                                 </div>
                                 <div class="form-group">
                                     <label for="creationDate">Creation date</label>
@@ -92,6 +86,7 @@ import Swal from 'sweetalert2'
 import CreateItemForm from '../item/CreateItemForm.vue';
 import ReadItems from '../item/ReadItems.vue';
 import InvoicePdfButton from '@/components/InvoicePdfButton.vue'
+import SearchCustomers from '../customer/SearchCustomers.vue';
 // import {
 //     validateName, validateCity, validateZip, validateAddress,
 //     validateRegistrationNumber, validateTaxNumber, validateBankAccount,
@@ -100,7 +95,7 @@ import InvoicePdfButton from '@/components/InvoicePdfButton.vue'
 
 export default defineComponent({
     components: {
-        ConditionalButtons, CreateItemForm, ReadItems, InvoicePdfButton
+        ConditionalButtons, CreateItemForm, ReadItems, InvoicePdfButton, SearchCustomers
     },
     computed: {
         invoice: {
@@ -129,7 +124,6 @@ export default defineComponent({
     data() {
         return {
             isFocused: false,
-            searchQuery: '',
             selectedCompany: null,
             readOnlyCondition: true,
             loading: false,

@@ -11,6 +11,18 @@ export const useCompaniesStore = defineStore({
         editCompany: JSON.parse(localStorage.getItem('editCompany')) || {},
     }),
     actions: {
+        sortByNameAsc() {
+            this.companies.sort((a, b) => a.name.localeCompare(b.name));
+        },
+        sortByNameDesc() {
+            this.companies.sort((a, b) => b.name.localeCompare(a.name));
+        },
+        sortByCityAsc() {
+            this.companies.sort((a, b) => a.city - b.city);
+        },
+        sortByCityDesc() {
+            this.companies.sort((a, b) => b.city - a.city);
+        },
         filterCompanies(searchInput) {
             if (!searchInput) {
                 return this.companies;

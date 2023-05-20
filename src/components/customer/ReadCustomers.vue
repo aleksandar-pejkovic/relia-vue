@@ -67,6 +67,7 @@
     <CustomerModal />
     <Pagination :currentPage="currentPage" :totalPages="totalPages" @previous-page="previousPage" @next-page="nextPage"
         @go-to-page="goToPage" />
+    <button hidden ref="openModalBtn" type="button" data-bs-toggle="modal" data-bs-target="#customerModal"></button>
 </template>
 
 <script>
@@ -113,6 +114,10 @@ export default defineComponent({
             const companiesStore = useCompaniesStore()
             companiesStore.editCompany = customer
             localStorage.setItem('editCompany', JSON.stringify(customer))
+        },
+        viewCompany(company) {
+            this.openCustomerModal(company)
+            this.$refs.openModalBtn.click()
         },
         previousPage() {
             if (this.currentPage > 1) {

@@ -6,9 +6,20 @@
                     <tr>
                         <th class="col-2">Document</th>
                         <th class="col-2">Partner</th>
-                        <th class="col-2">Creation date</th>
-                        <th class="col-2">Due date</th>
-                        <th class="col-2">Total</th>
+                        <th @click="sortList('creationDate')" class="col-2 clickable">
+                            Creation date
+                            <i v-if="sortBy === 'creationDate' && sortAsc" class="arrow-up"></i>
+                            <i v-if="sortBy === 'creationDate' && !sortAsc" class="arrow-down"></i>
+                        </th>
+                        <th @click="sortList('dueDate')" class="col-2 clickable">Due date
+                            <i v-if="sortBy === 'dueDate' && sortAsc" class="arrow-up"></i>
+                            <i v-if="sortBy === 'dueDate' && !sortAsc" class="arrow-down"></i>
+                        </th>
+                        <th @click="sortList('total')" class="col-2 clickable">
+                            Total
+                            <i v-if="sortBy === 'total' && sortAsc" class="arrow-up"></i>
+                            <i v-if="sortBy === 'total' && !sortAsc" class="arrow-down"></i>
+                        </th>
                         <th class="col-2"></th>
                     </tr>
                 </thead>
@@ -93,6 +104,8 @@ export default defineComponent({
             isSmallScreen: window.innerWidth <= 768,
             currentPage: 1,
             pageSize: 10,
+            sortBy: null,
+            sortAsc: false,
         };
     },
     created() {
@@ -140,6 +153,35 @@ export default defineComponent({
         goToPage(page) {
             if (page >= 1 && page <= this.totalPages && page !== this.currentPage) {
                 this.currentPage = page;
+            }
+        },
+        sortList(sortBy) {
+            if (this.sortBy === sortBy) {
+                this.sortAsc = !this.sortAsc;
+            } else {
+                this.sortBy = sortBy;
+                this.sortAsc = true;
+            }
+
+            const invoicesStore = useInvoicesStore();
+            if (sortBy === 'creationDate') {
+                if (this.sortAsc) {
+                    invoicesStore.sortByCreationDateAsc();
+                } else {
+                    invoicesStore.sortByCreationDateDesc();
+                }
+            } else if (sortBy === 'dueDate') {
+                if (this.sortAsc) {
+                    invoicesStore.sortByDueDateAsc();
+                } else {
+                    invoicesStore.sortByDueDateDesc();
+                }
+            } else if (sortBy === 'total') {
+                if (this.sortAsc) {
+                    invoicesStore.sortByTotalAsc();
+                } else {
+                    invoicesStore.sortByTotalDesc();
+                }
             }
         },
     },

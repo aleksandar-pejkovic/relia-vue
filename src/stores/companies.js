@@ -18,10 +18,10 @@ export const useCompaniesStore = defineStore({
             this.companies.sort((a, b) => b.name.localeCompare(a.name));
         },
         sortByCityAsc() {
-            this.companies.sort((a, b) => a.city - b.city);
+            this.companies.sort((a, b) => a.city.localeCompare(b.city));
         },
         sortByCityDesc() {
-            this.companies.sort((a, b) => b.city - a.city);
+            this.companies.sort((a, b) => b.city.localeCompare(a.city));
         },
         filterCompanies(searchInput) {
             if (!searchInput) {

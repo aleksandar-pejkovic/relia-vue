@@ -9,6 +9,24 @@ export const useInvoicesStore = defineStore({
         editInvoice: JSON.parse(localStorage.getItem('editInvoice')) || {},
     }),
     actions: {
+        sortByCreationDateAsc() {
+            this.invoices.sort((a, b) => a.creationDate.localeCompare(b.creationDate));
+        },
+        sortByCreationDateDesc() {
+            this.invoices.sort((a, b) => b.creationDate.localeCompare(a.creationDate));
+        },
+        sortByDueDateAsc() {
+            this.invoices.sort((a, b) => a.dueDate.localeCompare(b.dueDate));
+        },
+        sortByDueDateDesc() {
+            this.invoices.sort((a, b) => b.dueDate.localeCompare(a.dueDate));
+        },
+        sortByTotalAsc() {
+            this.invoices.sort((a, b) => a.total - b.total);
+        },
+        sortByTotalDesc() {
+            this.invoices.sort((a, b) => b.total - a.total);
+        },
         reduceTotal(item) {
             this.editInvoice.total -= item.total
             this.invoices.map(invoice => invoice.id === item.invoiceId ? this.editInvoice : invoice);

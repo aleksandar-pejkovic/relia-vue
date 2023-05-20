@@ -4,8 +4,16 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th class="col-2">Name</th>
-                        <th class="col-2">City</th>
+                        <th @click="sortList('name')" class="col-2 clickable">
+                            Name
+                            <i v-if="sortBy === 'name' && sortAsc" class="arrow-up"></i>
+                            <i v-if="sortBy === 'name' && !sortAsc" class="arrow-down"></i>
+                        </th>
+                        <th @click="sortList('city')" class="col-2 clickable">
+                            City
+                            <i v-if="sortBy === 'city' && sortAsc" class="arrow-up"></i>
+                            <i v-if="sortBy === 'city' && !sortAsc" class="arrow-down"></i>
+                        </th>
                         <th class="col-2">Address</th>
                         <th class="col-2">Tax number</th>
                         <th class="col-2">Director</th>
@@ -98,6 +106,8 @@ export default defineComponent({
             isSmallScreen: window.innerWidth <= 768,
             currentPage: 1,
             pageSize: 10,
+            sortBy: null,
+            sortAsc: false,
         };
     },
     created() {
@@ -132,6 +142,29 @@ export default defineComponent({
         goToPage(page) {
             if (page >= 1 && page <= this.totalPages && page !== this.currentPage) {
                 this.currentPage = page;
+            }
+        },
+        sortList(sortBy) {
+            if (this.sortBy === sortBy) {
+                this.sortAsc = !this.sortAsc;
+            } else {
+                this.sortBy = sortBy;
+                this.sortAsc = true;
+            }
+
+            const companiesStore = useCompaniesStore();
+            if (sortBy === 'name') {
+                if (this.sortAsc) {
+                    companiesStore.sortByNameAsc();
+                } else {
+                    companiesStore.sortByNameDesc();
+                }
+            } else if (sortBy === 'city') {
+                if (this.sortAsc) {
+                    companiesStore.sortByCityAsc();
+                } else {
+                    companiesStore.sortByCityDesc();
+                }
             }
         },
     },

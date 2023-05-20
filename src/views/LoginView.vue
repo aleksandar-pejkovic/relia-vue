@@ -61,7 +61,6 @@ export default defineComponent({
                 await productsStore.fetchProducts()
                 await productsStore.sortByNameAsc()
                 await invoicesStore.fetchInvoices()
-                await invoicesStore.sortByCreationDateAsc()
                 await itemsStore.fetchAllItems()
 
                 this.loading = false

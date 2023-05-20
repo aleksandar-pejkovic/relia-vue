@@ -23,26 +23,13 @@
       </div>
     </div>
     <div class="row mt-3">
-      <div class="col-md-6">
+      <div class="col-md-6">                
         <div class="card">
           <div class="card-header">
-            <h5 class="card-title">Recent Invoices</h5>
+            <h5 class="card-title">Top Invoices</h5>
           </div>
           <div class="card-body">
-            <ul class="list-group">
-              <li v-for="invoice in recentInvoices" :key="invoice.id" class="list-group-item">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <h6 class="mb-0">{{ invoice.customerName }}</h6>
-                    <small class="text-muted">{{ formatDate(invoice.invoiceDate) }}</small>
-                  </div>
-                  <div>
-                    <h6 class="mb-0">{{ formatCurrency(invoice.totalAmount) }}</h6>
-                    <span class="badge bg-primary">{{ invoice.status }}</span>
-                  </div>
-                </div>
-              </li>
-            </ul>
+            <Chart />
           </div>
         </div>
       </div>
@@ -77,8 +64,12 @@
 import { defineComponent } from 'vue';
 import { useInvoicesStore } from '@/stores/invoices';
 import { useCompaniesStore } from '@/stores/companies';
+import Chart from '../components/dashboard/Chart.vue';
 
 export default defineComponent({
+  components: {
+    Chart
+  },
   computed: {
     totalInvoices() {
       return useInvoicesStore().invoices?.length || 0

@@ -4,9 +4,11 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th class="col-5">Name</th>
+                        <th @click="sortByName" class="col-5 clickable">Name <i v-if="nameArrowUp" class="arrow-up"></i><i
+                                v-else-if="nameArrowDown" class="arrow-down"></i></th>
                         <th class="col-2">Tax rate</th>
-                        <th class="col-3">Price</th>
+                        <th @click="sortByPrice" class="col-3 clickable">Price <i v-if="priceArrowUp"
+                                class="arrow-up"></i><i v-else-if="priceArrowDown" class="arrow-down"></i></th>
                         <th class="col-2"></th>
                     </tr>
                 </thead>
@@ -79,6 +81,12 @@ export default defineComponent({
             isSmallScreen: window.innerWidth <= 768,
             currentPage: 1,
             pageSize: 10,
+            sortedByNameAsc: false,
+            sortedByPriceAsc: false,
+            nameArrowUp: false,
+            nameArrowDown: false,
+            priceArrowUp: false,
+            priceArrowDown: false,
         };
     },
     created() {
@@ -115,6 +123,36 @@ export default defineComponent({
                 this.currentPage = page;
             }
         },
+        sortByName() {
+            this.priceArrowDown = false
+            this.priceArrowUp = false
+            if (!this.sortedByNameAsc) {
+                useProductsStore().sortByNameAsc()
+                this.sortedByNameAsc = true
+                this.nameArrowDown = false
+                this.nameArrowUp = true
+            } else {
+                useProductsStore().sortByNameDesc()
+                this.sortedByNameAsc = false
+                this.nameArrowUp = false
+                this.nameArrowDown = true
+            }
+        },
+        sortByPrice() {
+            this.nameArrowUp = false
+            this.nameArrowDown = false
+            if (!this.sortedByPriceAsc) {
+                useProductsStore().sortByPriceAsc()
+                this.sortedByPriceAsc = true
+                this.priceArrowDown = false
+                this.priceArrowUp = true
+            } else {
+                useProductsStore().sortByPriceDesc()
+                this.sortedByPriceAsc = false
+                this.priceArrowUp = false
+                this.priceArrowDown = true
+            }
+        }
     },
     components: { ProductModal, Pagination }
 })

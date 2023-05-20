@@ -9,6 +9,50 @@ export const useProductsStore = defineStore({
         editProduct: JSON.parse(localStorage.getItem('editProduct')) || {},
     }),
     actions: {
+        sortByNameAsc() {
+            this.products.sort((a, b) => {
+                if (a.name < b.name) {
+                    return -1;
+                } else if (a.name > b.name) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+        },
+        sortByNameDesc() {
+            this.products.sort((a, b) => {
+                if (a.name > b.name) {
+                    return -1;
+                } else if (a.name < b.name) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+        },
+        sortByPriceAsc() {
+            this.products.sort((a, b) => {
+                if (a.price < b.price) {
+                    return -1;
+                } else if (a.price > b.price) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+        },
+        sortByPriceDesc() {
+            this.products.sort((a, b) => {
+                if (a.price > b.price) {
+                    return -1;
+                } else if (a.price < b.price) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+        },
         filterProducts(searchInput) {
             if (!searchInput) {
                 return this.products;

@@ -42,6 +42,10 @@ td,
   cursor: pointer;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .card {
   color: darkslateblue;
 }
@@ -189,8 +193,13 @@ label {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .list-group-item {
@@ -200,4 +209,27 @@ label {
 .list-group-item:hover {
   background-color: #0062CC;
   color: white;
+}
+
+.arrow-up:before,
+.arrow-down:before {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  vertical-align: middle;
+}
+
+.arrow-up:before {
+  border-style: solid;
+  border-width: 0.3em 0.3em 0 0.3em;
+  border-color: #fafafa transparent transparent transparent;
+  margin-right: 0.25em;
+}
+
+.arrow-down:before {
+  border-style: solid;
+  border-width: 0 0.3em 0.3em 0.3em;
+  border-color: transparent transparent #ffffff transparent;
+  margin-right: 0.25em;
 }

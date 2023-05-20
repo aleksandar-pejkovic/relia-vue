@@ -190,6 +190,9 @@ label {
   overflow-y: scroll;
   max-height: 50vh;
   animation: fadeIn 0.5s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border: 1px solid #a9a9a9; /* Add a border */
+  border-radius: 4px; /* Optional: Add border radius */
 }
 
 @keyframes fadeIn {

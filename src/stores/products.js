@@ -10,48 +10,16 @@ export const useProductsStore = defineStore({
     }),
     actions: {
         sortByNameAsc() {
-            this.products.sort((a, b) => {
-                if (a.name < b.name) {
-                    return -1;
-                } else if (a.name > b.name) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            });
+            this.products.sort((a, b) => a.name.localeCompare(b.name));
         },
         sortByNameDesc() {
-            this.products.sort((a, b) => {
-                if (a.name > b.name) {
-                    return -1;
-                } else if (a.name < b.name) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            });
+            this.products.sort((a, b) => b.name.localeCompare(a.name));
         },
         sortByPriceAsc() {
-            this.products.sort((a, b) => {
-                if (a.price < b.price) {
-                    return -1;
-                } else if (a.price > b.price) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            });
+            this.products.sort((a, b) => a.price - b.price);
         },
         sortByPriceDesc() {
-            this.products.sort((a, b) => {
-                if (a.price > b.price) {
-                    return -1;
-                } else if (a.price < b.price) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            });
+            this.products.sort((a, b) => b.price - a.price);
         },
         filterProducts(searchInput) {
             if (!searchInput) {

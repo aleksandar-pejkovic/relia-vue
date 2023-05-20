@@ -4,26 +4,26 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th @click="sortByName" class="col-5 clickable">Name <i v-if="nameArrowUp" class="arrow-up"></i><i
-                                v-else-if="nameArrowDown" class="arrow-down"></i></th>
+                        <th @click="sortList('name')" class="col-5 clickable">
+                            Name
+                            <i v-if="sortBy === 'name' && sortAsc" class="arrow-up"></i>
+                            <i v-if="sortBy === 'name' && !sortAsc" class="arrow-down"></i>
+                        </th>
                         <th class="col-2">Tax rate</th>
-                        <th @click="sortByPrice" class="col-3 clickable">Price <i v-if="priceArrowUp"
-                                class="arrow-up"></i><i v-else-if="priceArrowDown" class="arrow-down"></i></th>
+                        <th @click="sortList('price')" class="col-3 clickable">
+                            Price
+                            <i v-if="sortBy === 'price' && sortAsc" class="arrow-up"></i>
+                            <i v-if="sortBy === 'price' && !sortAsc" class="arrow-down"></i>
+                        </th>
                         <th class="col-2"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="product in products" :key="product.id" @click="openProductModal(product)"
                         data-bs-toggle="modal" data-bs-target="#productModal">
-                        <td>
-                            {{ product.name }}
-                        </td>
-                        <td>
-                            {{ product.taxRate }}%
-                        </td>
-                        <td>
-                            {{ Number(product.price).toFixed(2) }}
-                        </td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.taxRate }}%</td>
+                        <td>{{ Number(product.price).toFixed(2) }}</td>
                         <td>
                             <button @click="openProductModal(product)" type="button" class="btn btn-primary"
                                 data-bs-toggle="modal" data-bs-target="#productModal">
@@ -57,7 +57,7 @@
         @go-to-page="goToPage" />
     <ProductModal />
     <button hidden ref="openModalBtn" type="button" data-bs-toggle="modal" data-bs-target="#productModal"></button>
-</template>
+</template>  
 
 <script>
 import { defineComponent } from 'vue';
@@ -81,12 +81,8 @@ export default defineComponent({
             isSmallScreen: window.innerWidth <= 768,
             currentPage: 1,
             pageSize: 10,
-            sortedByNameAsc: false,
-            sortedByPriceAsc: false,
-            nameArrowUp: false,
-            nameArrowDown: false,
-            priceArrowUp: false,
-            priceArrowDown: false,
+            sortBy: null,
+            sortAsc: false,
         };
     },
     created() {
@@ -123,36 +119,29 @@ export default defineComponent({
                 this.currentPage = page;
             }
         },
-        sortByName() {
-            this.priceArrowDown = false
-            this.priceArrowUp = false
-            if (!this.sortedByNameAsc) {
-                useProductsStore().sortByNameAsc()
-                this.sortedByNameAsc = true
-                this.nameArrowDown = false
-                this.nameArrowUp = true
+        sortList(sortBy) {
+            if (this.sortBy === sortBy) {
+                this.sortAsc = !this.sortAsc;
             } else {
-                useProductsStore().sortByNameDesc()
-                this.sortedByNameAsc = false
-                this.nameArrowUp = false
-                this.nameArrowDown = true
+                this.sortBy = sortBy;
+                this.sortAsc = true;
+            }
+
+            const productsStore = useProductsStore();
+            if (sortBy === 'name') {
+                if (this.sortAsc) {
+                    productsStore.sortByNameAsc();
+                } else {
+                    productsStore.sortByNameDesc();
+                }
+            } else if (sortBy === 'price') {
+                if (this.sortAsc) {
+                    productsStore.sortByPriceAsc();
+                } else {
+                    productsStore.sortByPriceDesc();
+                }
             }
         },
-        sortByPrice() {
-            this.nameArrowUp = false
-            this.nameArrowDown = false
-            if (!this.sortedByPriceAsc) {
-                useProductsStore().sortByPriceAsc()
-                this.sortedByPriceAsc = true
-                this.priceArrowDown = false
-                this.priceArrowUp = true
-            } else {
-                useProductsStore().sortByPriceDesc()
-                this.sortedByPriceAsc = false
-                this.priceArrowUp = false
-                this.priceArrowDown = true
-            }
-        }
     },
     components: { ProductModal, Pagination }
 })

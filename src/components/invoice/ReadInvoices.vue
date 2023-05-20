@@ -39,7 +39,13 @@
                             {{ formatDate(invoice.dueDate) }}
                         </td>
                         <td>
-                            {{ Number(invoice.total).toFixed(2) }}
+                            {{ Number(invoice.total).toLocaleString(
+                                'sr-RS',
+                                {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })
+                            }}
                         </td>
                         <td>
                             <button @click="openInvoiceModal(invoice)" data-bs-toggle="modal" data-bs-target="#invoiceModal"

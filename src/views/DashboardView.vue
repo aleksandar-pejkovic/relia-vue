@@ -17,7 +17,14 @@
             <h5 class="card-title">Total Revenue</h5>
           </div>
           <div class="card-body">
-            <h2>{{ Number(totalRevenue).toFixed(2) }}</h2>
+            <h2>
+              {{ Number(totalRevenue).toLocaleString(
+                'sr-RS',
+                {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })
+              }}</h2>
           </div>
         </div>
       </div>
@@ -52,6 +59,8 @@ import { defineComponent } from 'vue';
 import { useInvoicesStore } from '@/stores/invoices';
 import InvoicesChart from '../components/dashboard/InvoicesChart.vue';
 import CompaniesChart from '../components/dashboard/CompaniesChart.vue';
+import { useCompaniesStore } from '../stores/companies';
+import { useProductsStore } from '../stores/products';
 
 export default defineComponent({
   components: {
@@ -70,6 +79,10 @@ export default defineComponent({
     async fetchDashboardData() {
       const invoicesStore = useInvoicesStore();
       await invoicesStore.sortByCreationDateDesc();
+      const companiesStore = useCompaniesStore();
+      await companiesStore.sortByNameAsc()
+      const productsStore = useProductsStore();
+      await productsStore.sortByNameAsc()
     },
   },
   mounted() {

@@ -4,13 +4,20 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th @click="sortList('name')" class="col-5 clickable">
+                        <th @click="sortList('plu')" class="col-1 clickable">
+                            Plu
+                            <i v-if="sortBy === 'plu' && sortAsc" class="arrow-up"></i>
+                            <i v-if="sortBy === 'plu' && !sortAsc" class="arrow-down"></i>
+                        </th>
+                        <th @click="sortList('name')" class="col-3 clickable">
                             Name
                             <i v-if="sortBy === 'name' && sortAsc" class="arrow-up"></i>
                             <i v-if="sortBy === 'name' && !sortAsc" class="arrow-down"></i>
                         </th>
-                        <th class="col-2">Tax rate</th>
-                        <th @click="sortList('price')" class="col-3 clickable">
+                        <th class="col-2">
+                            Tax rate
+                        </th>
+                        <th @click="sortList('price')" class="col-2 clickable">
                             Price
                             <i v-if="sortBy === 'price' && sortAsc" class="arrow-up"></i>
                             <i v-if="sortBy === 'price' && !sortAsc" class="arrow-down"></i>
@@ -21,9 +28,18 @@
                 <tbody>
                     <tr v-for="product in products" :key="product.id" @click="openProductModal(product)"
                         data-bs-toggle="modal" data-bs-target="#productModal">
+                        <td>{{ product.plu }}</td>
                         <td>{{ product.name }}</td>
                         <td>{{ product.taxRate }}%</td>
-                        <td>{{ Number(product.price).toFixed(2) }}</td>
+                        <td>
+                            {{ Number(product.price).toLocaleString(
+                                'sr-RS',
+                                {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })
+                            }}
+                        </td>
                         <td>
                             <button @click="openProductModal(product)" type="button" class="btn btn-primary"
                                 data-bs-toggle="modal" data-bs-target="#productModal">
@@ -139,6 +155,12 @@ export default defineComponent({
                     productsStore.sortByPriceAsc();
                 } else {
                     productsStore.sortByPriceDesc();
+                }
+            } else if (sortBy === 'plu') {
+                if (this.sortAsc) {
+                    productsStore.sortByPluAsc();
+                } else {
+                    productsStore.sortByPluDesc();
                 }
             }
         },

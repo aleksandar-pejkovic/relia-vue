@@ -56,10 +56,8 @@ export default defineComponent({
                 await authStore.login(this.username, this.password)
                 await userStore.fetchUser()
                 await companiesStore.fetchCompanies()
-                await companiesStore.sortByNameAsc()
                 await companiesStore.fetchOwnCompany()
                 await productsStore.fetchProducts()
-                await productsStore.sortByNameAsc()
                 await invoicesStore.fetchInvoices()
                 await itemsStore.fetchAllItems()
 

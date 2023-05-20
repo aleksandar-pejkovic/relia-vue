@@ -24,6 +24,9 @@ export const useProductsStore = defineStore({
         sortByPluAsc() {
             this.products.sort((a, b) => a.plu - b.plu);
         },
+        sortByPluDesc() {
+            this.products.sort((a, b) => b.plu - a.plu);
+        },
         filterProducts(searchInput) {
             if (!searchInput) {
                 return this.products;

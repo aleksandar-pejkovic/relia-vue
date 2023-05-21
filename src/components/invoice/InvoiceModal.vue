@@ -34,7 +34,8 @@
                                 <div v-if="!invoice.id > 0" class="form-group">
                                     <label for="invoiceNumber">Invoice number</label>
                                     <input type="text" class="form-control" id="invoiceNumber"
-                                        v-model="invoice.invoiceNumber" :readonly="readOnly">
+                                        v-model="invoice.invoiceNumber" :readonly="readOnly"
+                                        @input="validateInvoiceNumber">
                                     <span v-if="invoiceNumberError" class="error">{{ invoiceNumberError }}</span>
                                 </div>
                                 <div v-if="!invoice.id > 0" class="form-group">
@@ -87,11 +88,7 @@ import CreateItemForm from '../item/CreateItemForm.vue';
 import ReadItems from '../item/ReadItems.vue';
 import InvoicePdfButton from '@/components/InvoicePdfButton.vue'
 import SearchCustomers from '../customer/SearchCustomers.vue';
-// import {
-//     validateName, validateCity, validateZip, validateAddress,
-//     validateRegistrationNumber, validateTaxNumber, validateBankAccount,
-//     validatePhoneNumber, validateEmail, validateWebsite, validateDirector
-// } from '@/components/validation/invoiceValidation';
+import { validateInvoiceNumber } from '../validation/invoiceValidation'
 
 export default defineComponent({
     components: {
@@ -194,10 +191,9 @@ export default defineComponent({
             await invoicesStore.createInvoice(this.invoice)
             this.loading = false
         },
-        // // Function to validate invoice name
-        // validateName() {
-        //     this.nameError = validateName(this.invoice.name);
-        // },
+        validateInvoiceNumber() {
+            this.invoiceNumberError = validateInvoiceNumber(this.invoice.invoiceNumber);
+        },
     },
 })
 </script>

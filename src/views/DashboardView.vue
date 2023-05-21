@@ -75,19 +75,6 @@ export default defineComponent({
       return useInvoicesStore().invoices?.reduce((sum, invoice) => sum + invoice.total, 0) || 0;
     },
   },
-  methods: {
-    async fetchDashboardData() {
-      const invoicesStore = useInvoicesStore();
-      await invoicesStore.sortByCreationDateDesc();
-      const companiesStore = useCompaniesStore();
-      await companiesStore.sortByNameAsc()
-      const productsStore = useProductsStore();
-      await productsStore.sortByNameAsc()
-    },
-  },
-  mounted() {
-    this.fetchDashboardData();
-  },
 })
 </script>
   

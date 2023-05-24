@@ -37,6 +37,13 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <label for="vat-status" class="col-sm-2 col-form-label">VAT status</label>
+                            <div class="col-sm-10">
+                                <input class="form-check-input" type="checkbox" id="vat-status" v-model="user.vatStatus"
+                                    :disabled="readOnly">
+                            </div>
+                        </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button v-if="readOnly" @click.prevent="startEditing" class="btn btn-primary">
                                 Edit

@@ -98,7 +98,7 @@
 <script>
 import { defineComponent } from 'vue';
 import { useCompaniesStore } from '@/stores/companies'
-import Swal from 'sweetalert2'
+import { showErrorMessage, showSuccessMessage, showInvalidRequestMessage } from '../helper/message'
 import {
     validateName, validateCity, validateZip, validateAddress,
     validateRegistrationNumber, validateTaxNumber, validateBankAccount,
@@ -155,12 +155,7 @@ export default defineComponent({
         },
         async updateCustomer() {
             if (!this.validateInputs()) {
-                Swal.fire({
-                    title: 'Validation failed!',
-                    text: 'Please fix the errors in the form.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
+                showInvalidRequestMessage()
                 return;
             }
             const companiesStore = useCompaniesStore()
@@ -176,12 +171,7 @@ export default defineComponent({
         },
         async createCustomer() {
             if (!this.validateInputs()) {
-                Swal.fire({
-                    title: 'Validation failed!',
-                    text: 'Please fix the errors in the form.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
+                showInvalidRequestMessage()
                 return;
             }
             this.loading = true

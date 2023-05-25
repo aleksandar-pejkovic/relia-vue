@@ -1,11 +1,13 @@
 <template>
-    <button type="button" class="btn btn-primary mb-2" @click="downloadInvoicePdf">PDF</button>
+    <button v-if="hasOwnCompany" type="button" class="btn btn-primary mb-2" @click="downloadInvoicePdf">PDF</button>
 </template>
   
 <script>
 import axios from 'axios';
 import { defineComponent } from 'vue';
 import { useAuthenticationStore } from '@/stores/authentication';
+import { useBaseUrlStore } from '../stores/baseUrl';
+import { useCompaniesStore } from '../stores/companies';
 
 export default defineComponent({
     props: {
@@ -18,10 +20,15 @@ export default defineComponent({
             required: true,
         },
     },
+    computed: {
+        hasOwnCompany() {
+            return useCompaniesStore().ownCompany != null
+        }
+    },
     methods: {
         async downloadInvoicePdf() {
             const authStore = useAuthenticationStore()
-            const response = await axios.get(`http://localhost:8080/api/pdf/invoice/${this.id}`, {
+            const response = await axios.get(`${useBaseUrlStore().baseUrl}/api/pdf/invoice/${this.id}`, {
                 responseType: 'blob',
                 headers: {
                     'Authorization': `Bearer ${authStore.token}`

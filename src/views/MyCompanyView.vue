@@ -105,7 +105,7 @@
 <script>
 import { defineComponent } from 'vue';
 import { useCompaniesStore } from '@/stores/companies';
-import Swal from 'sweetalert2'
+import { showErrorMessage, showSuccessMessage, showInvalidRequestMessage } from '../components/helper/message'
 import {
     validateName, validateCity, validateZip, validateAddress,
     validateRegistrationNumber, validateTaxNumber, validateBankAccount,
@@ -165,12 +165,7 @@ export default defineComponent({
         },
         async createOwnCompany() {
             if (!this.validateInputs()) {
-                Swal.fire({
-                    title: 'Creating company unsuccessful!',
-                    text: 'Please fix the errors in the form.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
+                showInvalidRequestMessage()
                 return;
             }
             this.loading = true
@@ -179,26 +174,10 @@ export default defineComponent({
                 await companiesStore.createOwnCompany(this.company)
                 this.company = { ...companiesStore.ownCompany }
                 this.loading = false
-                this.readOnlyCondition = true;
-                Swal.fire({
-                    title: `Company was created!`,
-                    text: `You can find it on 'My company' page.`,
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                })
+                this.readOnlyCondition = true
             } catch (error) {
                 this.loading = false;
                 this.resetErrors()
-                let errorMessages = error.message;
-                if (error.response && error.response.data) {
-                    errorMessages = error.response.data.error || error.response.data.message || errorMessages;
-                }
-                Swal.fire({
-                    title: 'Request unsuccessful!',
-                    text: errorMessages,
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
             }
         },
         cancelEditing() {
@@ -212,29 +191,21 @@ export default defineComponent({
         },
         async updateOwnCompany() {
             if (!this.validateInputs()) {
-                Swal.fire({
-                    title: 'Invalid request!',
-                    text: 'Please fix the errors in the form.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
+                showInvalidRequestMessage()
                 return;
             }
-
             this.loading = true;
 
-            const companiesStore = useCompaniesStore();
-            await companiesStore.updateOwnCompany(this.company);
+            try {
+                const companiesStore = useCompaniesStore();
+                await companiesStore.updateOwnCompany(this.company);
 
-            this.loading = false;
-            this.readOnlyCondition = true;
-            this.resetErrors()
-            Swal.fire({
-                title: `Company updated`,
-                text: 'Company was successfully updated',
-                icon: 'success',
-                confirmButtonText: 'OK'
-            });
+                this.loading = false;
+                this.readOnlyCondition = true;
+                this.resetErrors()
+            } catch (error) {
+                this.loading = false;
+            }
         },
         // Function to validate company name
         validateName: function () {

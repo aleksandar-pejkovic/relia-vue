@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { useAuthenticationStore } from '@/stores/authentication'
+import { useBaseUrlStore } from './baseUrl';
 import axios from 'axios'
+import { showErrorMessage } from '../components/helper/message';
 
 export const useUserStore = defineStore({
     id: 'user',
@@ -11,7 +13,7 @@ export const useUserStore = defineStore({
         async fetchUser() {
             try {
                 const authStore = useAuthenticationStore()
-                const response = await axios.get('http://localhost:8080/api/users/current', {
+                const response = await axios.get(`${useBaseUrlStore().baseUrl}/api/users/current`, {
                     headers: { Authorization: `Bearer ${authStore.token}` }
                 })
 
@@ -20,13 +22,13 @@ export const useUserStore = defineStore({
                 localStorage.setItem('user', JSON.stringify(response.data))
             } catch (error) {
                 console.error(error)
-                throw new Error('Failed to fetch user data')
+                showErrorMessage(error)
             }
         },
         async createUser(userData) {
             try {
                 const authStore = useAuthenticationStore()
-                const response = await axios.post('http://localhost:8080/api/users/register', userData, {
+                const response = await axios.post(`${useBaseUrlStore().baseUrl}/api/users/register`, userData, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
@@ -35,12 +37,13 @@ export const useUserStore = defineStore({
                 localStorage.setItem('user', JSON.stringify(response.data))
             } catch (error) {
                 console.error(error)
+                showErrorMessage(error)
             }
         },
         async updateUser(userData) {
             try {
                 const authStore = useAuthenticationStore()
-                const response = await axios.put(`http://localhost:8080/api/users`, userData, {
+                const response = await axios.put(`${useBaseUrlStore().baseUrl}/api/users`, userData, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
@@ -49,12 +52,13 @@ export const useUserStore = defineStore({
                 localStorage.setItem('user', JSON.stringify(response.data))
             } catch (error) {
                 console.error(error)
+                showErrorMessage(error)
             }
         },
         async deleteUser(userId) {
             try {
                 const authStore = useAuthenticationStore()
-                await axios.delete(`http://localhost:8080/api/users/${userId}`, {
+                await axios.delete(`${useBaseUrlStore().baseUrl}/api/users/${userId}`, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
@@ -63,6 +67,7 @@ export const useUserStore = defineStore({
                 localStorage.removeItem('user')
             } catch (error) {
                 console.error(error)
+                showErrorMessage(error)
             }
         },
         reset() {

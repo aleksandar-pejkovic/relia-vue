@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
 import { useAuthenticationStore } from '@/stores/authentication'
+import { useBaseUrlStore } from './baseUrl';
 import axios from 'axios'
-import Swal from 'sweetalert2'
+import { showErrorMessage } from '../components/helper/message';
 
 export const useCompaniesStore = defineStore({
     id: 'companies',
@@ -35,7 +36,7 @@ export const useCompaniesStore = defineStore({
         async fetchCompanies() {
             try {
                 const authStore = useAuthenticationStore()
-                const response = await axios.get('http://localhost:8080/api/companies', {
+                const response = await axios.get(`${useBaseUrlStore().baseUrl}/api/companies`, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
@@ -44,12 +45,13 @@ export const useCompaniesStore = defineStore({
                 localStorage.setItem('companies', JSON.stringify(this.companies));
             } catch (error) {
                 console.error(error)
+                showErrorMessage(error)
             }
         },
         async fetchOwnCompany() {
             try {
                 const authStore = useAuthenticationStore()
-                const response = await axios.get('http://localhost:8080/api/companies/own', {
+                const response = await axios.get(`${useBaseUrlStore().baseUrl}/api/companies/own`, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
@@ -58,12 +60,13 @@ export const useCompaniesStore = defineStore({
                 localStorage.setItem('ownCompany', JSON.stringify(response.data))
             } catch (error) {
                 console.error(error)
+                showErrorMessage(error)
             }
         },
         async createCompany(companyData) {
             try {
                 const authStore = useAuthenticationStore()
-                const response = await axios.post('http://localhost:8080/api/companies/client', companyData, {
+                const response = await axios.post(`${useBaseUrlStore().baseUrl}/api/companies/client`, companyData, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
@@ -72,12 +75,13 @@ export const useCompaniesStore = defineStore({
                 localStorage.setItem('companies', JSON.stringify(this.companies));
             } catch (error) {
                 console.error(error)
+                showErrorMessage(error)
             }
         },
         async createOwnCompany(companyData) {
             try {
                 const authStore = useAuthenticationStore()
-                const response = await axios.post('http://localhost:8080/api/companies/own', companyData, {
+                const response = await axios.post(`${useBaseUrlStore().baseUrl}/api/companies/own`, companyData, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
@@ -86,12 +90,13 @@ export const useCompaniesStore = defineStore({
                 localStorage.setItem('ownCompany', JSON.stringify(response.data))
             } catch (error) {
                 console.error(error)
+                showErrorMessage(error)
             }
         },
         async updateCompany(companyData) {
             try {
                 const authStore = useAuthenticationStore()
-                const response = await axios.put(`http://localhost:8080/api/companies`, companyData, {
+                const response = await axios.put(`${useBaseUrlStore().baseUrl}/api/companies`, companyData, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
@@ -101,30 +106,15 @@ export const useCompaniesStore = defineStore({
                     this.companies[index] = response.data
                     localStorage.setItem('companies', JSON.stringify(this.companies));
                 }
-                Swal.fire({
-                    title: `${companyData.name} updated`,
-                    text: 'Customer was successfully updated',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                })
             } catch (error) {
-                console.error(error.message)
-                let errorMessages = error.message;
-                if (error.response && error.response.data) {
-                    errorMessages = error.response.data.error || error.response.data.message || errorMessages;
-                }
-                Swal.fire({
-                    title: 'Update customer unsuccessful!',
-                    text: errorMessages,
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
+                console.error(error)
+                showErrorMessage(error)
             }
         },
         async updateOwnCompany(companyData) {
             try {
                 const authStore = useAuthenticationStore()
-                const response = await axios.put(`http://localhost:8080/api/companies`, companyData, {
+                const response = await axios.put(`${useBaseUrlStore().baseUrl}/api/companies`, companyData, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
@@ -133,12 +123,13 @@ export const useCompaniesStore = defineStore({
                 localStorage.setItem('ownCompany', JSON.stringify(response.data))
             } catch (error) {
                 console.error(error)
+                showErrorMessage(error)
             }
         },
         async deleteCompany(company) {
             try {
                 const authStore = useAuthenticationStore();
-                await axios.delete(`http://localhost:8080/api/companies/${company.id}`, {
+                await axios.delete(`${useBaseUrlStore().baseUrl}/api/companies/${company.id}`, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
@@ -147,6 +138,7 @@ export const useCompaniesStore = defineStore({
                 localStorage.setItem('companies', JSON.stringify(this.companies));
             } catch (error) {
                 console.error(error);
+                showErrorMessage(error)
             }
         },
         reset() {

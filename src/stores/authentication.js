@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia';
+import { useBaseUrlStore } from './baseUrl';
+import { showErrorMessage, showSuccessMessage, showInvalidRequestMessage } from '../components/helper/message'
 import axios from 'axios'
 
 export const useAuthenticationStore = defineStore({
@@ -19,7 +21,7 @@ export const useAuthenticationStore = defineStore({
     async login(username, password) {
       try {
         const authHeader = "Basic " + btoa(username + ":" + password);
-        const response = await axios.post('http://localhost:8080/api/auth/login', null, {
+        const response = await axios.post(`${useBaseUrlStore().baseUrl}/api/auth/login`, null, {
           headers: {
             Authorization: authHeader
           }
@@ -29,9 +31,10 @@ export const useAuthenticationStore = defineStore({
         // Update the store's state with the response data
         this.setToken(token)
         this.setUsername(username)
+        showSuccessMessage(`Welcome ${username}!`, "Nice to see you!");
       } catch (error) {
         console.error(error)
-        throw new Error('Login failed')
+        showErrorMessage(error)
       }
     },
     setToken(token) {

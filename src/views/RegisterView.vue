@@ -40,9 +40,8 @@
  
 <script>
 import { defineComponent } from 'vue'
-import Swal from 'sweetalert2'
-import { useBaseUrlStore } from '@/stores/baseUrl'
-import axios from 'axios'
+import { showInvalidRequestMessage } from '../components/helper/message'
+import { useUserStore } from '../stores/user'
 
 export default defineComponent({
     name: "Register",
@@ -77,49 +76,11 @@ export default defineComponent({
     methods: {
         async register() {
             if (this.formError) {
-                Swal.fire({
-                    title: 'Registration unsuccessful!',
-                    text: 'Please fix the errors in the form.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
+                showInvalidRequestMessage()
                 return;
             }
             this.loading = true
-            const baseUrlStore = useBaseUrlStore()
-            const url = baseUrlStore.getUrl('users/register')
-            try {
-                await axios.post(
-                    url,
-                    this.user,
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                        }
-                    }
-                );
-                this.loading = false;
-                Swal.fire({
-                    title: 'Registration successful!',
-                    text: 'You can now login to your account.',
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                }).then(() => {
-                    this.$router.push('/login')
-                })
-            } catch (error) {
-                this.loading = false;
-                let errorMessages = error.message;
-                if (error.response && error.response.data) {
-                    errorMessages = error.response.data.error || error.response.data.message || errorMessages;
-                }
-                Swal.fire({
-                    title: 'Registration unsuccessful!',
-                    text: errorMessages,
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            }
+            await useUserStore().createUser(this.user)
         },
         validateUsername() {
             const usernameRegex = /^[a-zA-Z0-9_-]{3,35}$/;

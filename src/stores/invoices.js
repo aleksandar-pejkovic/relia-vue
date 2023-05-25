@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 import { useAuthenticationStore } from '@/stores/authentication'
+import { useBaseUrlStore } from './baseUrl';
+import { showErrorMessage, showSuccessMessage } from '../components/helper/message'
 import axios from 'axios'
 
 export const useInvoicesStore = defineStore({
@@ -40,7 +42,7 @@ export const useInvoicesStore = defineStore({
         async fetchInvoices() {
             try {
                 const authStore = useAuthenticationStore()
-                const response = await axios.get('http://localhost:8080/api/invoices', {
+                const response = await axios.get(`${useBaseUrlStore().baseUrl}/api/invoices`, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
@@ -49,12 +51,13 @@ export const useInvoicesStore = defineStore({
                 localStorage.setItem('invoices', JSON.stringify(this.invoices))
             } catch (error) {
                 console.error(error)
+                showErrorMessage(error)
             }
         },
         async createInvoice(invoiceData) {
             const authStore = useAuthenticationStore();
             try {
-                const response = await axios.post('http://localhost:8080/api/invoices', invoiceData, {
+                const response = await axios.post(`${useBaseUrlStore().baseUrl}/api/invoices`, invoiceData, {
                     headers: {
                         Authorization: `Bearer ${authStore.token}`,
                     },
@@ -65,12 +68,13 @@ export const useInvoicesStore = defineStore({
                 localStorage.setItem('invoices', JSON.stringify(this.invoices))
             } catch (error) {
                 this.error = 'Failed to create invoice.';
+                showErrorMessage(error)
             }
         },
         async updateInvoice(invoiceData) {
             try {
                 const authStore = useAuthenticationStore()
-                const response = await axios.put(`http://localhost:8080/api/invoices`, invoiceData, {
+                const response = await axios.put(`${useBaseUrlStore().baseUrl}/api/invoices`, invoiceData, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
@@ -82,12 +86,13 @@ export const useInvoicesStore = defineStore({
                 }
             } catch (error) {
                 console.error(error)
+                showErrorMessage(error)
             }
         },
         async deleteInvoice(invoiceId) {
             try {
                 const authStore = useAuthenticationStore()
-                await axios.delete(`http://localhost:8080/api/invoices/${invoiceId}`, {
+                await axios.delete(`${useBaseUrlStore().baseUrl}/api/invoices/${invoiceId}`, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
@@ -96,6 +101,7 @@ export const useInvoicesStore = defineStore({
                 localStorage.setItem('invoices', JSON.stringify(this.invoices))
             } catch (error) {
                 console.error(error)
+                showErrorMessage(error)
             }
         },
         reset() {

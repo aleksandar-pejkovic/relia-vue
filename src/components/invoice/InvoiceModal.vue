@@ -34,8 +34,7 @@
                                 <div v-if="!invoice.id > 0" class="form-group">
                                     <label for="invoiceNumber">Invoice number</label>
                                     <input type="text" class="form-control" id="invoiceNumber"
-                                        v-model="invoice.invoiceNumber" :readonly="readOnly"
-                                        @input="validateInvoiceNumber">
+                                        v-model="invoice.invoiceNumber" :readonly="readOnly" @input="validateInvoiceNumber">
                                     <span v-if="invoiceNumberError" class="error">{{ invoiceNumberError }}</span>
                                 </div>
                                 <div v-if="!invoice.id > 0" class="form-group">
@@ -83,7 +82,7 @@ import { useInvoicesStore } from '@/stores/invoices'
 import { useCompaniesStore } from '@/stores/companies';
 import { useItemsStore } from '@/stores/items';
 import ConditionalButtons from '../conditional/ConditionalButtons.vue';
-import Swal from 'sweetalert2'
+import { showInvalidRequestMessage } from '../helper/message'
 import CreateItemForm from '../item/CreateItemForm.vue';
 import ReadItems from '../item/ReadItems.vue';
 import InvoicePdfButton from '@/components/InvoicePdfButton.vue'
@@ -157,15 +156,6 @@ export default defineComponent({
             this.invoice.companyId = undefined
         },
         async updateInvoice() {
-            if (!this.validateInputs()) {
-                Swal.fire({
-                    title: 'Validation failed!',
-                    text: 'Please fix the errors in the form.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-                return;
-            }
             const invoicesStore = useInvoicesStore()
             await invoicesStore.updateInvoice(this.invoice)
             this.$refs.closeBtn.click()
@@ -177,13 +167,14 @@ export default defineComponent({
             alert(`Invoice ${this.invoice.invoiceNumber} deleted`)
         },
         async createInvoice() {
-            if (this.invoiceNumberError) {
-                Swal.fire({
-                    title: 'Validation failed!',
-                    text: 'Please fix the errors in the form.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
+            if (this.invoiceNumberError
+                || !this.invoice.companyId
+                || !this.invoice.creationDate
+                || !this.invoice.dueDate
+                || !this.invoice.documentType
+                || !this.invoice.invoiceStatus
+            ) {
+                showInvalidRequestMessage()
                 return;
             }
             this.loading = true

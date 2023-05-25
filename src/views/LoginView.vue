@@ -29,7 +29,6 @@ import { useAuthenticationStore } from '@/stores/authentication'
 import { useCompaniesStore } from '@/stores/companies'
 import { useProductsStore } from '@/stores/products'
 import { useUserStore } from '@/stores/user'
-import Swal from 'sweetalert2'
 import { useInvoicesStore } from '@/stores/invoices'
 import { useItemsStore } from '@/stores/items'
 
@@ -60,36 +59,11 @@ export default defineComponent({
                 await productsStore.fetchProducts()
                 await invoicesStore.fetchInvoices()
                 await itemsStore.fetchAllItems()
-
                 this.loading = false
                 this.$router.push("/dashboard");
-                await this.showSuccessMessage();
-            }
-            catch (error) {
+            } catch (error) {
                 this.loading = false
-                Swal.fire({
-                    title: "Login unsuccessful!",
-                    text: error.message,
-                    icon: "error",
-                    confirmButtonText: "OK"
-                });
             }
-        },
-        async showSuccessMessage() {
-            await Swal.fire({
-                title: "Welcome!",
-                text: "You successfully logged in to your account.",
-                icon: "success",
-                confirmButtonText: "OK",
-            });
-        },
-        async showErrorMessage() {
-            await Swal.fire({
-                title: "Login unsuccessful!",
-                text: error.message,
-                icon: "error",
-                confirmButtonText: "OK",
-            });
         },
     },
 })

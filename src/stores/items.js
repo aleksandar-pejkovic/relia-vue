@@ -2,6 +2,8 @@ import { defineStore } from 'pinia';
 import { useAuthenticationStore } from '@/stores/authentication';
 import axios from 'axios';
 import { useInvoicesStore } from './invoices';
+import { useBaseUrlStore } from './baseUrl';
+import { showErrorMessage, showSuccessMessage } from '../components/helper/message'
 
 export const useItemsStore = defineStore({
     id: 'items',
@@ -19,7 +21,7 @@ export const useItemsStore = defineStore({
         async fetchAllItems() {
             try {
                 const authStore = useAuthenticationStore();
-                const response = await axios.get(`http://localhost:8080/api/items`, {
+                const response = await axios.get(`${useBaseUrlStore().baseUrl}/api/items`, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
@@ -28,12 +30,13 @@ export const useItemsStore = defineStore({
                 localStorage.setItem('items', JSON.stringify(this.items));
             } catch (error) {
                 console.error(error);
+                showErrorMessage(error)
             }
         },
         async fetchItemsByInvoiceId(invoiceId) {
             try {
                 const authStore = useAuthenticationStore();
-                const response = await axios.get(`http://localhost:8080/api/items/invoice/${invoiceId}`, {
+                const response = await axios.get(`${useBaseUrlStore().baseUrl}/api/items/invoice/${invoiceId}`, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
@@ -42,12 +45,13 @@ export const useItemsStore = defineStore({
                 localStorage.setItem('items', JSON.stringify(this.items));
             } catch (error) {
                 console.error(error);
+                showErrorMessage(error)
             }
         },
         async createItem(itemData) {
             const authStore = useAuthenticationStore();
             try {
-                const response = await axios.post('http://localhost:8080/api/items', itemData, {
+                const response = await axios.post(`${useBaseUrlStore().baseUrl}/api/items`, itemData, {
                     headers: {
                         Authorization: `Bearer ${authStore.token}`,
                     },
@@ -58,12 +62,13 @@ export const useItemsStore = defineStore({
                 useInvoicesStore().increaseTotal(response.data)
             } catch (error) {
                 console.error(error);
+                showErrorMessage(error)
             }
         },
         async updateItem(itemData) {
             try {
                 const authStore = useAuthenticationStore();
-                const response = await axios.put(`http://localhost:8080/api/items`, itemData, {
+                const response = await axios.put(`${useBaseUrlStore().baseUrl}/api/items`, itemData, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
@@ -76,12 +81,13 @@ export const useItemsStore = defineStore({
                 }
             } catch (error) {
                 console.error(error);
+                showErrorMessage(error)
             }
         },
         async deleteItem(item) {
             try {
                 const authStore = useAuthenticationStore();
-                await axios.delete(`http://localhost:8080/api/items/${item.id}`, {
+                await axios.delete(`${useBaseUrlStore().baseUrl}/api/items/${item.id}`, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
@@ -91,6 +97,7 @@ export const useItemsStore = defineStore({
                 this.filterItemsByInvoiceId(item.invoiceId)
             } catch (error) {
                 console.error(error);
+                showErrorMessage(error)
             }
         },
         reset() {

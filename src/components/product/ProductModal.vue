@@ -69,7 +69,7 @@
 <script>
 import { defineComponent } from 'vue';
 import { useProductsStore } from '@/stores/products';
-import Swal from 'sweetalert2'
+import { showInvalidRequestMessage } from '../helper/message'
 import ConditionalButtons from '../conditional/ConditionalButtons.vue';
 import { validateName, validateUnit, validatePlu, validateDescription, validatePrice } from '@/components/validation/productValidation';
 
@@ -122,12 +122,7 @@ export default defineComponent({
         },
         async updateProduct() {
             if (!this.validateInputs()) {
-                Swal.fire({
-                    title: 'Validation failed!',
-                    text: 'Please fix the errors in the form.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
+                showInvalidRequestMessage()
                 return;
             }
             const productStore = useProductsStore()
@@ -142,12 +137,7 @@ export default defineComponent({
         },
         async createProduct() {
             if (!this.validateInputs()) {
-                Swal.fire({
-                    title: 'Validation failed!',
-                    text: 'Please fix the errors in the form.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
+                showInvalidRequestMessage()
                 return;
             }
             this.loading = true

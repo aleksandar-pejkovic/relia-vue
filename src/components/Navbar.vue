@@ -91,7 +91,7 @@ export default {
 
             Swal.fire({
                 title: 'Goodbye!',
-                text: 'Logout successful!',
+                text: 'Have a nice day!',
                 icon: 'success',
                 confirmButtonText: 'OK'
             })

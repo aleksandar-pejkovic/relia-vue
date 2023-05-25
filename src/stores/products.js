@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 import { useAuthenticationStore } from '@/stores/authentication'
+import { useBaseUrlStore } from './baseUrl';
+import { showErrorMessage, showSuccessMessage } from '../components/helper/message'
 import axios from 'axios'
 
 export const useProductsStore = defineStore({
@@ -39,7 +41,7 @@ export const useProductsStore = defineStore({
         async fetchProducts() {
             try {
                 const authStore = useAuthenticationStore()
-                const response = await axios.get('http://localhost:8080/api/products', {
+                const response = await axios.get(`${useBaseUrlStore().baseUrl}/api/products`, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
@@ -48,12 +50,13 @@ export const useProductsStore = defineStore({
                 localStorage.setItem('products', JSON.stringify(this.products))
             } catch (error) {
                 console.error(error)
+                showErrorMessage(error)
             }
         },
         async createProduct(productData) {
             try {
                 const authStore = useAuthenticationStore()
-                const response = await axios.post('http://localhost:8080/api/products', productData, {
+                const response = await axios.post(`${useBaseUrlStore().baseUrl}/api/products`, productData, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
@@ -62,12 +65,13 @@ export const useProductsStore = defineStore({
                 localStorage.setItem('products', JSON.stringify(this.products))
             } catch (error) {
                 console.error(error)
+                showErrorMessage(error)
             }
         },
         async updateProduct(productData) {
             try {
                 const authStore = useAuthenticationStore()
-                const response = await axios.put(`http://localhost:8080/api/products`, productData, {
+                const response = await axios.put(`${useBaseUrlStore().baseUrl}/api/products`, productData, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
@@ -79,12 +83,13 @@ export const useProductsStore = defineStore({
                 }
             } catch (error) {
                 console.error(error)
+                showErrorMessage(error)
             }
         },
         async deleteProduct(productId) {
             try {
                 const authStore = useAuthenticationStore()
-                await axios.delete(`http://localhost:8080/api/products/${productId}`, {
+                await axios.delete(`${useBaseUrlStore().baseUrl}/api/products/${productId}`, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
                     }
@@ -93,6 +98,7 @@ export const useProductsStore = defineStore({
                 localStorage.setItem('products', JSON.stringify(this.products))
             } catch (error) {
                 console.error(error)
+                showErrorMessage(error)
             }
         },
         reset() {

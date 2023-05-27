@@ -28,9 +28,9 @@ import SearchCustomers from '../components/customer/SearchCustomers.vue';
 
 export default defineComponent({
     components: {
-    ReadCustomers,
-    SearchCustomers
-},
+        ReadCustomers,
+        SearchCustomers
+    },
     methods: {
         openCustomerModal() {
             useCompaniesStore().clearEditCompany()

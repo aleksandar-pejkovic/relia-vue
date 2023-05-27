@@ -75,7 +75,7 @@ import { validateName, validateUnit, validatePlu, validateDescription, validateP
 
 export default defineComponent({
     components: {
-        ConditionalButtons
+        ConditionalButtons,
     },
     computed: {
         product: {
@@ -101,7 +101,7 @@ export default defineComponent({
             unitError: "",
             pluError: "",
             descriptionError: "",
-            priceError: ""
+            priceError: "",
         }
     },
     methods: {
@@ -125,13 +125,17 @@ export default defineComponent({
                 showInvalidRequestMessage()
                 return;
             }
+            this.loading = true
             const productStore = useProductsStore()
             await productStore.updateProduct(this.product)
+            this.loading = false
             this.$refs.closeBtn.click()
         },
         async deleteProduct() {
+            this.loading = true
             const productStore = useProductsStore()
             await productStore.deleteProduct(this.product.id)
+            this.loading = false
             this.$refs.closeBtn.click()
             alert(`Product ${this.product.name} deleted`)
         },

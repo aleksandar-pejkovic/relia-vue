@@ -158,14 +158,18 @@ export default defineComponent({
                 showInvalidRequestMessage()
                 return;
             }
+            this.loading = true
             const companiesStore = useCompaniesStore()
             await companiesStore.updateCompany(this.customer)
+            this.loading = false
             this.$refs.closeBtn.click()
         },
         async deleteCustomer() {
+            this.loading = true
             const companiesStore = useCompaniesStore()
             await companiesStore.deleteCompany(this.customer)
             await useInvoicesStore().fetchInvoices()
+            this.loading = false
             this.$refs.closeBtn.click()
             alert(`Invoice ${this.customer.name} deleted`)
         },

@@ -195,11 +195,9 @@ export default defineComponent({
                 return;
             }
             this.loading = true;
-
             try {
                 const companiesStore = useCompaniesStore();
                 await companiesStore.updateOwnCompany(this.company);
-
                 this.loading = false;
                 this.readOnlyCondition = true;
                 this.resetErrors()

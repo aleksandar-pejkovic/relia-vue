@@ -1,4 +1,5 @@
 <template>
+    <ProductModal />
     <div v-if="!isSmallScreen">
         <div class="table-responsive">
             <table class="table table-striped table-hover">
@@ -71,7 +72,6 @@
     </div>
     <Pagination :currentPage="currentPage" :totalPages="totalPages" @previous-page="previousPage" @next-page="nextPage"
         @go-to-page="goToPage" />
-    <ProductModal />
     <button hidden ref="openModalBtn" type="button" data-bs-toggle="modal" data-bs-target="#productModal"></button>
 </template>  
 

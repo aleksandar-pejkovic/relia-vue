@@ -156,13 +156,17 @@ export default defineComponent({
             this.invoice.companyId = undefined
         },
         async updateInvoice() {
+            this.loading = true
             const invoicesStore = useInvoicesStore()
             await invoicesStore.updateInvoice(this.invoice)
+            this.loading = false
             this.$refs.closeBtn.click()
         },
         async deleteInvoice() {
+            this.loading = true
             const invoicesStore = useInvoicesStore()
             await invoicesStore.deleteInvoice(this.invoice.id)
+            this.loading = false
             this.$refs.closeBtn.click()
             alert(`Invoice ${this.invoice.invoiceNumber} deleted`)
         },

@@ -25,6 +25,7 @@
   
 <script>
 import { defineComponent } from 'vue'
+import { showSuccessMessage } from '../components/helper/message'
 import { useAuthenticationStore } from '@/stores/authentication'
 import { useCompaniesStore } from '@/stores/companies'
 import { useProductsStore } from '@/stores/products'
@@ -60,7 +61,13 @@ export default defineComponent({
                 await invoicesStore.fetchInvoices()
                 await itemsStore.fetchAllItems()
                 this.loading = false
-                this.$router.push("/dashboard");
+
+                if (companiesStore.ownCompany) {
+                    this.$router.push("/dashboard");
+                } else if (authStore.token) {
+                    showSuccessMessage('Enter your company data', 'You can create it later or update it at any time')
+                    this.$router.push('/my-company')
+                }
             } catch (error) {
                 this.loading = false
             }

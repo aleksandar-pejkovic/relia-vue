@@ -41,6 +41,9 @@ export const useProductsStore = defineStore({
         async fetchProducts() {
             try {
                 const authStore = useAuthenticationStore()
+                if (!authStore.token) {
+                    return
+                }
                 const response = await axios.get(`${useBaseUrlStore().baseUrl}/api/products`, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
@@ -50,7 +53,6 @@ export const useProductsStore = defineStore({
                 localStorage.setItem('products', JSON.stringify(this.products))
             } catch (error) {
                 console.error(error)
-                showErrorMessage(error)
             }
         },
         async createProduct(productData) {

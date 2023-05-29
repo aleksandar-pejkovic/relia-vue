@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { useAuthenticationStore } from '@/stores/authentication'
 import { useBaseUrlStore } from './baseUrl';
 import axios from 'axios'
-import { showErrorMessage } from '../components/helper/message';
+import { showErrorMessage, showSuccessMessage } from '../components/helper/message';
 
 export const useUserStore = defineStore({
     id: 'user',
@@ -13,6 +13,9 @@ export const useUserStore = defineStore({
         async fetchUser() {
             try {
                 const authStore = useAuthenticationStore()
+                if (!authStore.token) {
+                    return
+                }
                 const response = await axios.get(`${useBaseUrlStore().baseUrl}/api/users/current`, {
                     headers: { Authorization: `Bearer ${authStore.token}` }
                 })
@@ -22,19 +25,20 @@ export const useUserStore = defineStore({
                 localStorage.setItem('user', JSON.stringify(response.data))
             } catch (error) {
                 console.error(error)
-                showErrorMessage(error)
             }
         },
         async createUser(userData) {
             try {
-                const authStore = useAuthenticationStore()
-                const response = await axios.post(`${useBaseUrlStore().baseUrl}/api/users/register`, userData, {
-                    headers: {
-                        'Authorization': `Bearer ${authStore.token}`
+                await axios.post(
+                    `${useBaseUrlStore().baseUrl}/api/users/register`,
+                    userData,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        }
                     }
-                })
-                this.user = response.data
-                localStorage.setItem('user', JSON.stringify(response.data))
+                )
+                showSuccessMessage('Regustration successfull', 'You can now sign in')
             } catch (error) {
                 console.error(error)
                 showErrorMessage(error)

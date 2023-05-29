@@ -36,6 +36,9 @@ export const useCompaniesStore = defineStore({
         async fetchCompanies() {
             try {
                 const authStore = useAuthenticationStore()
+                if (!authStore.token) {
+                    return
+                }
                 const response = await axios.get(`${useBaseUrlStore().baseUrl}/api/companies`, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
@@ -45,12 +48,14 @@ export const useCompaniesStore = defineStore({
                 localStorage.setItem('companies', JSON.stringify(this.companies));
             } catch (error) {
                 console.error(error)
-                showErrorMessage(error)
             }
         },
         async fetchOwnCompany() {
             try {
                 const authStore = useAuthenticationStore()
+                if (!authStore.token) {
+                    return
+                }
                 const response = await axios.get(`${useBaseUrlStore().baseUrl}/api/companies/own`, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
@@ -59,8 +64,7 @@ export const useCompaniesStore = defineStore({
                 this.ownCompany = response.data
                 localStorage.setItem('ownCompany', JSON.stringify(response.data))
             } catch (error) {
-                console.error(error)
-                showErrorMessage(error)
+                console.error('Create your company')
             }
         },
         async createCompany(companyData) {

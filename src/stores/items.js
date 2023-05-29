@@ -21,6 +21,9 @@ export const useItemsStore = defineStore({
         async fetchAllItems() {
             try {
                 const authStore = useAuthenticationStore();
+                if (!authStore.token) {
+                    return
+                }
                 const response = await axios.get(`${useBaseUrlStore().baseUrl}/api/items`, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
@@ -30,7 +33,6 @@ export const useItemsStore = defineStore({
                 localStorage.setItem('items', JSON.stringify(this.items));
             } catch (error) {
                 console.error(error);
-                showErrorMessage(error)
             }
         },
         async fetchItemsByInvoiceId(invoiceId) {
@@ -45,7 +47,6 @@ export const useItemsStore = defineStore({
                 localStorage.setItem('items', JSON.stringify(this.items));
             } catch (error) {
                 console.error(error);
-                showErrorMessage(error)
             }
         },
         async createItem(itemData) {

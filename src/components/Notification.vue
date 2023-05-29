@@ -15,10 +15,8 @@ export default defineComponent({
         };
     },
     methods: {
-        showNotification(title, subtitle, text) {
+        showNotification(title) {
             this.title = title;
-            this.subtitle = subtitle;
-            this.text = text;
             this.visible = true;
             setTimeout(() => {
                 this.hideNotification()
@@ -27,8 +25,6 @@ export default defineComponent({
         hideNotification() {
             this.visible = false;
             this.title = '';
-            this.subtitle = '';
-            this.text = '';
         },
     },
 });

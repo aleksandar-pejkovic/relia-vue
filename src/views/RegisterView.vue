@@ -40,8 +40,9 @@
  
 <script>
 import { defineComponent } from 'vue'
-import { showInvalidRequestMessage } from '../components/helper/message'
-import { useUserStore } from '../stores/user'
+import { useBaseUrlStore } from '../stores/baseUrl';
+import axios from 'axios'
+import { showInvalidRequestMessage, showErrorMessage, showSuccessMessage } from '../components/helper/message'
 
 export default defineComponent({
     name: "Register",
@@ -80,7 +81,21 @@ export default defineComponent({
                 return;
             }
             this.loading = true
-            await useUserStore().createUser(this.user)
+            const baseUrlStore = useBaseUrlStore()
+            const url = baseUrlStore.baseUrl + '/api/users/register'
+            try {
+                await axios.post(
+                    url,
+                    this.user,
+                    { headers: { "Content-Type": "application/json" } }
+                );
+                this.loading = false;
+                showSuccessMessage('Registration successful!', 'You can now login to your account.')
+                this.$router.push('/login')
+            } catch (error) {
+                this.loading = false;
+                showErrorMessage(error)
+            }
         },
         validateUsername() {
             const usernameRegex = /^[a-zA-Z0-9_-]{3,35}$/;

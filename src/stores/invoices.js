@@ -42,6 +42,9 @@ export const useInvoicesStore = defineStore({
         async fetchInvoices() {
             try {
                 const authStore = useAuthenticationStore()
+                if (!authStore.token) {
+                    return
+                }
                 const response = await axios.get(`${useBaseUrlStore().baseUrl}/api/invoices`, {
                     headers: {
                         'Authorization': `Bearer ${authStore.token}`
@@ -51,7 +54,6 @@ export const useInvoicesStore = defineStore({
                 localStorage.setItem('invoices', JSON.stringify(this.invoices))
             } catch (error) {
                 console.error(error)
-                showErrorMessage(error)
             }
         },
         async createInvoice(invoiceData) {

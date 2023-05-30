@@ -80,16 +80,25 @@
                             </div>
                         </div>
                         <div v-if="!companyExists">
-                            <button @click.prevent="createOwnCompany" type="submit"
-                                class="btn btn-success m-2">Create</button>
-                            <span class="visually-hidden">Loading...</span>
+                            <div v-if="loading" class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <div v-else>
+                                <button @click.prevent="createOwnCompany" type="submit"
+                                    class="btn btn-success m-2">Create</button>
+                            </div>
                         </div>
                         <div v-else>
                             <div v-if="!readOnly">
-                                <button @click="cancelEditing" type="button" class="btn btn-secondary m-2">Cancel</button>
-                                <span class="visually-hidden">Loading...</span>
-                                <button @click.prevent="updateOwnCompany" type="submit"
-                                    class="btn btn-success m-2">Update</button>
+                                <div v-if="loading" class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <div v-else>
+                                    <button @click="cancelEditing" type="button"
+                                        class="btn btn-secondary m-2">Cancel</button>
+                                    <button @click.prevent="updateOwnCompany" type="submit"
+                                        class="btn btn-success m-2">Update</button>
+                                </div>
                             </div>
                             <div v-else>
                                 <button @click="startEditing" type="button" class="btn btn-primary m-2">Edit</button>

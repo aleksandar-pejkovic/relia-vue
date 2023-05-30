@@ -19,7 +19,12 @@
                     </div>
                 </div>
                 <div class="col-md-1">
-                    <button id="addItemBtn" class="btn btn-success" type="submit">+</button>
+                    <div v-if="loading" class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <div v-else>
+                        <button id="addItemBtn" class="btn btn-success" type="submit">+</button>
+                    </div>
                 </div>
             </div>
         </form>
@@ -47,6 +52,7 @@ export default defineComponent({
             item: {},
             product: {},
             selectedProduct: null,
+            loading: false
         }
     },
     methods: {
@@ -85,7 +91,9 @@ export default defineComponent({
                 this.showErrorMessage('Invalid price')
                 return
             }
+            this.loading = true
             useItemsStore().createItem(this.item)
+            this.loading = false
             this.searchQuery = ''
             this.product = {}
             this.item = {}

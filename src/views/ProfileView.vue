@@ -49,13 +49,18 @@
                                 Edit
                             </button>
                             <div v-else>
-                                <button @click.prevent="cancelEditing" class="btn btn-secondary me-md-2">
-                                    Cancel
-                                </button>
-                                <button type="submit" class="btn btn-primary"
-                                    :class="{ 'disabled': emailError || nameError }" :disabled="hasErrors">
-                                    Save
-                                </button>
+                                <div v-if="loading" class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <div v-else>
+                                    <button @click.prevent="cancelEditing" class="btn btn-secondary me-md-2">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="btn btn-primary"
+                                        :class="{ 'disabled': emailError || nameError }" :disabled="hasErrors">
+                                        Save
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -81,7 +86,8 @@ export default defineComponent({
             temp: null,
             readOnly: true,
             emailError: '',
-            nameError: ''
+            nameError: '',
+            loading: false,
         };
     },
     computed: {
@@ -103,8 +109,10 @@ export default defineComponent({
     methods: {
         async updateUser() {
             this.readOnly = true
+            this.loading = true
             const userStore = useUserStore()
             userStore.updateUser(this.user)
+            this.loading = false
         },
         cancelEditing() {
             this.readOnly = true;

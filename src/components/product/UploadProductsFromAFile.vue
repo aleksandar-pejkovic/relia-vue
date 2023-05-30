@@ -1,7 +1,10 @@
 <template>
     <div>
         <input type="file" @change="handleFileUpload" accept=".xlsx, .xls, .csv">
-        <button @click="uploadFile" class="btn btn-secondary">Upload</button>
+        <div v-if="loading" class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <button v-else @click="uploadFile" class="btn btn-secondary">Upload</button>
     </div>
 </template>
   
@@ -13,6 +16,11 @@ import { useBaseUrlStore } from '@/stores/baseUrl';
 import { showErrorMessage } from '../helper/message';
 
 export default {
+    data() {
+        return {
+            loading: false
+        }
+    },
     methods: {
         handleFileUpload(event) {
             this.file = event.target.files[0];
@@ -22,6 +30,7 @@ export default {
                 console.error('No file selected.');
                 return;
             }
+            this.loading = true
 
             const formData = new FormData();
             formData.append('file', this.file);
@@ -37,6 +46,8 @@ export default {
             } catch (error) {
                 console.error('Error uploading file:', error);
                 showErrorMessage(error)
+            } finally {
+                this.loading = false
             }
         },
     },

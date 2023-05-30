@@ -70,7 +70,7 @@ router.beforeEach((to, from, next) => {
   if (requiresAuth && !authStore.isAuthenticated) {
     next('/login')
   } else if (requiresGuest && authStore.isAuthenticated) {
-    next('/')
+    next('/dashboard')
   } else {
     next()
   }

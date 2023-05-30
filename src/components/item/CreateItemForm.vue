@@ -30,6 +30,7 @@
 import { defineComponent } from 'vue';
 import { useItemsStore } from '../../stores/items';
 import SearchProducts from '../product/SearchProducts.vue';
+import Swal from 'sweetalert2'
 
 export default defineComponent({
     components: {
@@ -77,10 +78,10 @@ export default defineComponent({
                 this.showErrorMessage('Select a product')
                 return
             }
-            if (!this.item.quantity < 1) {
+            if (this.item.quantity < 1) {
                 this.showErrorMessage('Invalid quantity')
                 return
-            } if (!this.item.price < 1) {
+            } if (this.item.price < 0) {
                 this.showErrorMessage('Invalid price')
                 return
             }

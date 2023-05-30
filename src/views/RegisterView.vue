@@ -119,7 +119,7 @@ export default defineComponent({
             }
         },
         validateName() {
-            const nameRegex = /^[A-Z][a-zA-Z]*([ \u002D][A-Z][a-zA-Z]*)*$/;
+            const nameRegex = /^[A-ZČĆŠĐŽ][a-zA-ZčćšđžČĆŠĐŽ]*([ -][A-ZČĆŠĐŽ][a-zA-ZčćšđžČĆŠĐŽ]*){1,49}$/;
             const isValidName = nameRegex.test(this.user.name)
             if (!isValidName) {
                 this.nameError = 'Please enter a valid name'

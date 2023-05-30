@@ -1,6 +1,6 @@
 
 export function validateName(name) {
-    const regex = /^[a-zA-Z0-9\s-]{2,50}/; // Only allows letters and spaces
+    const regex = /^[a-zA-Z0-9\s-čćšđžČĆŠĐŽ]{2,50}/;
     if (!regex.test(name)) {
         return "Please enter a valid name";
     } else {

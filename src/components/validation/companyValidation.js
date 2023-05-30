@@ -1,6 +1,6 @@
 // Function to validate company name
 export function validateName(name) {
-    const regex = /^[a-zA-Z\s]*$/; // Only allows letters and spaces
+    const regex = /^[a-zA-Z0-9\sčćžšđČĆŽŠĐ\-']*$/
     if (!regex.test(name)) {
         return "Please enter a valid name";
     } else {
@@ -10,7 +10,7 @@ export function validateName(name) {
 
 // Function to validate city
 export function validateCity(city) {
-    const regex = /^[a-zA-Z\s]*$/; // Only allows letters and spaces
+    const regex = /^[a-zA-Z0-9\sčćžšđČĆŽŠĐ]*$/
     if (!regex.test(city)) {
         return "Please enter a valid city";
     } else {
@@ -30,7 +30,7 @@ export function validateZip(zip) {
 
 // Function to validate address
 export function validateAddress(street) {
-    const regex = /^[a-zA-Z0-9\s]*$/; // Allows letters, numbers, and spaces
+    const regex = /^[a-zA-Z0-9\sčćžšđČĆŽŠĐ]*$/; // Allows letters, numbers, and spaces
     if (!regex.test(street)) {
         return "Please enter a valid address";
     } else {
@@ -99,7 +99,7 @@ export function validateWebsite(website) {
 }
 
 export function validateDirector(director) {
-    const regex = /^[a-zA-Z\s]*$/; // Checks if input is in website format
+    const regex = /^[a-zA-Z\sčćžšđČĆŽŠĐ]*$/; // Checks if input is in website format
     if (!regex.test(director)) {
         return "Please enter a valid director name";
     } else {

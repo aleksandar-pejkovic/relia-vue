@@ -69,8 +69,8 @@ export default {
     },
     methods: {
         logout() {
+            localStorage.clear()
             console.log('Logging out...')
-            this.$router.push("/")
             
             const authenticationStore = useAuthenticationStore()
             const userStore = useUserStore()
@@ -87,7 +87,7 @@ export default {
             invoicesStore.reset()
             itemsStore.reset()
 
-            localStorage.clear()
+            this.$router.push("/")
 
             Swal.fire({
                 title: 'Goodbye!',

@@ -38,7 +38,8 @@ export default {
             try {
                 await axios.post(`${useBaseUrlStore().baseUrl}/api/products/upload`, formData, {
                     headers: {
-                        Authorization: `Bearer ${useAuthenticationStore().token}`
+                        Authorization: `Bearer ${useAuthenticationStore().token}`,
+                        'Content-Type': 'multipart/form-data',
                     }
                 })
                 useProductsStore().fetchProducts()

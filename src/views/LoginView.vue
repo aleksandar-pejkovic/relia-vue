@@ -55,11 +55,9 @@ export default defineComponent({
 
                 await authStore.login(this.username, this.password)
                 await userStore.fetchUser()
-                await companiesStore.fetchCompanies()
                 await companiesStore.fetchOwnCompany()
-                await productsStore.fetchProducts()
+                await companiesStore.fetchCompanies()
                 await invoicesStore.fetchInvoices()
-                await itemsStore.fetchAllItems()
                 this.loading = false
 
                 if (companiesStore.ownCompany) {
@@ -68,6 +66,8 @@ export default defineComponent({
                     showSuccessMessage('Enter your company data', 'You can create it later or update it at any time')
                     this.$router.push('/my-company')
                 }
+                await productsStore.fetchProducts()
+                await itemsStore.fetchAllItems()
             } catch (error) {
                 this.loading = false
             }

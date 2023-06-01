@@ -79,7 +79,7 @@ export default defineComponent({
             this.item.taxRate = product.taxRate
             this.item.invoiceId = this.invoiceId
         },
-        createItem() {
+        async createItem() {
             if (!this.selectedProduct) {
                 this.showErrorMessage('Select a product')
                 return
@@ -92,7 +92,7 @@ export default defineComponent({
                 return
             }
             this.loading = true
-            useItemsStore().createItem(this.item)
+            await useItemsStore().createItem(this.item)
             this.loading = false
             this.searchQuery = ''
             this.product = {}

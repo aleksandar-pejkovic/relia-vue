@@ -1,39 +1,41 @@
 <template>
-    <div class="d-flex flex-column align-items-center">
+    <div class="container mt-3">
         <h2>Register</h2>
-        <form @submit.prevent="register" class="w-50">
-            <div class="mb-3">
+        <form @submit.prevent="register" class="row justify-content-center align-items-center flex-column">
+            <div class="col-md-6">
                 <label for="username" class="form-label">Username:</label>
                 <input type="text" class="form-control" id="username" v-model="user.username" @input="validateUsername">
                 <span v-if="usernameError" class="error">{{ usernameError }}</span>
             </div>
-            <div class="mb-3">
+            <div class="col-md-6">
                 <label for="email" class="form-label">Email:</label>
                 <input type="email" class="form-control" id="email" v-model="user.email" @input="validateEmail">
                 <span v-if="emailError" class="error">{{ emailError }}</span>
             </div>
-            <div class="mb-3">
+            <div class="col-md-6">
                 <label for="name" class="form-label">Full Name:</label>
                 <input type="text" class="form-control" id="name" v-model="user.name" @input="validateName">
                 <span v-if="nameError" class="error">{{ nameError }}</span>
             </div>
-            <div class="mb-3">
+            <div class="col-md-6">
                 <label for="password" class="form-label">Password:</label>
                 <input type="password" class="form-control" id="password" v-model="user.password" @input="validatePassword">
                 <span v-if="passwordError" class="error">{{ passwordError }}</span>
             </div>
-            <div class="mb-3">
+            <div class="col-md-6">
                 <label for="repeatPassword" class="form-label">Repeat Password:</label>
                 <input type="password" class="form-control" id="repeatPassword" v-model="repeatPassword"
                     @input="validateRepeatPassword">
                 <span v-if="repeatPasswordError" class="error">{{ repeatPasswordError }}</span>
             </div>
-            <div v-if="loading" class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-            <div v-else>
-                <router-link to="/" class="btn btn-secondary btn-lg m-2">Cancel</router-link>
-                <button class="btn btn-primary" type="submit">Register</button>
+            <div class="col-12">
+                <div v-if="loading" class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <div v-else>
+                    <router-link to="/" class="btn btn-secondary btn-lg m-2">Cancel</router-link>
+                    <button class="btn btn-primary" type="submit">Register</button>
+                </div>
             </div>
         </form>
     </div>

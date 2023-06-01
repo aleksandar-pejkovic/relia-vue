@@ -76,7 +76,7 @@
   
 <script>
 import { useUserStore } from '../stores/user';
-import { defineComponent } from 'vue';
+import { defineComponent, watch  } from 'vue';
 
 export default defineComponent({
     name: 'UserDetails',
@@ -99,11 +99,9 @@ export default defineComponent({
         const userStore = useUserStore()
         this.user = { ...userStore.user } // create a new object with the same properties as userStore.user
 
-        userStore.$subscribe((mutation, state) => {
-            if (mutation.type === 'updateUser') {
-                this.user = { ...state.user } // create a new object with the same properties as state.user
-            }
-        })
+        watch(() => userStore.user, (newUser) => {
+            this.user = { ...newUser }; // create a new object with the same properties as newUser
+        });
     },
 
     methods: {

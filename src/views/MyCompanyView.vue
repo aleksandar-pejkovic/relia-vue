@@ -112,7 +112,7 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent, watch  } from 'vue';
 import { useCompaniesStore } from '@/stores/companies';
 import { showErrorMessage, showSuccessMessage, showInvalidRequestMessage } from '../components/helper/message'
 import {
@@ -126,11 +126,9 @@ export default defineComponent({
         const companiesStore = useCompaniesStore()
         this.company = { ...companiesStore.ownCompany }
 
-        companiesStore.$subscribe((mutation, state) => {
-            if (mutation.type === 'updateOwnCompany') {
-                this.company = { ...state.ownCompany }
-            }
-        })
+        watch(() => companiesStore.ownCompany, (newOwnCompany) => {
+            this.company = { ...newOwnCompany }; // create a new object with the same properties as newUser
+        });
     },
     computed: {
         companyExists() {

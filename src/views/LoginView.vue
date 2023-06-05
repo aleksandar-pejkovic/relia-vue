@@ -18,6 +18,9 @@
                     <router-link to="/" class="btn btn-secondary btn-lg m-2">Cancel</router-link>
                     <button class="btn btn-primary m-2" type="submit">Login</button>
                 </div>
+                <div>
+                    <router-link to="/reset-password">Reset password</router-link>
+                </div>
             </div>
         </form>
     </div>

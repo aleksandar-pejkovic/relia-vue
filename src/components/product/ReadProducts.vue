@@ -62,7 +62,15 @@
                             <div class="mb-2">
                                 <div class="fw-bold">{{ product.name }}</div>
                                 <div>Tax rate: {{ product.taxRate }}%</div>
-                                <div>Price: {{ Number(product.price).toFixed(2) }}</div>
+                                <div>
+                                    Price: {{ Number(product.price).toLocaleString(
+                                        'sr-RS',
+                                        {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2
+                                        })
+                                    }}
+                                </div>
                             </div>
                         </div>
                     </div>

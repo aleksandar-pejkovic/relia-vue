@@ -67,7 +67,14 @@
                                 <div class="fw-bold">{{ invoice.documentType }} - {{ invoice.invoiceNumber }}</div>
                                 <div>Partner: {{ getCompanyName(invoice.companyId) }}</div>
                                 <div>Creation date: {{ formatDate(invoice.creationDate) }}</div>
-                                <div>Total: {{ Number(invoice.total).toFixed(2) }}</div>
+                                <div>Total: {{ Number(invoice.total).toLocaleString(
+                                    'sr-RS',
+                                    {
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2
+                                    })
+                                }}
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -22,16 +22,34 @@
                             {{ item.quantity }}
                         </td>
                         <td>
-                            {{ Number(item.preTax).toFixed(2) }}
+                            {{ Number(item.preTax).toLocaleString(
+                                'sr-RS',
+                                {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })
+                            }}
                         </td>
                         <td>
                             {{ item.taxRate }}
                         </td>
                         <td>
-                            {{ Number(item.price).toFixed(2) }}
+                            {{ Number(item.price).toLocaleString(
+                                'sr-RS',
+                                {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })
+                            }}
                         </td>
                         <td>
-                            {{ Number(item.total).toFixed(2) }}
+                            {{ Number(item.total).toLocaleString(
+                                'sr-RS',
+                                {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })
+                            }}
                         </td>
                         <td>
                             <button @click="deleteItem(item)" type="button" class="btn btn-primary">Remove</button>
@@ -50,8 +68,24 @@
                             <div class="mb-2">
                                 <div class="fw-bold">{{ item.productName }}</div>
                                 <div>Quantity: {{ item.quantity }}</div>
-                                <div>Price: {{ Number(item.price).toFixed(2) }}</div>
-                                <div>Total: {{ Number(item.total).toFixed(2) }}</div>
+                                <div>
+                                    Price: {{ Number(item.price).toLocaleString(
+                                        'sr-RS',
+                                        {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2
+                                        })
+                                    }}
+                                </div>
+                                <div>
+                                    Total: {{ Number(item.total).toLocaleString(
+                                        'sr-RS',
+                                        {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2
+                                        })
+                                    }}
+                                </div>
                                 <button @click="deleteItem(item)" type="button" class="btn btn-primary">Remove</button>
                             </div>
                         </div>

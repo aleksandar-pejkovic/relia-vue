@@ -56,7 +56,15 @@
                                 </div>
                                 <div v-if="invoice.id > 0" class="form-group">
                                     <label for="total">Total</label>
-                                    <input type="text" class="form-control" id="total" v-model="invoice.total" readonly>
+                                    <div class="form-control" readonly>
+                                        {{ Number(invoice.total).toLocaleString(
+                                            'sr-RS',
+                                            {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            })
+                                        }}
+                                    </div>
                                 </div>
                             </div>
                         </div>

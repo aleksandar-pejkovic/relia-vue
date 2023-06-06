@@ -50,8 +50,17 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="price">Price</label>
-                                    <input type="number" step="any" min="0" max="100000000" class="form-control" id="price"
-                                        v-model="product.price" :readonly="readOnly" @input="formatPrice">
+                                    <div v-if="readOnly" class="form-control" readonly>
+                                        {{ Number(product.price).toLocaleString(
+                                            'sr-RS',
+                                            {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            })
+                                        }}
+                                    </div>
+                                    <input v-else type="number" step="any" min="0" max="100000000" class="form-control"
+                                        id="price" v-model="product.price" @input="formatPrice">
                                 </div>
                             </div>
                         </div>

@@ -4,8 +4,8 @@
       <div class="col-12 text-center">
         <h1 class="title">Welcome to ReliaBill</h1>
         <p class="subtitle">Create and manage your invoices with ease</p>
-        <router-link to="/login" class="btn btn-primary btn-lg m-2">Login</router-link>
-        <router-link to="/register" class="btn btn-primary btn-lg m-2">Register</router-link>
+        <router-link to="/login" class="btn btn-primary m-2">Login</router-link>
+        <router-link to="/register" class="btn btn-primary m-2">Register</router-link>
       </div>
     </div>
   </div>

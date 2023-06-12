@@ -15,7 +15,7 @@
                     <span class="visually-hidden">Loading...</span>
                 </div>
                 <div v-else>
-                    <router-link to="/" class="btn btn-secondary btn-lg m-2">Cancel</router-link>
+                    <router-link to="/" class="btn btn-secondary m-2">Cancel</router-link>
                     <button class="btn btn-primary m-2" type="submit">Login</button>
                 </div>
                 <div>

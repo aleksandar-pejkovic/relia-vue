@@ -26,7 +26,7 @@ export const useCompaniesStore = defineStore({
         },
         filterCompanies(searchInput) {
             if (!searchInput) {
-                return this.companies;
+                return null;
             }
             const searchQuery = searchInput.toLowerCase();
             return this.companies.filter((company) =>

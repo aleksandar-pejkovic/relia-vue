@@ -31,7 +31,7 @@ export const useProductsStore = defineStore({
         },
         filterProducts(searchInput) {
             if (!searchInput) {
-                return this.products;
+                return null;
             }
             const searchQuery = searchInput.toLowerCase();
             return this.products.filter((product) =>

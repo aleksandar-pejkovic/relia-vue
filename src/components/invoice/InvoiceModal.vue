@@ -75,7 +75,7 @@
                     </form>
                     <div v-if="invoice.id > 0">
                         <CreateItemForm :invoiceId="invoice.id" />
-                        <InvoicePdfButton v-if="hasItems" :id="invoice.id" :invoiceNumber="invoice.invoiceNumber" />
+                        <InvoicePdfButton v-if="hasItems" :id="invoice.id" :invoice="invoice" />
                         <ReadItems />
                     </div>
                 </div>

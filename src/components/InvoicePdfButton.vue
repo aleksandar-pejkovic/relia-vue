@@ -15,8 +15,8 @@ export default defineComponent({
             type: Number,
             required: true,
         },
-        invoiceNumber: {
-            type: String,
+        invoice: {
+            type: Object,
             required: true,
         },
     },
@@ -27,7 +27,7 @@ export default defineComponent({
     },
     methods: {
         async downloadInvoicePdf() {
-            const authStore = useAuthenticationStore()
+            const authStore = useAuthenticationStore();
             const response = await axios.get(`${useBaseUrlStore().baseUrl}/api/pdf/invoice/${this.id}`, {
                 responseType: 'blob',
                 headers: {
@@ -39,23 +39,22 @@ export default defineComponent({
                 type: 'application/pdf',
             });
 
+            // Get the filename from the invoiceNumber prop
+            const filename = `${this.invoice.documentType} ${this.invoice.invoiceNumber}.pdf`;
+
             const url = window.URL.createObjectURL(blob);
 
-            // Open the PDF in a new browser tab
-            window.open(url, '_blank');
+            // Create a temporary link element to trigger the download
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            link.target = '_blank';
+
+            // Programmatically click the link to start the download
+            link.click();
 
             // Clean up
             window.URL.revokeObjectURL(url);
-        },
-    },
-    props: {
-        id: {
-            type: Number,
-            required: true,
-        },
-        invoiceNumber: {
-            type: String,
-            required: true,
         },
     },
 })

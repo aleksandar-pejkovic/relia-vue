@@ -47,10 +47,6 @@ td,
   cursor: pointer;
 }
 
-.card {
-  color: darkslateblue;
-}
-
 td {
   vertical-align: middle;
   text-align: left;
@@ -67,8 +63,11 @@ label {
 
 .card {
   background-color: #FFFFFF;
+  color: darkslateblue;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-left: darkslateblue solid;
+  border-right: darkslateblue solid;
 }
 
 .card-header {

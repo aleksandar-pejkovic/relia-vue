@@ -98,4 +98,10 @@ export default defineComponent({
 a {
     cursor: pointer;
 }
+
+@media (max-width: 768px) {
+    .pagination {
+        margin-top: 20px;
+    }
+}
 </style>

@@ -66,8 +66,16 @@ label {
   color: darkslateblue;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.side-borders {
   border-left: darkslateblue solid;
   border-right: darkslateblue solid;
+}
+
+.item-borders {
+  border-top: darkslateblue solid;
+  border-bottom: darkslateblue solid;
 }
 
 .card-header {
@@ -191,8 +199,10 @@ label {
   max-height: 50vh;
   animation: fadeIn 0.5s ease-in-out;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  border: 1px solid #a9a9a9; /* Add a border */
-  border-radius: 4px; /* Optional: Add border radius */
+  border: 1px solid #a9a9a9;
+  /* Add a border */
+  border-radius: 4px;
+  /* Optional: Add border radius */
 }
 
 @keyframes fadeIn {

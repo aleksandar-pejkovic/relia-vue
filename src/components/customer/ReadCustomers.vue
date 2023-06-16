@@ -59,7 +59,7 @@
             <div class="row">
                 <div class="col-sm-6 col-md-4 col-lg-3" v-for="customer in customers" :key="customer.id">
                     <div @click="openCustomerModal(customer)" data-bs-toggle="modal" data-bs-target="#customerModal"
-                        class="card mt-2">
+                        class="card mt-2 side-borders">
                         <div class="card-body p-3">
                             <div class="mb-2">
                                 <div class="fw-bold">{{ customer.name }}</div>

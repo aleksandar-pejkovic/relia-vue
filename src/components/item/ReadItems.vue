@@ -63,7 +63,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 col-md-4 col-lg-3" v-for="item in items" :key="item.id">
-                    <div class="card mt-2">
+                    <div class="card mt-2 item-borders">
                         <div class="card-body p-3">
                             <div class="mb-2">
                                 <div class="fw-bold">{{ item.productName }}</div>

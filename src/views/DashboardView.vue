@@ -2,7 +2,7 @@
   <div class="container mt-3">
     <div class="row">
       <div @click="this.$router.push('/invoices')" class="col-md-6">
-        <div class="card">
+        <div class="card mt-3">
           <div class="card-header">
             <h5 class="card-title">Total Invoices</h5>
           </div>
@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="card">
+        <div class="card mt-3">
           <div class="card-header">
             <h5 class="card-title">Total Revenue</h5>
           </div>
@@ -29,9 +29,9 @@
         </div>
       </div>
     </div>
-    <div class="row mt-3">
+    <div class="row">
       <div class="col-md-6">
-        <div class="card">
+        <div class="card mt-3">
           <div class="card-header">
             <h5 class="card-title">Top Invoices</h5>
           </div>
@@ -41,7 +41,7 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="card">
+        <div class="card mt-3">
           <div class="card-header">
             <h5 class="card-title">Top Customers</h5>
           </div>

@@ -76,6 +76,7 @@
                     <div v-if="invoice.id > 0">
                         <CreateItemForm :invoiceId="invoice.id" />
                         <InvoicePdfButton v-if="hasItems" :id="invoice.id" :invoice="invoice" />
+                        <SendInvoiceToClient v-if="hasItems" :id="invoice.id" :invoice="invoice" />
                         <ReadItems />
                     </div>
                 </div>
@@ -94,12 +95,13 @@ import { showInvalidRequestMessage } from '../helper/message'
 import CreateItemForm from '../item/CreateItemForm.vue';
 import ReadItems from '../item/ReadItems.vue';
 import InvoicePdfButton from '@/components/InvoicePdfButton.vue'
+import SendInvoiceToClient from '@/components/SendInvoiceToClient.vue'
 import SearchCustomers from '../customer/SearchCustomers.vue';
 import { validateInvoiceNumber } from '../validation/invoiceValidation'
 
 export default defineComponent({
     components: {
-        ConditionalButtons, CreateItemForm, ReadItems, InvoicePdfButton, SearchCustomers
+        ConditionalButtons, CreateItemForm, ReadItems, InvoicePdfButton, SearchCustomers, SendInvoiceToClient
     },
     computed: {
         invoice: {

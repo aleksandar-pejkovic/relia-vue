@@ -46,7 +46,7 @@ export default {
             }
             const baseUrl = useBaseUrlStore().baseUrl;
             axios
-                .post(`${baseUrl}/api/users/reset-password`, null, {
+                .post(`${baseUrl}/api/password/reset`, null, {
                     params: {
                         email: this.email
                     }

@@ -55,7 +55,7 @@ export default {
             }
             const baseUrl = useBaseUrlStore().baseUrl;
             axios
-                .put(`${baseUrl}/api/users/update-password`, null, {
+                .put(`${baseUrl}/api/password/update`, null, {
                     params: {
                         token: this.token,
                         newPassword: this.newPassword

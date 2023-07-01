@@ -162,7 +162,7 @@ label {
 
 .btn {
   width: 120px;
-  border-radius: 5px;
+  border-radius: 25px;
   font-size: 14px;
   font-weight: bold;
   transition: all 0.3s ease-in-out;

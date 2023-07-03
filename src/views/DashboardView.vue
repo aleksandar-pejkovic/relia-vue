@@ -59,8 +59,6 @@ import { defineComponent } from 'vue';
 import { useInvoicesStore } from '@/stores/invoices';
 import InvoicesChart from '../components/dashboard/InvoicesChart.vue';
 import CompaniesChart from '../components/dashboard/CompaniesChart.vue';
-import { useCompaniesStore } from '../stores/companies';
-import { useProductsStore } from '../stores/products';
 
 export default defineComponent({
   components: {

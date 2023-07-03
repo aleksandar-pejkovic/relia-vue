@@ -1,12 +1,11 @@
 <template>
     <div>
-        <input ref="fileInput" type="file" @change="handleFileUpload" accept=".xlsx, .xls, .csv" :max-size="52880">
         <div v-if="loading" class="spinner-border text-primary" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
         <div v-else>
+            <input type="file" @change="handleFileUpload" accept=".xlsx, .xls, .csv" :max-size="52880">
             <button @click="uploadFile" class="btn btn-secondary m-1">Upload</button>
-            <button @click="reloadProducts" class="btn btn-success m-1">&#x27F3;</button>
         </div>
     </div>
 </template>
@@ -40,27 +39,30 @@ export default {
             const formData = new FormData();
             formData.append('file', this.file);
 
-            axios.post(`${useBaseUrlStore().baseUrl}/api/products/upload`, formData, {
-                headers: {
-                    Authorization: `Bearer ${useAuthenticationStore().token}`,
-                    'Content-Type': 'multipart/form-data',
-                }
-            })
-            showSuccessMessage(
-                "File uploaded",
-                "The time it will take to upload files depends on the size of the file. Wait a while and then click reload button."
-            )
+            try {
+                const response = await axios.post(`${useBaseUrlStore().baseUrl}/api/upload/products`, formData, {
+                    headers: {
+                        Authorization: `Bearer ${useAuthenticationStore().token}`,
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
 
-            this.file = null
-            this.$refs.fileInput.value = null;
-            console.log('uploading done')
-            this.loading = false
+                const responseData = response.data;
+
+                showSuccessMessage(
+                    "File uploaded",
+                    "Products have been updated"
+                );
+                await useProductsStore().fetchProducts();
+            } catch (error) {
+                showErrorMessage(error);
+                console.error("An error occurred during file upload:", error);
+            } finally {
+                this.file = null;
+                console.log('Uploading done');
+                this.loading = false;
+            }
         },
-        async reloadProducts() {
-            this.loading = true
-            await useProductsStore().fetchProducts()
-            this.loading = false
-        }
     },
 };
 </script>

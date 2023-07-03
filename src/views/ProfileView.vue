@@ -30,18 +30,21 @@
                             </div>
                         </div>
                         <div class="row mb-3">
+                            <label for="vat-status-input" class="col-sm-2 col-form-label">VAT status</label>
+                            <div class="col-sm-10 d-flex align-items-center">
+                                <div class="form-control" :readonly="readOnly">
+                                    <span class="mr-2">Set whether user is in VAT system</span>
+                                    <input class="form-check-input checkbox-lg" type="checkbox" id="vat-status-input"
+                                        v-model="user.vatStatus" :disabled="readOnly">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
                             <label for="creation-date" class="col-sm-2 col-form-label">Creation Date</label>
                             <div class="col-sm-10">
                                 <div class="form-control" id="creation-date" readonly>
                                     {{ formatDate(user.creationDate) }}
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="vat-status" class="col-sm-2 col-form-label">VAT status</label>
-                            <div class="col-sm-10">
-                                <input class="form-check-input" type="checkbox" id="vat-status" v-model="user.vatStatus"
-                                    :disabled="readOnly">
                             </div>
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -76,7 +79,7 @@
   
 <script>
 import { useUserStore } from '../stores/user';
-import { defineComponent, watch  } from 'vue';
+import { defineComponent, watch } from 'vue';
 
 export default defineComponent({
     name: 'UserDetails',
@@ -158,3 +161,9 @@ export default defineComponent({
 });
 </script>
   
+<style scoped>
+.checkbox-lg {
+    transform: scale(1.5);
+    margin-left: 10px;
+}
+</style>

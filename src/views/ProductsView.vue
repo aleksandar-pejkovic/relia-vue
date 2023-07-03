@@ -11,6 +11,9 @@
                 </button>
             </div>
         </div>
+        <div class="row">
+            <ProductsReport />
+        </div>
         <div class="row m-2">
             <SearchProducts class="col-md-7" @product-selected="viewProduct" ref="searchProducts" />
             <UploadProductsFromAFile class="col-md-5" />
@@ -27,12 +30,14 @@ import ReadProducts from '../components/product/ReadProducts.vue';
 import { useProductsStore } from '@/stores/products';
 import UploadProductsFromAFile from '../components/product/UploadProductsFromAFile.vue';
 import SearchProducts from '../components/product/SearchProducts.vue';
+import ProductsReport from '../components/product/ProductsReport.vue';
 
 export default defineComponent({
     components: {
         ReadProducts,
         UploadProductsFromAFile,
-        SearchProducts
+        SearchProducts,
+        ProductsReport
     },
     methods: {
         openProductModal() {

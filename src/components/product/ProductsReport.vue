@@ -3,11 +3,11 @@
         <h6>Sort by:</h6>
         <select v-model="sortBy" class="form-select m-2">
             <option value="REVENUE">Revenue</option>
-            <option value="DEBT">Debt</option>
-            <option value="PAYMENTS">Payments</option>
+            <option value="UNITS_SOLD">Units sold</option>
+            <option value="IN_STOCK">In stock</option>
             <option value="NAME">Name</option>
         </select>
-        <button type="button" class="btn btn-primary m-2" @click="downloadCustomersReport">Create Report</button>
+        <button type="button" class="btn btn-primary m-2" @click="downloadProductsReport">Create Report</button>
     </div>
 </template>
   
@@ -24,9 +24,9 @@ export default defineComponent({
         };
     },
     methods: {
-        async downloadCustomersReport() {
+        async downloadProductsReport() {
             const authStore = useAuthenticationStore();
-            const response = await axios.get(`${useBaseUrlStore().baseUrl}/api/pdf/companies-report`, {
+            const response = await axios.get(`${useBaseUrlStore().baseUrl}/api/pdf/products-report`, {
                 responseType: 'blob',
                 params: {
                     sortBy: this.sortBy
@@ -41,7 +41,7 @@ export default defineComponent({
             });
 
             // Get the filename from the invoiceNumber prop
-            const filename = `companies-report.pdf`;
+            const filename = `products-report.pdf`;
 
             const url = window.URL.createObjectURL(blob);
 

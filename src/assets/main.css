@@ -13,9 +13,21 @@ body {
 }
 
 .main {
-  min-height: 93vh;
+  min-height: 75vh;
+}
+
+.main-2 {
+  min-height: 85vh;
+}
+
+.main-home {
   display: flex;
   align-items: center;
+}
+
+.main-login {
+  display: flex;
+  flex-direction: column;
 }
 
 .error {

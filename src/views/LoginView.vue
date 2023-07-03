@@ -1,5 +1,5 @@
 <template>
-    <div class="container mt-3">
+    <div class="main-login main-2 container mt-3">
         <h2>Login</h2>
         <form @submit.prevent="login" class="row justify-content-center align-items-center flex-column">
             <div class="col-md-6">

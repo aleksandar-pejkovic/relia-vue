@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main-2 main-login">
     <SendPasswordToken v-if="!token" />
     <UpdatePassword v-else :token="token" />
   </div>

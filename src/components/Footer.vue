@@ -28,9 +28,6 @@
                     </div>
                 </div>
             </div>
-            <button class="close-btn" @click="hideFooter">
-                <i class="fas fa-times"></i>
-            </button>
         </div>
     </footer>
 </template>
@@ -51,8 +48,6 @@ const hideFooter = () => {
     color: #ccc;
     padding: 20px;
     text-align: center;
-    position: fixed;
-    bottom: 0;
     width: 100%;
 }
 
@@ -73,31 +68,6 @@ a {
 
 .social-icons a:hover {
     color: #fff;
-}
-
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: #ccc;
-    font-size: 24px;
-}
-
-.close-btn:hover {
-    color: #fff;
-}
-
-@media (max-width: 768px),
-(max-height: 928px) {
-    .footer {
-        position: relative;
-        margin-top: 20px;
-        width: auto;
-        height: auto;
-    }
 }
 </style>
   

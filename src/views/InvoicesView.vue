@@ -1,5 +1,5 @@
 <template>
-    <div class="container mt-2">
+    <div class="main container mt-2">
         <div class="row">
             <div class="col-md-10">
                 <h1 clas>Invoices</h1>

@@ -1,5 +1,5 @@
 <template>
-  <div class="main container-fluid">
+  <div class="main-home main-2 container-fluid">
     <div class="row">
       <div class="col-12 text-center">
         <h1 class="title">Welcome to ReliaBill</h1>

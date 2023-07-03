@@ -1,7 +1,7 @@
 <template>
   <Navbar v-if="loggedIn"></Navbar>
   <RouterView />
-  <Footer v-if="loggedIn"></Footer>
+  <Footer></Footer>
 </template>
 
 <script>

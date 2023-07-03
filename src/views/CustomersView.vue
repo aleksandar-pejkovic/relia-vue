@@ -1,8 +1,11 @@
 <template>
     <div class="container mt-2">
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-5">
                 <h1 clas>Partners</h1>
+            </div>
+            <div class="col-md-5">
+                <CustomersReport />
             </div>
             <div class="col-md-2">
                 <button @click="openCustomerModal" type="button" class="btn btn-success m-2" data-bs-toggle="modal"
@@ -11,11 +14,8 @@
                 </button>
             </div>
         </div>
-        <div class="row">
-            <CustomersReport />
-        </div>
         <div class="row m-3">
-            <SearchCustomers class="col-md-7" @company-selected="viewCompany" ref="searchCompanies" />
+            <SearchCustomers class="col-md-6" @company-selected="viewCompany" ref="searchCompanies" />
         </div>
         <div class="row">
             <ReadCustomers ref="readCustomers" />

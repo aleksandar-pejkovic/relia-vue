@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { useBaseUrlStore } from './baseUrl';
-import { showErrorMessage, showSuccessMessage, showInvalidRequestMessage } from '../components/helper/message'
+import { showErrorMessage } from '../components/helper/message'
 import axios from 'axios'
 
 export const useAuthenticationStore = defineStore({
@@ -31,7 +31,6 @@ export const useAuthenticationStore = defineStore({
         // Update the store's state with the response data
         this.setToken(token)
         this.setUsername(username)
-        showSuccessMessage(`Welcome ${username}!`, "Nice to see you!");
       } catch (error) {
         console.error(error)
         showErrorMessage(error)

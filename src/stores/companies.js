@@ -145,6 +145,14 @@ export const useCompaniesStore = defineStore({
                 showErrorMessage(error)
             }
         },
+        setCompanies(companies) {
+            this.companies = companies
+            localStorage.setItem('companies', JSON.stringify(companies));
+        },
+        setOwnCompany(company) {
+            this.ownCompany = company
+            localStorage.setItem('ownCompany', JSON.stringify(company))
+        },
         reset() {
             this.companies = null
             this.ownCompany = null

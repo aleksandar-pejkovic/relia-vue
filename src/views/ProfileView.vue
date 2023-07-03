@@ -43,7 +43,7 @@
                             <label for="creation-date" class="col-sm-2 col-form-label">Creation Date</label>
                             <div class="col-sm-10">
                                 <div class="form-control" id="creation-date" readonly>
-                                    {{ formatDate(user.creationDate) }}
+                                    {{ formatDate(user?.creationDate ?? new Date()) }}
                                 </div>
                             </div>
                         </div>

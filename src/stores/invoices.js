@@ -106,6 +106,10 @@ export const useInvoicesStore = defineStore({
                 showErrorMessage(error)
             }
         },
+        setInvoices(invoices) {
+            this.invoices = invoices
+            localStorage.setItem('invoices', JSON.stringify(invoices))
+        },
         reset() {
             this.invoices = null
             localStorage.removeItem('invoices')

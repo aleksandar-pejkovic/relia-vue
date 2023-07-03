@@ -103,6 +103,10 @@ export const useProductsStore = defineStore({
                 showErrorMessage(error)
             }
         },
+        setProducts(products) {
+            this.products = products
+            localStorage.setItem('products', JSON.stringify(products))
+        },
         reset() {
             this.products = null
             localStorage.removeItem('products')

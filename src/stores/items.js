@@ -101,6 +101,10 @@ export const useItemsStore = defineStore({
                 showErrorMessage(error)
             }
         },
+        setItems(items) {
+            this.items = items
+            localStorage.setItem('items', JSON.stringify(items));
+        },
         reset() {
             this.items = null;
             localStorage.removeItem('items');

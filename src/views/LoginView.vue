@@ -30,11 +30,13 @@
 import { defineComponent } from 'vue'
 import { showSuccessMessage } from '../components/helper/message'
 import { useAuthenticationStore } from '@/stores/authentication'
+import { useBaseUrlStore } from '@/stores/baseUrl'
 import { useCompaniesStore } from '@/stores/companies'
 import { useProductsStore } from '@/stores/products'
 import { useUserStore } from '@/stores/user'
 import { useInvoicesStore } from '@/stores/invoices'
 import { useItemsStore } from '@/stores/items'
+import axios from 'axios'
 
 export default defineComponent({
     name: "Login",
@@ -50,21 +52,19 @@ export default defineComponent({
             this.loading = true
             try {
                 const authStore = useAuthenticationStore()
-                const userStore = useUserStore()
+                const baseUrlStore = useBaseUrlStore()
                 const companiesStore = useCompaniesStore()
-                const productsStore = useProductsStore()
-                const invoicesStore = useInvoicesStore()
-                const itemsStore = useItemsStore()
 
                 await authStore.login(this.username, this.password)
-                await userStore.fetchUser()
-                await companiesStore.fetchOwnCompany()
-                await companiesStore.fetchCompanies()
-                await invoicesStore.fetchInvoices()
-                await productsStore.fetchProducts()
-                await itemsStore.fetchAllItems()
-                this.loading = false
 
+                const response = await axios.get(`${baseUrlStore.baseUrl}/api/auth/data`, {
+                    headers: { Authorization: `Bearer ${authStore.token}` }
+                })
+                const dataMap = response.data
+
+                await this.setUsersData(dataMap)
+
+                showSuccessMessage(`Welcome ${authStore.username}!`, "Nice to see you!");
                 if (companiesStore.ownCompany) {
                     this.$router.push("/dashboard");
                 } else if (authStore.token) {
@@ -72,8 +72,29 @@ export default defineComponent({
                     this.$router.push('/my-company')
                 }
             } catch (error) {
-                this.loading = false
             }
+            this.loading = false
+        },
+        async setUsersData(dataMap) {
+            const userStore = useUserStore()
+            const companiesStore = useCompaniesStore()
+            const productsStore = useProductsStore()
+            const invoicesStore = useInvoicesStore()
+            const itemsStore = useItemsStore()
+
+            const user = dataMap.user;
+            const ownCompany = dataMap.ownCompany;
+            const companies = dataMap.companies;
+            const invoices = dataMap.invoices;
+            const products = dataMap.products;
+            const items = dataMap.items;
+
+            userStore.setUser(user)
+            companiesStore.setOwnCompany(ownCompany)
+            companiesStore.setCompanies(companies)
+            invoicesStore.setInvoices(invoices)
+            productsStore.setProducts(products)
+            itemsStore.setItems(items)
         },
     },
 })

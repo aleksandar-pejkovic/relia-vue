@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="row m-3">
-            <SearchCustomers class="col-md-6" @company-selected="viewCompany" ref="searchCompanies" />
+            <SearchCustomers class="col-md-6 mt-3" @company-selected="viewCompany" ref="searchCompanies" />
         </div>
         <div class="row">
             <ReadCustomers ref="readCustomers" />

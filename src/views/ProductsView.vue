@@ -15,8 +15,8 @@
             </div>
         </div>
         <div class="row m-3">
-            <SearchProducts class="col-md-6" @product-selected="viewProduct" ref="searchProducts" />
-            <UploadProductsFromAFile class="col-md-5" />
+            <SearchProducts class="col-md-6 mt-3" @product-selected="viewProduct" ref="searchProducts" />
+            <UploadProductsFromAFile class="col-md-5 mt-3" />
         </div>
         <div class="row">
             <ReadProducts ref="readProducts" />

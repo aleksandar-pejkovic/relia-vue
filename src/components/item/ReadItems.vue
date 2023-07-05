@@ -100,6 +100,7 @@
 import { defineComponent } from 'vue';
 import { useItemsStore } from '@/stores/items'
 import { useInvoicesStore } from '@/stores/invoices';
+import { useProductsStore } from '@/stores/products';
 
 export default defineComponent({
     computed: {
@@ -127,9 +128,10 @@ export default defineComponent({
         handleResize() {
             this.isSmallScreen = window.innerWidth <= 768;
         },
-        deleteItem(item) {
+        async deleteItem(item) {
             useItemsStore().deleteItem(item);
             useInvoicesStore().reduceTotal(item)
+            await useProductsStore().discardSale(item.productName, item.quantity)
         }
     },
 })

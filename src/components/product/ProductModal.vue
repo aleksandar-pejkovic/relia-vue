@@ -31,6 +31,11 @@
                                         :readonly="readOnly" @input="validateUnit">
                                     <span v-if="unitError" class="error">{{ unitError }}</span>
                                 </div>
+                                <div v-if="productExists" class="form-group">
+                                    <label for="inStock">In stock</label>
+                                    <input type="text" class="form-control" id="inStock" v-model="product.inStock"
+                                        :readonly="readOnly" @input="validateUnit">
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -61,6 +66,11 @@
                                     </div>
                                     <input v-else type="number" step="any" min="0" max="100000000" class="form-control"
                                         id="price" v-model="product.price" @input="formatPrice">
+                                </div>
+                                <div v-if="productExists" class="form-group">
+                                    <label for="unitsSold">Units Sold</label>
+                                    <input type="text" class="form-control" id="unitsSold" v-model="product.unitsSold"
+                                        readonly>
                                 </div>
                             </div>
                         </div>

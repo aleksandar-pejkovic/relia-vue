@@ -34,6 +34,7 @@
 <script>
 import { defineComponent } from 'vue';
 import { useItemsStore } from '../../stores/items';
+import { useProductsStore } from '@/stores/products';
 import SearchProducts from '../product/SearchProducts.vue';
 import Swal from 'sweetalert2'
 
@@ -51,7 +52,7 @@ export default defineComponent({
         return {
             item: {},
             product: {},
-            selectedProduct: null,
+            selectedProduct: {},
             loading: false
         }
     },
@@ -93,6 +94,7 @@ export default defineComponent({
             }
             this.loading = true
             await useItemsStore().createItem(this.item)
+            await useProductsStore().registerSale(this.selectedProduct, this.item.quantity)
             this.loading = false
             this.searchQuery = ''
             this.product = {}

@@ -115,6 +115,25 @@ export const useProductsStore = defineStore({
         clearEditProduct() {
             this.editProduct = {}
             localStorage.removeItem('editProduct')
+        },
+        async registerSale(soldProduct, quantity) {
+            const index = this.products.findIndex(product => product.id === soldProduct.id)
+            if (index >= 0) {
+                soldProduct.inStock -= quantity
+                soldProduct.unitsSold += quantity
+                this.products[index] = soldProduct
+                localStorage.setItem('products', JSON.stringify(this.products))
+            }
+        },
+        async discardSale(productName, quantity) {
+            const index = this.products.findIndex(product => product.name === productName)
+            if (index >= 0) {
+                const unsoldProduct = this.products[index]
+                unsoldProduct.inStock += quantity
+                unsoldProduct.unitsSold -= quantity
+                this.products[index] = unsoldProduct
+                localStorage.setItem('products', JSON.stringify(this.products))
+            }
         }
     }
 })

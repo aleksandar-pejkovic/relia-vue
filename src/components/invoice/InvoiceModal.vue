@@ -7,7 +7,7 @@
                 <div class="modal-header">
                     <h1 v-if="!invoice.id > 0" class="modal-title fs-5" id="staticBackdropLabel">Invoice</h1>
                     <h1 v-else class="modal-title fs-5" id="staticBackdropLabel">{{ invoice.documentType }} {{
-                        invoice.invoiceNumber }}</h1>
+                        invoice.invoiceNumber }} - {{ invoice.companyName }}</h1>
                     <button @click="cancelEditing" type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                         ref="closeBtn">Close</button>
                 </div>

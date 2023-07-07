@@ -30,16 +30,6 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="vat-status-input" class="col-sm-2 col-form-label">VAT status</label>
-                            <div class="col-sm-10 d-flex align-items-center">
-                                <div class="form-control" :readonly="readOnly">
-                                    <span class="mr-2">Set whether user is in VAT system</span>
-                                    <input class="form-check-input checkbox-lg" type="checkbox" id="vat-status-input"
-                                        v-model="user.vatStatus" :disabled="readOnly">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
                             <label for="creation-date" class="col-sm-2 col-form-label">Creation Date</label>
                             <div class="col-sm-10">
                                 <div class="form-control" id="creation-date" readonly>
@@ -145,7 +135,7 @@ export default defineComponent({
             }
         },
         validateName() {
-            const nameRegex = /^[A-Z][a-zA-Z]*([ \u002D][A-Z][a-zA-Z]*)*$/;
+            const nameRegex = /^[A-Z][a-zA-ZŠĐČĆŽšđčćž]*([ \u002D][A-Z][a-zA-ZŠĐČĆŽšđčćž]*)*$/;
             const isValidName = nameRegex.test(this.user.name)
             if (!isValidName) {
                 this.nameError = 'Please enter a valid name'
@@ -160,10 +150,3 @@ export default defineComponent({
     },
 });
 </script>
-  
-<style scoped>
-.checkbox-lg {
-    transform: scale(1.5);
-    margin-left: 10px;
-}
-</style>

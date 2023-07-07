@@ -77,6 +77,12 @@
                                         :readonly="readOnly" @input="validateDirector">
                                     <span v-if="directorError" class="error">{{ directorError }}</span>
                                 </div>
+                                <div class="form-group">
+                                    <label for="vat-status-input">VAT status</label>
+                                    <br />
+                                    <input class="form-check-input checkbox-lg" type="checkbox" id="vat-status-input"
+                                        v-model="company.vatStatus" :disabled="readOnly">
+                                </div>
                             </div>
                         </div>
                         <div v-if="!companyExists">
@@ -112,7 +118,7 @@
 </template>
 
 <script>
-import { defineComponent, watch  } from 'vue';
+import { defineComponent, watch } from 'vue';
 import { useCompaniesStore } from '@/stores/companies';
 import { showErrorMessage, showSuccessMessage, showInvalidRequestMessage } from '../components/helper/message'
 import {
@@ -288,5 +294,11 @@ export default defineComponent({
         },
     },
 })
-
 </script>
+
+<style scoped>
+.checkbox-lg {
+    transform: scale(1.5);
+    margin: 15px;
+}
+</style>

@@ -28,7 +28,7 @@
   
 <script>
 import { defineComponent } from 'vue'
-import { showSuccessMessage } from '../components/helper/message'
+import { showSuccessMessage, showErrorMessage } from '../components/helper/message'
 import { useAuthenticationStore } from '@/stores/authentication'
 import { useBaseUrlStore } from '@/stores/baseUrl'
 import { useCompaniesStore } from '@/stores/companies'
@@ -50,29 +50,38 @@ export default defineComponent({
     methods: {
         async login() {
             this.loading = true
-            try {
-                const authStore = useAuthenticationStore()
-                const baseUrlStore = useBaseUrlStore()
-                const companiesStore = useCompaniesStore()
+            const authStore = useAuthenticationStore()
+            const baseUrlStore = useBaseUrlStore()
+            const companiesStore = useCompaniesStore()
 
-                await authStore.login(this.username, this.password)
+            const authHeader = "Basic " + btoa(this.username + ":" + this.password);
 
-                const response = await axios.get(`${baseUrlStore.baseUrl}/api/auth/data`, {
-                    headers: { Authorization: `Bearer ${authStore.token}` }
-                })
-                const dataMap = response.data
-
-                await this.setUsersData(dataMap)
-
-                showSuccessMessage(`Welcome ${authStore.username}!`, "Nice to see you!");
-                if (companiesStore.ownCompany) {
-                    this.$router.push("/dashboard");
-                } else if (authStore.token) {
-                    showSuccessMessage('Enter your company data', 'You can create it later or update it at any time')
-                    this.$router.push('/my-company')
+            await axios.post(`${baseUrlStore.baseUrl}/api/auth/login`, null, {
+                headers: {
+                    Authorization: authHeader
                 }
-            } catch (error) {
-            }
+            })
+                .then(async response => {
+                    const dataMap = response.data;
+                    const token = dataMap.token;
+                    authStore.setToken(token);
+                    authStore.setUsername(this.username);
+
+                    await this.setUsersData(dataMap);
+
+                    showSuccessMessage(`Welcome ${authStore.username}!`, "Nice to see you!");
+
+                    if (companiesStore.ownCompany) {
+                        this.$router.push("/dashboard");
+                    } else {
+                        showSuccessMessage('Enter your company data', 'You can create it later or update it at any time');
+                        this.$router.push('/my-company');
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    showErrorMessage(error);
+                });
             this.loading = false
         },
         async setUsersData(dataMap) {

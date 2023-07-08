@@ -18,24 +18,6 @@ export const useAuthenticationStore = defineStore({
     })
   },
   actions: {
-    async login(username, password) {
-      try {
-        const authHeader = "Basic " + btoa(username + ":" + password);
-        const response = await axios.post(`${useBaseUrlStore().baseUrl}/api/auth/login`, null, {
-          headers: {
-            Authorization: authHeader
-          }
-        })
-        const token = response.data
-
-        // Update the store's state with the response data
-        this.setToken(token)
-        this.setUsername(username)
-      } catch (error) {
-        console.error(error)
-        showErrorMessage(error)
-      }
-    },
     setToken(token) {
       this.token = token;
       localStorage.setItem('token', token);

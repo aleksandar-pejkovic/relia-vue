@@ -3,7 +3,7 @@ import Swal from 'sweetalert2'
 export function showErrorMessage(error) {
     let errorMessages = error.message;
     if (error.response && error.response.data) {
-        errorMessages = error.response.data.error || error.response.data.message || errorMessages;
+        errorMessages = error.response.data.error || error.response.data.message || error.response.data || errorMessages;
     }
     Swal.fire({
         title: 'Request unsuccessful!',

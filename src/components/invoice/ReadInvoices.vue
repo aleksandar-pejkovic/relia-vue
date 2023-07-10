@@ -30,7 +30,7 @@
                             {{ invoice.documentType }} - {{ invoice.invoiceNumber }}
                         </td>
                         <td>
-                            {{ getCompanyName(invoice.companyId) }}
+                            {{ invoice.companyName }}
                         </td>
                         <td>
                             {{ formatDate(invoice.creationDate) }}
@@ -65,7 +65,7 @@
                         <div class="card-body p-3">
                             <div class="mb-2">
                                 <div class="fw-bold">{{ invoice.documentType }} - {{ invoice.invoiceNumber }}</div>
-                                <div>Partner: {{ getCompanyName(invoice.companyId) }}</div>
+                                <div>Partner: {{ invoice.companyName }}</div>
                                 <div>Creation date: {{ formatDate(invoice.creationDate) }}</div>
                                 <div>Total: {{ Number(invoice.total).toLocaleString(
                                     'sr-RS',
@@ -138,13 +138,6 @@ export default defineComponent({
         },
         handleResize() {
             this.isSmallScreen = window.innerWidth <= 768;
-        },
-        getCompanyName(companyId) {
-            const companiesStore = useCompaniesStore();
-            const company = companiesStore.companies.find(
-                (company) => company.id === companyId
-            );
-            return company ? company.name : "";
         },
         openInvoiceModal(invoice) {
             const invoicesStore = useInvoicesStore()

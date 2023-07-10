@@ -1,6 +1,5 @@
 <template>
     <div class="container row">
-        <h6>Sort by:</h6>
         <select v-model="sortBy" class="form-select m-2">
             <option value="REVENUE">Revenue</option>
             <option value="DEBT">Debt</option>

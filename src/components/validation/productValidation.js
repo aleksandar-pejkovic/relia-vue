@@ -18,10 +18,10 @@ export function validateUnit(unit) {
 }
 
 export function validatePlu(plu) {
-    if (plu < 0 || plu > 10000) {
-        return "Plu must be a number between 0 and 10000";
-    } else {
+    if (plu > 0 && plu < 100000) {
         return "";
+    } else {
+        return "Plu must be a number between 1 and 99999";
     }
 }
 
@@ -37,7 +37,7 @@ export function validateDescription(description) {
 export function validatePrice(price) {
     const minPrice = 0;
     const maxPrice = 100000000.00;
-    if (price < minPrice || price > maxPrice) {
+    if (price < minPrice || price > maxPrice || !price) {
         return `Please enter a price between ${minPrice.toFixed(2)} and ${maxPrice.toFixed(2)}`;
     } else {
         return "";

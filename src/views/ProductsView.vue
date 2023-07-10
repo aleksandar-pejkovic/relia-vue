@@ -22,22 +22,28 @@
             <ReadProducts ref="readProducts" />
         </div>
     </div>
+    <ProductModal ref="modal" />
 </template>
 
 <script>
 import { defineComponent } from 'vue';
 import ReadProducts from '../components/product/ReadProducts.vue';
+import ProductModal from '../components/product/ProductModal.vue';
 import { useProductsStore } from '@/stores/products';
 import UploadProductsFromAFile from '../components/product/UploadProductsFromAFile.vue';
 import SearchProducts from '../components/product/SearchProducts.vue';
 import ProductsReport from '../components/product/ProductsReport.vue';
 
 export default defineComponent({
+    beforeUnmount() {
+        this.$refs.modal.$refs.closeBtn.click()
+    },
     components: {
         ReadProducts,
         UploadProductsFromAFile,
         SearchProducts,
-        ProductsReport
+        ProductsReport,
+        ProductModal
     },
     methods: {
         openProductModal() {

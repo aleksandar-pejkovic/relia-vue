@@ -21,20 +21,26 @@
             <ReadCustomers ref="readCustomers" />
         </div>
     </div>
+    <CustomerModal ref="modal" />
 </template>
 
 <script>
 import { defineComponent } from 'vue';
 import ReadCustomers from '../components/customer/ReadCustomers.vue';
+import CustomerModal from '../components/customer/CustomerModal.vue';
 import { useCompaniesStore } from '../stores/companies';
 import SearchCustomers from '../components/customer/SearchCustomers.vue';
 import CustomersReport from '../components/customer/CustomersReport.vue';
 
 export default defineComponent({
+    beforeUnmount() {
+        this.$refs.modal.$refs.closeBtn.click()
+    },
     components: {
         ReadCustomers,
         SearchCustomers,
-        CustomersReport
+        CustomersReport,
+        CustomerModal
     },
     methods: {
         openCustomerModal() {

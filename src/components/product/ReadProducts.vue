@@ -1,5 +1,4 @@
 <template>
-    <ProductModal />
     <div v-if="!isSmallScreen">
         <div class="table-responsive">
             <table class="table table-striped table-hover">
@@ -83,10 +82,10 @@
 <script>
 import { defineComponent } from 'vue';
 import { useProductsStore } from '@/stores/products';
-import ProductModal from './ProductModal.vue';
 import Pagination from '../Pagination.vue';
 
 export default defineComponent({
+    components: { Pagination },
     computed: {
         products() {
             const start = (this.currentPage - 1) * this.pageSize;
@@ -170,6 +169,5 @@ export default defineComponent({
             }
         },
     },
-    components: { ProductModal, Pagination }
 })
 </script>

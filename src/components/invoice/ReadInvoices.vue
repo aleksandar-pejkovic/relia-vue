@@ -64,8 +64,8 @@
                         <div class="card-body p-3">
                             <div class="mb-2">
                                 <div class="fw-bold mt-2">{{ invoice.documentType }} - {{ invoice.invoiceNumber }}</div>
-                                <div class="mt-2">Partner: {{ invoice.companyName }}</div>
-                                <div class="mt-2">Creation date: {{ formatDate(invoice.creationDate) }}</div>
+                                <div class="mt-2">{{ invoice.companyName }}</div>
+                                <div class="mt-2">{{ formatDate(invoice.creationDate) }}</div>
                                 <div class="mt-2">Total: {{ Number(invoice.total).toLocaleString(
                                     'sr-RS',
                                     {
@@ -81,7 +81,6 @@
             </div>
         </div>
     </div>
-    <InvoiceModal />
     <Pagination :currentPage="currentPage" :totalPages="totalPages" @previous-page="previousPage" @next-page="nextPage"
         @go-to-page="goToPage" />
 </template>
@@ -91,11 +90,10 @@ import { defineComponent } from 'vue';
 import { useInvoicesStore } from '@/stores/invoices'
 import { useCompaniesStore } from '@/stores/companies'
 import { useItemsStore } from '@/stores/items';
-import InvoiceModal from './InvoiceModal.vue';
 import Pagination from '../Pagination.vue';
 
 export default defineComponent({
-    components: { InvoiceModal, Pagination },
+    components: { Pagination },
     computed: {
         invoices: {
             get() {

@@ -15,6 +15,7 @@
             <ReadInvoices />
         </div>
     </div>
+    <InvoiceModal ref="modal" />
 </template>
 
 <script>
@@ -22,10 +23,14 @@ import { defineComponent } from 'vue';
 import ReadInvoices from '../components/invoice/ReadInvoices.vue';
 import { useInvoicesStore } from '@/stores/invoices';
 import { useItemsStore } from '@/stores/items';
+import InvoiceModal from '../components/invoice/InvoiceModal.vue';
 
 export default defineComponent({
+    beforeUnmount() {
+        this.$refs.modal.$refs.closeBtn.click()
+    },
     components: {
-        ReadInvoices
+        ReadInvoices, InvoiceModal
     },
     methods: {
         openInvoiceModal() {

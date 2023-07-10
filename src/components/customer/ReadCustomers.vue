@@ -1,5 +1,4 @@
 <template>
-    <CustomerModal />
     <div v-if="!isSmallScreen">
         <div class="table-responsive">
             <table class="table table-striped table-hover">
@@ -56,9 +55,9 @@
                         <div class="card-body p-3">
                             <div class="mb-2">
                                 <div class="fw-bold mt-2">{{ customer.name }}</div>
-                                <div class="mt-2">City: {{ customer.city }}</div>
+                                <div class="mt-2">{{ customer.city }}</div>
                                 <div class="mt-2">Director: {{ customer.director }}</div>
-                                <div class="mt-2">Phone: {{ customer.phone }}</div>
+                                <div class="mt-2">{{ customer.phone }}</div>
                             </div>
                         </div>
                     </div>
@@ -74,11 +73,10 @@
 <script>
 import { defineComponent } from 'vue';
 import { useCompaniesStore } from '@/stores/companies'
-import CustomerModal from './CustomerModal.vue';
 import Pagination from '../Pagination.vue';
 
 export default defineComponent({
-    components: { CustomerModal, Pagination },
+    components: { Pagination },
     computed: {
         customers: {
             get() {

@@ -25,7 +25,7 @@ export default {
             const topInvoices = sortedInvoices.slice(0, 10);
 
             const totals = topInvoices.map((invoice) => Number(invoice.total).toFixed(2));
-            const labels = topInvoices.map((invoice) => invoice.documentType + ' ' + invoice.invoiceNumber);
+            const labels = topInvoices.map((invoice) => invoice.invoiceNumber);
 
             const chartCanvas = this.$refs.chartCanvas;
             const ctx = chartCanvas.getContext('2d');

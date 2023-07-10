@@ -11,6 +11,10 @@
                     <button @click="cancelEditing" type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                         ref="closeBtn">Close</button>
                 </div>
+                <div>
+                    <InvoicePdfButton v-if="hasItems" :id="invoice.id" :invoice="invoice" />
+                    <SendInvoiceToClient v-if="hasItems" :id="invoice.id" :invoice="invoice" />
+                </div>
                 <div class="modal-body">
                     <form>
                         <div class="row">
@@ -75,8 +79,6 @@
                     </form>
                     <div v-if="invoice.id > 0">
                         <CreateItemForm :invoiceId="invoice.id" />
-                        <InvoicePdfButton v-if="hasItems" :id="invoice.id" :invoice="invoice" />
-                        <SendInvoiceToClient v-if="hasItems" :id="invoice.id" :invoice="invoice" />
                         <ReadItems />
                     </div>
                 </div>

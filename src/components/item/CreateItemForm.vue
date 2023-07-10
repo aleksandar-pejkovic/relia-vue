@@ -1,20 +1,19 @@
 <template>
     <div class="container mt-3">
-        <h4>Add Item</h4>
         <form @submit.prevent="createItem" class="justify-content-center align-items-center flex-column">
             <div class="row m-3">
                 <div class="col-md-4">
-                    <SearchProducts @product-selected="selectProduct" ref="searchProducts" />
+                    <SearchProducts class="m-2" @product-selected="selectProduct" ref="searchProducts" />
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
-                        <input type="number" step="any" min="1" max="1000000" class="form-control" id="quantity"
+                        <input type="number" step="any" min="1" max="1000000" class="form-control m-2" id="quantity"
                             placeholder="Quantity" v-model="item.quantity" @input="formatQuantity">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <input type="number" step="any" min="0" max="100000000" class="form-control" id="price"
+                        <input type="number" step="any" min="0" max="100000000" class="form-control m-2" id="price"
                             placeholder="Price" v-model="item.price" @input="formatPrice">
                     </div>
                 </div>
@@ -23,7 +22,7 @@
                         <span class="visually-hidden">Loading...</span>
                     </div>
                     <div v-else>
-                        <button id="addItemBtn" class="btn btn-success" type="submit">+</button>
+                        <button id="addItemBtn" class="btn btn-outline-success m-2" type="submit">+</button>
                     </div>
                 </div>
             </div>
@@ -116,6 +115,5 @@ export default defineComponent({
 <style scoped>
 #addItemBtn {
     width: 50px;
-    height: 100%;
 }
 </style>

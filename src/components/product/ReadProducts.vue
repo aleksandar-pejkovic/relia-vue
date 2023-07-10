@@ -16,6 +16,9 @@
                             <i v-if="sortBy === 'name' && !sortAsc" class="arrow-down"></i>
                         </th>
                         <th class="col-2">
+                            In stock
+                        </th>
+                        <th class="col-2">
                             Tax rate
                         </th>
                         <th @click="sortList('price')" class="col-2 clickable">
@@ -23,7 +26,6 @@
                             <i v-if="sortBy === 'price' && sortAsc" class="arrow-up"></i>
                             <i v-if="sortBy === 'price' && !sortAsc" class="arrow-down"></i>
                         </th>
-                        <th class="col-2"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,6 +33,7 @@
                         data-bs-toggle="modal" data-bs-target="#productModal">
                         <td>{{ product.plu }}</td>
                         <td>{{ product.name }}</td>
+                        <td>{{ product.inStock }}</td>
                         <td>{{ product.taxRate }}%</td>
                         <td>
                             {{ Number(product.price).toLocaleString(
@@ -40,12 +43,6 @@
                                     maximumFractionDigits: 2
                                 })
                             }}
-                        </td>
-                        <td>
-                            <button @click="openProductModal(product)" type="button" class="btn btn-primary"
-                                data-bs-toggle="modal" data-bs-target="#productModal">
-                                View
-                            </button>
                         </td>
                     </tr>
                 </tbody>
@@ -60,9 +57,9 @@
                         class="card mt-2 side-borders">
                         <div class="card-body p-3">
                             <div class="mb-2">
-                                <div class="fw-bold">{{ product.name }}</div>
-                                <div>Tax rate: {{ product.taxRate }}%</div>
-                                <div>
+                                <div class="fw-bold mt-2">{{ product.name }}</div>
+                                <div class="mt-2">Tax rate: {{ product.taxRate }}%</div>
+                                <div class="mt-2">
                                     Price: {{ Number(product.price).toLocaleString(
                                         'sr-RS',
                                         {

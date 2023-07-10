@@ -15,12 +15,12 @@
                             <i v-if="sortBy === 'dueDate' && sortAsc" class="arrow-up"></i>
                             <i v-if="sortBy === 'dueDate' && !sortAsc" class="arrow-down"></i>
                         </th>
+                        <th class="col-2"></th>
                         <th @click="sortList('total')" class="col-2 clickable">
                             Total
                             <i v-if="sortBy === 'total' && sortAsc" class="arrow-up"></i>
                             <i v-if="sortBy === 'total' && !sortAsc" class="arrow-down"></i>
                         </th>
-                        <th class="col-2"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,6 +39,9 @@
                             {{ formatDate(invoice.dueDate) }}
                         </td>
                         <td>
+                            {{ invoice.invoiceStatus }}
+                        </td>
+                        <td>
                             {{ Number(invoice.total).toLocaleString(
                                 'sr-RS',
                                 {
@@ -46,10 +49,6 @@
                                     maximumFractionDigits: 2
                                 })
                             }}
-                        </td>
-                        <td>
-                            <button @click="openInvoiceModal(invoice)" data-bs-toggle="modal" data-bs-target="#invoiceModal"
-                                class="btn btn-primary">View</button>
                         </td>
                     </tr>
                 </tbody>
@@ -64,10 +63,10 @@
                         class="card mt-2 side-borders">
                         <div class="card-body p-3">
                             <div class="mb-2">
-                                <div class="fw-bold">{{ invoice.documentType }} - {{ invoice.invoiceNumber }}</div>
-                                <div>Partner: {{ invoice.companyName }}</div>
-                                <div>Creation date: {{ formatDate(invoice.creationDate) }}</div>
-                                <div>Total: {{ Number(invoice.total).toLocaleString(
+                                <div class="fw-bold mt-2">{{ invoice.documentType }} - {{ invoice.invoiceNumber }}</div>
+                                <div class="mt-2">Partner: {{ invoice.companyName }}</div>
+                                <div class="mt-2">Creation date: {{ formatDate(invoice.creationDate) }}</div>
+                                <div class="mt-2">Total: {{ Number(invoice.total).toLocaleString(
                                     'sr-RS',
                                     {
                                         minimumFractionDigits: 2,

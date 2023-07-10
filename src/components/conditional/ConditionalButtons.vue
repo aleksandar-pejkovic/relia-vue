@@ -24,8 +24,8 @@
                 <span class="visually-hidden">Loading...</span>
             </div>
             <div v-else>
-                <button @click="deleteObject" type="button" class="btn btn-danger m-2">Delete</button>
-                <button @click="enableEditing" type="button" class="btn btn-primary m-2">Edit</button>
+                <button @click="deleteObject" type="button" class="btn btn-outline-danger m-2">Delete</button>
+                <button @click="enableEditing" type="button" class="btn btn-outline-primary m-2">Edit</button>
             </div>
         </div>
     </div>

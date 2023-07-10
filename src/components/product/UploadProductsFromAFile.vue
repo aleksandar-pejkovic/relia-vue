@@ -5,7 +5,7 @@
         </div>
         <div v-else>
             <input type="file" @change="handleFileUpload" accept=".xlsx, .xls, .csv" :max-size="52880">
-            <button @click="uploadFile" class="btn btn-secondary m-1">Upload</button>
+            <button @click="uploadFile" class="btn btn-outline-secondary m-1">Upload</button>
         </div>
     </div>
 </template>

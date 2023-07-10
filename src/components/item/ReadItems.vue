@@ -52,7 +52,7 @@
                             }}
                         </td>
                         <td>
-                            <button @click="deleteItem(item)" type="button" class="btn btn-primary">Remove</button>
+                            <button @click="deleteItem(item)" type="button" id="removeItemBtn" class="btn btn-outline-danger">-</button>
                         </td>
                     </tr>
                 </tbody>
@@ -66,9 +66,9 @@
                     <div class="card mt-2 item-borders">
                         <div class="card-body p-3">
                             <div class="mb-2">
-                                <div class="fw-bold">{{ item.productName }}</div>
-                                <div>Quantity: {{ item.quantity }}</div>
-                                <div>
+                                <div class="fw-bold mt-2">{{ item.productName }}</div>
+                                <div class="mt-2">Quantity: {{ item.quantity }}</div>
+                                <div class="mt-2">
                                     Price: {{ Number(item.price).toLocaleString(
                                         'sr-RS',
                                         {
@@ -77,7 +77,7 @@
                                         })
                                     }}
                                 </div>
-                                <div>
+                                <div class="mt-2">
                                     Total: {{ Number(item.total).toLocaleString(
                                         'sr-RS',
                                         {
@@ -86,7 +86,7 @@
                                         })
                                     }}
                                 </div>
-                                <button @click="deleteItem(item)" type="button" class="btn btn-primary">Remove</button>
+                                <button @click="deleteItem(item)" type="button" id="removeItemBtn" class="btn btn-outline-danger mt-2">-</button>
                             </div>
                         </div>
                     </div>
@@ -136,3 +136,9 @@ export default defineComponent({
     },
 })
 </script>
+
+<style scoped>
+#removeItemBtn {
+    width: 50px;
+}
+</style>

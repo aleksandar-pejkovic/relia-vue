@@ -6,7 +6,7 @@
             <option value="PAYMENTS">Payments</option>
             <option value="NAME">Name</option>
         </select>
-        <button type="button" class="btn btn-primary m-2" @click="downloadCustomersReport">Create Report</button>
+        <button type="button" class="btn btn-outline-primary m-2" @click="downloadCustomersReport">Create Report</button>
     </div>
 </template>
   

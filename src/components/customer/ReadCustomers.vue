@@ -19,7 +19,6 @@
                         <th class="col-2">Tax number</th>
                         <th class="col-2">Director</th>
                         <th class="col-2">Phone</th>
-                        <th class="col-2"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,12 +42,6 @@
                         <td>
                             {{ customer.phone }}
                         </td>
-                        <td>
-                            <button @click="openCustomerModal(customer)" type="button" class="btn btn-primary"
-                                data-bs-toggle="modal" data-bs-target="#customerModal">
-                                View
-                            </button>
-                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -62,10 +55,10 @@
                         class="card mt-2 side-borders">
                         <div class="card-body p-3">
                             <div class="mb-2">
-                                <div class="fw-bold">{{ customer.name }}</div>
-                                <div>City: {{ customer.city }}</div>
-                                <div>Director: {{ customer.director }}</div>
-                                <div>Phone: {{ customer.phone }}</div>
+                                <div class="fw-bold mt-2">{{ customer.name }}</div>
+                                <div class="mt-2">City: {{ customer.city }}</div>
+                                <div class="mt-2">Director: {{ customer.director }}</div>
+                                <div class="mt-2">Phone: {{ customer.phone }}</div>
                             </div>
                         </div>
                     </div>

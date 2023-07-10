@@ -11,11 +11,11 @@
                     <button @click="cancelEditing" type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                         ref="closeBtn">Close</button>
                 </div>
-                <div>
-                    <InvoicePdfButton v-if="hasItems" :id="invoice.id" :invoice="invoice" />
-                    <SendInvoiceToClient v-if="hasItems" :id="invoice.id" :invoice="invoice" />
-                </div>
                 <div class="modal-body">
+                    <div class="container">
+                        <InvoicePdfButton v-if="hasItems" :id="invoice.id" :invoice="invoice" />
+                        <SendInvoiceToClient v-if="hasItems" :id="invoice.id" :invoice="invoice" />
+                    </div>
                     <form>
                         <div class="row">
                             <div class="col-md-6">
@@ -72,7 +72,7 @@
                                 </div>
                             </div>
                         </div>
-                        <ConditionalButtons @reset-errors="resetErrors" @cancel-editing="cancelEditing"
+                        <ConditionalButtons class="mt-3" @reset-errors="resetErrors" @cancel-editing="cancelEditing"
                             @enable-editing="enableEditing" @create="createInvoice" @update="updateInvoice"
                             @delete="deleteInvoice" :object="invoice" :readOnly="readOnly" :objectExists="invoiceExists"
                             :loading="loading" />
@@ -204,3 +204,13 @@ export default defineComponent({
     },
 })
 </script>
+
+<style scoped>
+@media screen and (max-width: 768px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+</style>

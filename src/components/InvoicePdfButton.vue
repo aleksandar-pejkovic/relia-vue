@@ -1,5 +1,5 @@
 <template>
-    <button v-if="hasOwnCompany" type="button" class="btn btn-primary m-2" @click="downloadInvoicePdf">PDF</button>
+    <button v-if="hasOwnCompany" type="button" class="btn btn-outline-success m-2" @click="downloadInvoicePdf">PDF</button>
 </template>
   
 <script>

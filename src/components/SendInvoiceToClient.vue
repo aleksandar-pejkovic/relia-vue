@@ -36,8 +36,8 @@ export default defineComponent({
     },
     methods: {
         async sendInvoiceToClient() {
+            this.message = 'Sending...';
             const authStore = useAuthenticationStore();
-
             try {
                 const response = await axios.get(
                     `${useBaseUrlStore().baseUrl}/api/pdf/invoice/${this.id}/send`,

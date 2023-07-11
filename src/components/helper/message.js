@@ -13,6 +13,15 @@ export function showErrorMessage(error) {
     });
 }
 
+export function showLoginErrorMessage() {
+    Swal.fire({
+        title: 'Login unsuccessful!',
+        text: "Wrong username or password",
+        icon: 'error',
+        confirmButtonText: 'OK'
+    });
+}
+
 export function showSuccessMessage(title, text) {
     Swal.fire({
         title: title,

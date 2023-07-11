@@ -27,6 +27,7 @@ export default defineComponent({
     },
     methods: {
         async downloadInvoicePdf() {
+            this.$emit('generating-invoice')
             const authStore = useAuthenticationStore();
             const response = await axios.get(`${useBaseUrlStore().baseUrl}/api/pdf/invoice/${this.id}`, {
                 responseType: 'blob',
@@ -57,5 +58,6 @@ export default defineComponent({
             window.URL.revokeObjectURL(url);
         },
     },
+    emits: ['generating-invoice']
 })
 </script>

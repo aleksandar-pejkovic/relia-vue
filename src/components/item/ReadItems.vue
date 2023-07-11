@@ -52,7 +52,11 @@
                             }}
                         </td>
                         <td>
-                            <button @click="deleteItem(item)" type="button" id="removeItemBtn" class="btn btn-outline-danger">-</button>
+                            <div v-if="removingItem" class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Removing item...</span>
+                            </div>
+                            <button v-else @click="deleteItem(item)" type="button" id="removeItemBtn"
+                                class="btn btn-outline-danger">-</button>
                         </td>
                     </tr>
                 </tbody>
@@ -86,7 +90,11 @@
                                         })
                                     }}
                                 </div>
-                                <button @click="deleteItem(item)" type="button" id="removeItemBtn" class="btn btn-outline-danger mt-2">-</button>
+                                <div v-if="removingItem" class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Removing item...</span>
+                                </div>
+                                <button v-else @click="deleteItem(item)" type="button" id="removeItemBtn"
+                                    class="btn btn-outline-danger mt-2">-</button>
                             </div>
                         </div>
                     </div>
@@ -116,6 +124,7 @@ export default defineComponent({
     data() {
         return {
             isSmallScreen: window.innerWidth <= 768,
+            removingItem: false,
         };
     },
     created() {
@@ -128,10 +137,12 @@ export default defineComponent({
         handleResize() {
             this.isSmallScreen = window.innerWidth <= 768;
         },
-        async deleteItem(item) {
+        deleteItem(item) {
+            this.removingItem = true
             useItemsStore().deleteItem(item);
             useInvoicesStore().reduceTotal(item)
-            await useProductsStore().discardSale(item.productName, item.quantity)
+            useProductsStore().discardSale(item.productName, item.quantity)
+            this.removingItem = false
         }
     },
 })

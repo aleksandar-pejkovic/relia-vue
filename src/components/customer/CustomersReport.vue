@@ -1,5 +1,8 @@
 <template>
-    <div class="container row">
+    <div v-if="generatingReport" class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Generating report...</span>
+    </div>
+    <div v-else class="container row">
         <select v-model="sortBy" class="form-select m-2">
             <option value="REVENUE">Revenue</option>
             <option value="DEBT">Debt</option>
@@ -19,11 +22,13 @@ import { useBaseUrlStore } from '@/stores/baseUrl';
 export default defineComponent({
     data() {
         return {
-            sortBy: 'REVENUE'
+            sortBy: 'REVENUE',
+            generatingReport: false
         };
     },
     methods: {
         async downloadCustomersReport() {
+            this.generatingReport = true
             const authStore = useAuthenticationStore();
             const response = await axios.get(`${useBaseUrlStore().baseUrl}/api/pdf/companies-report`, {
                 responseType: 'blob',
@@ -55,6 +60,7 @@ export default defineComponent({
 
             // Clean up
             window.URL.revokeObjectURL(url);
+            this.generatingReport = false
         },
     },
 })

@@ -80,11 +80,11 @@ export default defineComponent({
             this.item.invoiceId = this.invoiceId
         },
         async createItem() {
-            if (!this.selectedProduct) {
+            if (!this.selectedProduct.id) {
                 this.showErrorMessage('Select a product')
                 return
             }
-            if (this.item.quantity < 1) {
+            if (!this.item.quantity) {
                 this.showErrorMessage('Invalid quantity')
                 return
             } if (this.item.price < 0) {
@@ -98,6 +98,7 @@ export default defineComponent({
             this.searchQuery = ''
             this.product = {}
             this.item = {}
+            this.selectedProduct = {}
             this.$refs.searchProducts.searchQuery = ''
         },
         showErrorMessage(msg) {

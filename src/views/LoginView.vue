@@ -28,7 +28,7 @@
   
 <script>
 import { defineComponent } from 'vue'
-import { showSuccessMessage, showErrorMessage } from '../components/helper/message'
+import { showSuccessMessage, showLoginErrorMessage } from '../components/helper/message'
 import { useAuthenticationStore } from '@/stores/authentication'
 import { useBaseUrlStore } from '@/stores/baseUrl'
 import { useCompaniesStore } from '@/stores/companies'
@@ -80,7 +80,7 @@ export default defineComponent({
                 })
                 .catch(error => {
                     console.error(error);
-                    showErrorMessage(error);
+                    showLoginErrorMessage();
                 });
             this.loading = false
         },

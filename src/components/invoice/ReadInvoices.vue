@@ -24,8 +24,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="invoice in invoices" :key="invoice.id" @click="openInvoiceModal(invoice)"
-                        data-bs-toggle="modal" data-bs-target="#invoiceModal">
+                    <tr v-for="invoice in invoices" :key="invoice.id" @click="openInvoiceModal(invoice)">
                         <td>
                             {{ invoice.documentType }} - {{ invoice.invoiceNumber }}
                         </td>
@@ -59,8 +58,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 col-md-4 col-lg-3" v-for="invoice in invoices" :key="invoice.id">
-                    <div @click="openInvoiceModal(invoice)" data-bs-toggle="modal" data-bs-target="#invoiceModal"
-                        class="card mt-2 side-borders">
+                    <div @click="openInvoiceModal(invoice)" class="card mt-2 side-borders">
                         <div class="card-body p-3">
                             <div class="mb-2">
                                 <div class="fw-bold mt-2">{{ invoice.documentType }} - {{ invoice.invoiceNumber }}</div>
@@ -88,7 +86,6 @@
 <script>
 import { defineComponent } from 'vue';
 import { useInvoicesStore } from '@/stores/invoices'
-import { useCompaniesStore } from '@/stores/companies'
 import { useItemsStore } from '@/stores/items';
 import Pagination from '../Pagination.vue';
 
@@ -142,6 +139,7 @@ export default defineComponent({
             localStorage.setItem('editInvoice', JSON.stringify(invoice))
             const itemsStore = useItemsStore()
             itemsStore.filterItemsByInvoiceId(invoice.id)
+            this.$router.push('/invoice')
         },
         previousPage() {
             if (this.currentPage > 1) {

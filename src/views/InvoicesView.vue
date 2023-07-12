@@ -5,8 +5,7 @@
                 <h1 clas>Invoices</h1>
             </div>
             <div class="col-md-2">
-                <button @click="openInvoiceModal" type="button" class="btn btn-success m-2" data-bs-toggle="modal"
-                    data-bs-target="#invoiceModal">
+                <button @click="openInvoiceModal" type="button" class="btn btn-success m-2">
                     Add Invoice
                 </button>
             </div>
@@ -15,7 +14,6 @@
             <ReadInvoices />
         </div>
     </div>
-    <InvoiceModal ref="modal" />
 </template>
 
 <script>
@@ -23,19 +21,16 @@ import { defineComponent } from 'vue';
 import ReadInvoices from '../components/invoice/ReadInvoices.vue';
 import { useInvoicesStore } from '@/stores/invoices';
 import { useItemsStore } from '@/stores/items';
-import InvoiceModal from '../components/invoice/InvoiceModal.vue';
 
 export default defineComponent({
-    beforeUnmount() {
-        this.$refs.modal.$refs.closeBtn.click()
-    },
     components: {
-        ReadInvoices, InvoiceModal
+        ReadInvoices
     },
     methods: {
         openInvoiceModal() {
             useInvoicesStore().clearEditInvoice()
             useItemsStore().clearItemsByInvoice()
+            this.$router.push('/invoice')
         },
     }
 })

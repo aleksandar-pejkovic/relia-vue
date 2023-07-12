@@ -15,7 +15,7 @@
                         <RouterLink class="nav-link" to="/invoices">Invoices</RouterLink>
                     </li>
                     <li class="nav-item">
-                        <RouterLink class="nav-link" to="/customers">Partners</RouterLink>
+                        <RouterLink class="nav-link" to="/customers">Customers</RouterLink>
                     </li>
                     <li class="nav-item">
                         <RouterLink class="nav-link" to="/products">Products</RouterLink>

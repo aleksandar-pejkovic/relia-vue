@@ -1,9 +1,9 @@
 <template>
-    <button v-if="hasOwnCompany" type="button" class="btn btn-outline-success m-2" @click="sendInvoiceToClient">Send to
-        client</button>
-    <div v-if="message" class="alert alert-success" role="alert">
+    <button v-if="hasOwnCompany" type="button" class="btn btn-outline-success m-2" @click="sendInvoiceToClient"
+        :disabled="disabled">{{ btnText }}</button>
+    <!-- <div v-if="message" class="alert alert-success" role="alert">
         {{ message }}
-    </div>
+    </div> -->
 </template>
   
 <script>
@@ -27,6 +27,8 @@ export default defineComponent({
     data() {
         return {
             message: '',
+            btnText: 'Send to client',
+            disabled: false,
         };
     },
     computed: {
@@ -36,7 +38,9 @@ export default defineComponent({
     },
     methods: {
         async sendInvoiceToClient() {
-            this.message = 'Sending...';
+            this.message = 'Sending...'
+            this.btnText = 'Sending...'
+            this.disabled = true
             const authStore = useAuthenticationStore();
             try {
                 const response = await axios.get(
@@ -49,13 +53,17 @@ export default defineComponent({
                 );
                 console.log(response.data);
                 this.message = 'Invoice sent successfully';
+                this.btnText = 'Success!'
             } catch (error) {
                 console.error(error);
                 this.message = 'Something went wrong';
+                this.btnText = 'Error!'
             } finally {
                 setTimeout(() => {
                     this.message = ''
-                }, 5000)
+                    this.btnText = 'Send to client'
+                    this.disabled = false
+                }, 4000)
             }
         },
     },

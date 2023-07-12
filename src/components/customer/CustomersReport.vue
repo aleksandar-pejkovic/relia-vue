@@ -18,6 +18,7 @@ import axios from 'axios';
 import { defineComponent } from 'vue';
 import { useAuthenticationStore } from '@/stores/authentication';
 import { useBaseUrlStore } from '@/stores/baseUrl';
+import { saveAs } from 'file-saver';
 
 export default defineComponent({
     data() {
@@ -27,10 +28,10 @@ export default defineComponent({
         };
     },
     methods: {
-        async downloadCustomersReport() {
+        downloadCustomersReport() {
             this.generatingReport = true
             const authStore = useAuthenticationStore();
-            const response = await axios.get(`${useBaseUrlStore().baseUrl}/api/pdf/companies-report`, {
+            axios.get(`${useBaseUrlStore().baseUrl}/api/pdf/companies-report`, {
                 responseType: 'blob',
                 params: {
                     sortBy: this.sortBy
@@ -38,29 +39,10 @@ export default defineComponent({
                 headers: {
                     'Authorization': `Bearer ${authStore.token}`
                 }
-            });
-
-            const blob = new Blob([response.data], {
-                type: 'application/pdf',
-            });
-
-            // Get the filename from the invoiceNumber prop
-            const filename = `companies-report.pdf`;
-
-            const url = window.URL.createObjectURL(blob);
-
-            // Create a temporary link element to trigger the download
-            const link = document.createElement('a');
-            link.href = url;
-            // link.target = '_blank';
-            link.download = filename;
-
-            // Programmatically click the link to start the download
-            link.click();
-
-            // Clean up
-            window.URL.revokeObjectURL(url);
-            this.generatingReport = false
+            }).then(response => {
+                saveAs(response.data, `companies-report.pdf`)
+                this.generatingReport = false
+            })
         },
     },
 })

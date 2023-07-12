@@ -12,12 +12,8 @@
                         ref="closeBtn">Close</button>
                 </div>
                 <div class="modal-body">
-                    <div v-if="generatingInvoice" class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Generating invoice...</span>
-                    </div>
-                    <div v-else>
-                        <InvoicePdfButton v-if="hasItems" @generating-invoice="handleSpinnerFlag" :id="invoice.id"
-                            :invoice="invoice" />
+                    <div>
+                        <InvoicePdfButton v-if="hasItems" :id="invoice.id" :invoice="invoice" />
                         <SendInvoiceToClient v-if="hasItems" :id="invoice.id" :invoice="invoice" />
                     </div>
                     <form>
@@ -205,12 +201,6 @@ export default defineComponent({
         },
         validateInvoiceNumber() {
             this.invoiceNumberError = validateInvoiceNumber(this.invoice.invoiceNumber);
-        },
-        handleSpinnerFlag() {
-            this.generatingInvoice = true
-            setTimeout(() => {
-                this.generatingInvoice = false
-            }, 500)
         },
     },
 })

@@ -1,5 +1,6 @@
 <template>
-    <button v-if="hasOwnCompany" type="button" class="btn btn-outline-success m-2" @click="downloadInvoicePdf">PDF</button>
+    <button v-if="hasOwnCompany" type="button" class="btn btn-outline-success m-2" @click="downloadInvoicePdf"
+        :disabled="disabled">{{ message }}</button>
 </template>
   
 <script>
@@ -8,6 +9,7 @@ import { defineComponent } from 'vue';
 import { useAuthenticationStore } from '@/stores/authentication';
 import { useBaseUrlStore } from '../stores/baseUrl';
 import { useCompaniesStore } from '../stores/companies';
+import { saveAs } from 'file-saver';
 
 export default defineComponent({
     props: {
@@ -25,39 +27,31 @@ export default defineComponent({
             return useCompaniesStore().ownCompany != null
         }
     },
+    data() {
+        return {
+            message: 'PDF',
+            disabled: false,
+        }
+    },
     methods: {
-        async downloadInvoicePdf() {
-            this.$emit('generating-invoice')
+        downloadInvoicePdf() {
+            this.message = 'Creating...'
+            this.disabled = true
             const authStore = useAuthenticationStore();
-            const response = await axios.get(`${useBaseUrlStore().baseUrl}/api/pdf/invoice/${this.id}`, {
+            axios.get(`${useBaseUrlStore().baseUrl}/api/pdf/invoice/${this.id}`, {
                 responseType: 'blob',
                 headers: {
                     'Authorization': `Bearer ${authStore.token}`
                 }
-            });
-
-            const blob = new Blob([response.data], {
-                type: 'application/pdf',
-            });
-
-            // Get the filename from the invoiceNumber prop
-            const filename = `${this.invoice.documentType} ${this.invoice.invoiceNumber}.pdf`;
-
-            const url = window.URL.createObjectURL(blob);
-
-            // Create a temporary link element to trigger the download
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = filename;
-            link.target = '_blank';
-
-            // Programmatically click the link to start the download
-            link.click();
-
-            // Clean up
-            window.URL.revokeObjectURL(url);
+            }).then(response => {
+                saveAs(response.data, `${this.invoice.documentType} ${this.invoice.invoiceNumber}.pdf`)
+                this.message = 'Ready!'
+                setTimeout(() => {
+                    this.message = 'PDF'
+                    this.disabled = false
+                }, 4000)
+            })
         },
     },
-    emits: ['generating-invoice']
 })
 </script>

@@ -5,7 +5,7 @@
         <div>
             <InvoicePdfButton v-if="hasItems" :id="invoice.id" :invoice="invoice" />
             <SendInvoiceToClient v-if="hasItems" :id="invoice.id" :invoice="invoice" />
-            <Payment ref="payment" urlSufix="/invoiceId/" :urlId="invoice.id" />
+            <Payment ref="payment" urlSufix="invoiceId" :invoiceId="invoice.id" />
         </div>
         <form>
             <div class="row">

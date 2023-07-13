@@ -1,7 +1,4 @@
 import { defineStore } from 'pinia';
-import { useBaseUrlStore } from './baseUrl';
-import { showErrorMessage } from '../components/helper/message'
-import axios from 'axios'
 
 export const useAuthenticationStore = defineStore({
   id: 'authentication',

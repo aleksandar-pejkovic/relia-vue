@@ -65,8 +65,7 @@ import axios from 'axios'
 export default {
     props: {
         urlSufix: String,
-        invoiceId: Number,
-        customerId: Number,
+        id: Number,
     },
     data() {
         return {
@@ -76,7 +75,7 @@ export default {
     },
     mounted() {
         this.payment.amount = 0
-        this.payment.invoiceId = this.invoiceId
+        this.payment.invoiceId = this.id
         this.fetchPayments()
     },
     methods: {
@@ -120,7 +119,7 @@ export default {
         fetchPayments() {
             const baseUrl = useBaseUrlStore()
             const authStore = useAuthenticationStore()
-            axios.get(`${baseUrl.baseUrl}/api/payments/${this.urlSufix}/${this.invoiceId}`, {
+            axios.get(`${baseUrl.baseUrl}/api/payments/${this.urlSufix}/${this.id}`, {
                 headers: {
                     'Authorization': `Bearer ${authStore.token}`
                 }

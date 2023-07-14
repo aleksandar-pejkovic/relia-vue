@@ -11,7 +11,7 @@
                 </div>
                 <div class="modal-body">
                     <!-- Payment form -->
-                    <form v-show="invoiceId" @submit.prevent="addPayment" class="row">
+                    <form v-show="id" @submit.prevent="addPayment" class="row">
                         <div class="form-group col">
                             <input type="datetime-local" class="form-control" id="paymentDate"
                                 v-model="payment.paymentDate">

@@ -106,6 +106,10 @@ export const useInvoicesStore = defineStore({
                 showErrorMessage(error)
             }
         },
+        updateEditInvoice(invoiceId) {
+            this.editInvoice = this.invoices.find(invoice => invoice.id === invoiceId)
+            localStorage.setItem('editInvoice', JSON.stringify(this.editInvoice))
+        },
         setInvoices(invoices) {
             this.invoices = invoices
             localStorage.setItem('invoices', JSON.stringify(invoices))

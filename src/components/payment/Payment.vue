@@ -20,7 +20,8 @@
                             <input type="number" class="form-control" id="paymentAmount" min="0" max="1000000000000"
                                 v-model="payment.amount" @input="formatAmount">
                         </div>
-                        <button type="submit" class="addBtn btn btn-success col-1">Dodaj uplatu</button>
+                        <button type="submit" class="addBtn btn btn-success col-1" :disabled="addPaymentBtnDisabled">{{
+                            addPaymentBtnText }}</button>
                     </form>
                     <div class="table-responsive">
                         <table class="table table-striped table-hover">
@@ -60,6 +61,7 @@
 <script>
 import { useBaseUrlStore } from '@/stores/baseUrl';
 import { useAuthenticationStore } from '@/stores/authentication';
+import { useInvoicesStore } from '@/stores/invoices';
 import axios from 'axios'
 
 export default {
@@ -67,16 +69,22 @@ export default {
         urlSufix: String,
         id: Number,
     },
+    emits: ['payment-added'],
     data() {
         return {
             payment: {},
-            payments: []
+            payments: [],
+            addPaymentBtnText: 'Dodaj uplatu',
+            addPaymentBtnDisabled: false
         };
     },
     mounted() {
         this.payment.amount = 0
         this.payment.invoiceId = this.id
         this.fetchPayments()
+    },
+    beforeUnmount() {
+        this.$refs.closeBtn.click()
     },
     methods: {
         formatAmount() {
@@ -87,6 +95,8 @@ export default {
             }
         },
         addPayment() {
+            this.addPaymentBtnText = 'U toku...'
+            this.addPaymentBtnDisabled = true
             const baseUrl = useBaseUrlStore()
             const authStore = useAuthenticationStore()
 
@@ -94,8 +104,14 @@ export default {
                 headers: {
                     Authorization: `Bearer ${authStore.token}`,
                 },
-            }).then(() => this.fetchPayments())
-                .catch(() => {
+            }).then(async () => {
+                this.fetchPayments()
+                await useInvoicesStore().fetchInvoices()
+                await useInvoicesStore().updateEditInvoice(this.id)
+                this.$emit('payment-added')
+                this.addPaymentBtnText = 'Dodaj uplatu'
+                this.addPaymentBtnDisabled = false
+            }).catch(() => {
                     alert("Failed to create payment")
                 })
         },

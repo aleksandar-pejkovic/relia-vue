@@ -2,12 +2,12 @@
     <div class="container main mt-3">
         <div v-if="invoice.invoiceNumber">
             <h3 class="m-3" id="staticBackdropLabel">{{ invoice.documentType }} {{
-            invoice.invoiceNumber }} - {{ invoice.companyName }}</h3>
+                invoice.invoiceNumber }} - {{ invoice.companyName }}</h3>
         </div>
         <div v-if="hasItems">
             <InvoicePdfButton :id="invoice.id" :invoice="invoice" />
             <SendInvoiceToClient :id="invoice.id" :invoice="invoice" />
-            <Payment ref="payment" urlSufix="invoiceId" :id="invoice.id" />
+            <Payment @payment-added="updateInvoiceStatus" urlSufix="invoiceId" :id="invoice.id" />
         </div>
         <form>
             <div class="row">
@@ -43,7 +43,7 @@
                     <div class="form-group">
                         <label for="invoiceStatus">Status</label>
                         <select class="form-control" id="invoiceStatus" v-model="invoice.invoiceStatus"
-                            :readonly="readOnly">
+                            :disabled="readOnly">
                             <option value="Neizmireno">Neizmireno</option>
                             <option value="Delimično izmireno">Delimično izmireno</option>
                             <option value="Plaćeno">Plaćeno</option>
@@ -125,6 +125,7 @@ export default defineComponent({
             loading: false,
             invoiceNumberError: '',
             generatingInvoice: false,
+            tempInvoice: {},
         }
     },
     methods: {
@@ -160,15 +161,16 @@ export default defineComponent({
             this.loading = true
             const invoicesStore = useInvoicesStore()
             await invoicesStore.updateInvoice(this.invoice)
+            invoicesStore.editInvoice = { ...this.invoice }
+            localStorage.setItem('editInvoice', JSON.stringify(invoicesStore.editInvoice))
             this.loading = false
-            this.$refs.closeBtn.click()
+            this.readOnlyCondition = true
         },
         async deleteInvoice() {
             this.loading = true
             const invoicesStore = useInvoicesStore()
             await invoicesStore.deleteInvoice(this.invoice.id)
             this.loading = false
-            this.$refs.closeBtn.click()
             alert(`Invoice ${this.invoice.invoiceNumber} deleted`)
         },
         async createInvoice() {
@@ -189,6 +191,10 @@ export default defineComponent({
         },
         validateInvoiceNumber() {
             this.invoiceNumberError = validateInvoiceNumber(this.invoice.invoiceNumber);
+        },
+        updateInvoiceStatus() {
+            const invoicesStore = useInvoicesStore()
+            this.invoice = { ...invoicesStore.editInvoice };
         },
     },
 })

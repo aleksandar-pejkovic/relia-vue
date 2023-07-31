@@ -5,19 +5,19 @@
                 <thead>
                     <tr>
                         <th @click="sortList('name')" class="col-2 clickable">
-                            Name
+                            Naziv
                             <i v-if="sortBy === 'name' && sortAsc" class="arrow-up"></i>
                             <i v-if="sortBy === 'name' && !sortAsc" class="arrow-down"></i>
                         </th>
                         <th @click="sortList('city')" class="col-2 clickable">
-                            City
+                            Mesto
                             <i v-if="sortBy === 'city' && sortAsc" class="arrow-up"></i>
                             <i v-if="sortBy === 'city' && !sortAsc" class="arrow-down"></i>
                         </th>
-                        <th class="col-2">Address</th>
-                        <th class="col-2">Tax number</th>
-                        <th class="col-2">Director</th>
-                        <th class="col-2">Phone</th>
+                        <th class="col-2">Adresa</th>
+                        <th class="col-2">PIB</th>
+                        <th class="col-2">Direktor</th>
+                        <th class="col-2">Telefon</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,7 +56,7 @@
                             <div class="mb-2">
                                 <div class="fw-bold mt-2">{{ customer.name }}</div>
                                 <div class="mt-2">{{ customer.city }}</div>
-                                <div class="mt-2">Director: {{ customer.director }}</div>
+                                <div class="mt-2">Direktor: {{ customer.director }}</div>
                                 <div class="mt-2">{{ customer.phone }}</div>
                             </div>
                         </div>

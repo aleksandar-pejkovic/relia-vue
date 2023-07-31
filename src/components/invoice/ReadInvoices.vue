@@ -4,20 +4,22 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th class="col-2">Document</th>
-                        <th class="col-2">Partner</th>
+                        <th class="col-2">Dokument</th>
+                        <th class="col-2">Firma</th>
                         <th @click="sortList('creationDate')" class="col-2 clickable">
-                            Creation date
+                            Datum kreiranja
                             <i v-if="sortBy === 'creationDate' && sortAsc" class="arrow-up"></i>
                             <i v-if="sortBy === 'creationDate' && !sortAsc" class="arrow-down"></i>
                         </th>
-                        <th @click="sortList('dueDate')" class="col-2 clickable">Due date
+                        <th @click="sortList('dueDate')" class="col-2 clickable">Datum dospeća
                             <i v-if="sortBy === 'dueDate' && sortAsc" class="arrow-up"></i>
                             <i v-if="sortBy === 'dueDate' && !sortAsc" class="arrow-down"></i>
                         </th>
-                        <th class="col-2"></th>
+                        <th class="col-2">
+                            Status
+                        </th>
                         <th @click="sortList('total')" class="col-2 clickable">
-                            Total
+                            Ukupno
                             <i v-if="sortBy === 'total' && sortAsc" class="arrow-up"></i>
                             <i v-if="sortBy === 'total' && !sortAsc" class="arrow-down"></i>
                         </th>

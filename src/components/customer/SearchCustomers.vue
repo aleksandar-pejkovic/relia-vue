@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input class="form-control" type="search" v-model="searchQuery" placeholder="Search company..."
+        <input class="form-control" type="search" v-model="searchQuery" placeholder="Pretraži partnere..."
             @focus="showSearchList" @blur="hideSearchList">
         <ul class="list-group mt-3" v-show="isFocused">
             <li v-for="company in filteredCompanies" :key="company.id" class="list-group-item"

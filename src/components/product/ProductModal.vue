@@ -7,7 +7,7 @@
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="staticBackdropLabel">Product</h1>
                     <button @click="cancelEditing" type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                        ref="closeBtn">Close</button>
+                        ref="closeBtn">Zatvori</button>
                 </div>
                 <div class="modal-body">
                     <form>
@@ -20,32 +20,32 @@
                                     <span v-if="pluError" class="error">{{ pluError }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="name">Name</label>
+                                    <label for="name">Naziv</label>
                                     <input type="text" class="form-control" id="name" v-model="product.name"
                                         :readonly="readOnly" @input="validateName">
                                     <span v-if="nameError" class="error">{{ nameError }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="unit">Unit</label>
+                                    <label for="unit">JM</label>
                                     <input type="text" class="form-control" id="unit" v-model="product.unit"
                                         :readonly="readOnly" @input="validateUnit">
                                     <span v-if="unitError" class="error">{{ unitError }}</span>
                                 </div>
                                 <div v-if="productExists" class="form-group">
-                                    <label for="inStock">In stock</label>
+                                    <label for="inStock">Stanje na zalihama</label>
                                     <input type="text" class="form-control" id="inStock" v-model="product.inStock"
                                         :readonly="readOnly" @input="validateUnit">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="description">Description</label>
+                                    <label for="description">Opis</label>
                                     <input type="text" class="form-control" id="description" v-model="product.description"
                                         :readonly="readOnly" @input="validateDescription">
                                     <span v-if="descriptionError" class="error">{{ descriptionError }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="taxRate">Tax rate</label>
+                                    <label for="taxRate">Poreska stopa</label>
                                     <select class="form-control" id="taxRate" v-model="product.taxRate"
                                         :disabled="readOnly">
                                         <option value="0">0%</option>
@@ -54,7 +54,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="price">Price</label>
+                                    <label for="price">Cena</label>
                                     <div v-if="readOnly" class="form-control" readonly>
                                         {{ Number(product.price).toLocaleString(
                                             'sr-RS',
@@ -68,7 +68,7 @@
                                         id="price" v-model="product.price" @input="formatPrice">
                                 </div>
                                 <div v-if="productExists" class="form-group">
-                                    <label for="unitsSold">Units Sold</label>
+                                    <label for="unitsSold">Prodato jedinica</label>
                                     <input type="text" class="form-control" id="unitsSold" v-model="product.unitsSold"
                                         readonly>
                                 </div>

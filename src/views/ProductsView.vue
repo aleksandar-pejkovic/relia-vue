@@ -2,7 +2,7 @@
     <div class="main container mt-2">
         <div class="row">
             <div class="col-md-5">
-                <h1 clas>Products</h1>
+                <h1 clas>Proizvodi</h1>
             </div>
             <div class="col-md-5">
                 <ProductsReport />
@@ -10,7 +10,7 @@
             <div class="col-md-2">
                 <button @click="openProductModal" type="button" class="btn btn-success m-2" data-bs-toggle="modal"
                     data-bs-target="#productModal">
-                    Add Product
+                    Dodaj
                 </button>
             </div>
         </div>

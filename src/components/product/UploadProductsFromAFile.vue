@@ -5,7 +5,7 @@
         </div>
         <div v-else>
             <input type="file" @change="handleFileUpload" accept=".xlsx, .xls, .csv" :max-size="52880">
-            <button @click="uploadFile" class="btn btn-outline-secondary m-1">Upload</button>
+            <button @click="uploadFile" class="btn btn-outline-secondary m-1">Učitaj</button>
         </div>
     </div>
 </template>
@@ -50,13 +50,13 @@ export default {
                 const responseData = response.data;
 
                 showSuccessMessage(
-                    "File uploaded",
-                    "Products have been updated"
+                    "Fajl je učitan",
+                    "Proizvodi su ažurirani"
                 );
                 await useProductsStore().fetchProducts();
             } catch (error) {
                 showErrorMessage(error);
-                console.error("An error occurred during file upload:", error);
+                console.error("Došlo je do greške:", error);
             } finally {
                 this.file = null;
                 console.log('Uploading done');

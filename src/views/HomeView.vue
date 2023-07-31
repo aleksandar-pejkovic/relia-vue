@@ -2,10 +2,10 @@
   <div class="main-home main-2 container-fluid">
     <div class="row">
       <div class="col-12 text-center">
-        <h1 class="title">Welcome to ReliaBill</h1>
-        <p class="subtitle">Create and manage your invoices with ease</p>
-        <router-link to="/login" class="btn btn-primary m-2">Login</router-link>
-        <router-link to="/register" class="btn btn-primary m-2">Register</router-link>
+        <h1 class="title">Dobro došli u ReliaBill</h1>
+        <p class="subtitle">Kreirajte i upravljajte fakturama sa lakoćom</p>
+        <router-link to="/login" class="btn btn-primary m-2">Prijavi se</router-link>
+        <router-link to="/register" class="btn btn-primary m-2">Registracija</router-link>
       </div>
     </div>
   </div>

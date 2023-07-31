@@ -1,15 +1,15 @@
 <template>
     <div v-if="generatingReport" class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Generating report...</span>
+        <span class="visually-hidden">Generisanje izveštaja...</span>
     </div>
     <div v-else class="container row">
         <select v-model="sortBy" class="form-select m-2">
-            <option value="REVENUE">Revenue</option>
-            <option value="UNITS_SOLD">Units sold</option>
-            <option value="IN_STOCK">In stock</option>
-            <option value="NAME">Name</option>
+            <option value="REVENUE">Promet</option>
+            <option value="UNITS_SOLD">Prodato jedinica</option>
+            <option value="IN_STOCK">Stanje na zalihama</option>
+            <option value="NAME">Naziv</option>
         </select>
-        <button type="button" class="btn btn-outline-primary m-2" @click="downloadProductsReport">Create Report</button>
+        <button type="button" class="btn btn-outline-primary m-2" @click="downloadProductsReport">Izveštaj</button>
     </div>
 </template>
   

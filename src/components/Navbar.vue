@@ -9,16 +9,16 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <RouterLink class="nav-link" to="/dashboard">Dashboard</RouterLink>
+                        <RouterLink class="nav-link" to="/dashboard">Radna tabla</RouterLink>
                     </li>
                     <li class="nav-item">
-                        <RouterLink class="nav-link" to="/invoices">Invoices</RouterLink>
+                        <RouterLink class="nav-link" to="/invoices">Dokumenti</RouterLink>
                     </li>
                     <li class="nav-item">
-                        <RouterLink class="nav-link" to="/customers">Customers</RouterLink>
+                        <RouterLink class="nav-link" to="/customers">Partneri</RouterLink>
                     </li>
                     <li class="nav-item">
-                        <RouterLink class="nav-link" to="/products">Products</RouterLink>
+                        <RouterLink class="nav-link" to="/products">Proizvodi</RouterLink>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -27,13 +27,13 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <RouterLink class="dropdown-item" to="/profile">Profile</RouterLink>
+                                <RouterLink class="dropdown-item" to="/profile">Profil</RouterLink>
                             </li>
                             <li>
-                                <RouterLink class="dropdown-item" to="/my-company">My company</RouterLink>
+                                <RouterLink class="dropdown-item" to="/my-company">Moja firma</RouterLink>
                             </li>
                             <li>
-                                <a class="dropdown-item" style="cursor: pointer" @click="logout">Logout</a>
+                                <a class="dropdown-item" style="cursor: pointer" @click="logout">Odjavi se</a>
                             </li>
                         </ul>
                     </li>
@@ -90,8 +90,8 @@ export default {
             this.$router.push("/")
 
             Swal.fire({
-                title: 'Goodbye!',
-                text: 'Have a nice day!',
+                title: 'Vidimo se!',
+                text: 'Prijatan dan!',
                 icon: 'success',
                 confirmButtonText: 'OK'
             })

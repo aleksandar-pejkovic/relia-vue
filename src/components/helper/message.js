@@ -6,7 +6,7 @@ export function showErrorMessage(error) {
         errorMessages = error.response.data.error || error.response.data.message || error.response.data || errorMessages;
     }
     Swal.fire({
-        title: 'Request unsuccessful!',
+        title: 'Zahtev nije uspeo!',
         text: errorMessages,
         icon: 'error',
         confirmButtonText: 'OK'
@@ -15,8 +15,8 @@ export function showErrorMessage(error) {
 
 export function showLoginErrorMessage() {
     Swal.fire({
-        title: 'Login unsuccessful!',
-        text: "Wrong username or password",
+        title: 'Prijava nije uspela!',
+        text: "Pogrešan username ili pasvord",
         icon: 'error',
         confirmButtonText: 'OK'
     });
@@ -33,8 +33,8 @@ export function showSuccessMessage(title, text) {
 
 export function showInvalidRequestMessage() {
     Swal.fire({
-        title: 'Invalid request!',
-        text: 'Please fix the errors in the form.',
+        title: 'Nevažeći zahtev!',
+        text: 'Ispravite greške u formularu.',
         icon: 'error',
         confirmButtonText: 'OK'
     });

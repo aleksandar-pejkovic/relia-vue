@@ -10,18 +10,18 @@
                             <i v-if="sortBy === 'plu' && !sortAsc" class="arrow-down"></i>
                         </th>
                         <th @click="sortList('name')" class="col-3 clickable">
-                            Name
+                            Naziv
                             <i v-if="sortBy === 'name' && sortAsc" class="arrow-up"></i>
                             <i v-if="sortBy === 'name' && !sortAsc" class="arrow-down"></i>
                         </th>
                         <th class="col-2">
-                            In stock
+                            Stanje na zalihama
                         </th>
                         <th class="col-2">
-                            Tax rate
+                            Poreska stopa
                         </th>
                         <th @click="sortList('price')" class="col-2 clickable">
-                            Price
+                            Cena
                             <i v-if="sortBy === 'price' && sortAsc" class="arrow-up"></i>
                             <i v-if="sortBy === 'price' && !sortAsc" class="arrow-down"></i>
                         </th>
@@ -57,9 +57,9 @@
                         <div class="card-body p-3">
                             <div class="mb-2">
                                 <div class="fw-bold mt-2">{{ product.name }}</div>
-                                <div class="mt-2">Tax rate: {{ product.taxRate }}%</div>
+                                <div class="mt-2">Poreska stopa: {{ product.taxRate }}%</div>
                                 <div class="mt-2">
-                                    Price: {{ Number(product.price).toLocaleString(
+                                    Cena: {{ Number(product.price).toLocaleString(
                                         'sr-RS',
                                         {
                                             minimumFractionDigits: 2,

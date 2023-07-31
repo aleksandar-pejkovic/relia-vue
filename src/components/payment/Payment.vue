@@ -1,13 +1,13 @@
 <template>
-    <button class="btn btn-outline-success m-2" data-bs-toggle="modal" data-bs-target="#paymentsModal">Payments</button>
+    <button class="btn btn-outline-success m-2" data-bs-toggle="modal" data-bs-target="#paymentsModal">Uplate</button>
 
     <div class="modal" id="paymentsModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Payments</h5>
+                    <h5 class="modal-title">Uplate</h5>
                     <button @click="reset" type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                        ref="closeBtn">Close</button>
+                        ref="closeBtn">Zatvori</button>
                 </div>
                 <div class="modal-body">
                     <!-- Payment form -->
@@ -20,14 +20,14 @@
                             <input type="number" class="form-control" id="paymentAmount" min="0" max="1000000000000"
                                 v-model="payment.amount" @input="formatAmount">
                         </div>
-                        <button type="submit" class="addBtn btn btn-success col-1">Add Payment</button>
+                        <button type="submit" class="addBtn btn btn-success col-1">Dodaj uplatu</button>
                     </form>
                     <div class="table-responsive">
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th class="col-5">Date</th>
-                                    <th class="col-6">Amount</th>
+                                    <th class="col-5">Datum</th>
+                                    <th class="col-6">Iznos</th>
                                     <th class="col-1"></th>
                                 </tr>
                             </thead>

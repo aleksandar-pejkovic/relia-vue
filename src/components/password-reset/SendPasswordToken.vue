@@ -1,15 +1,15 @@
 <template>
     <div class="container mt-3">
-        <h1>Reset Password</h1>
+        <h1>Resetuj lozinku</h1>
         <form @submit.prevent="resetPassword" class="row justify-content-center align-items-center flex-column">
             <div class="col-md-6">
-                <label class="form-label" for="email">Email:</label>
+                <label class="form-label" for="email">Imejl:</label>
                 <input class="form-control" type="email" id="email" v-model="email" @input="validateEmail" />
                 <span v-if="emailError" class="error">{{ emailError }}</span>
             </div>
             <div>
-                <router-link to="/" class="btn btn-secondary m-2">Cancel</router-link>
-                <button type="submit" class="btn btn-primary m-2">Send link</button>
+                <router-link to="/" class="btn btn-secondary m-2">Otkaži</router-link>
+                <button type="submit" class="btn btn-primary m-2">Pošalji link</button>
             </div>
             <p v-if="errorMessage">{{ errorMessage }}</p>
             <p v-if="successMessage">{{ successMessage }}</p>
@@ -61,9 +61,9 @@ export default {
         validateEmail() {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!this.email) {
-                this.emailError = "Email is required.";
+                this.emailError = "Unesi imejl.";
             } else if (!emailRegex.test(this.email)) {
-                this.emailError = "Invalid email format.";
+                this.emailError = "Nepravilan format imejla.";
             } else {
                 this.emailError = "";
             }

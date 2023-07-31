@@ -27,7 +27,7 @@ export default defineComponent({
     data() {
         return {
             message: '',
-            btnText: 'Send to client',
+            btnText: 'Pošalji',
             disabled: false,
         };
     },
@@ -38,8 +38,8 @@ export default defineComponent({
     },
     methods: {
         async sendInvoiceToClient() {
-            this.message = 'Sending...'
-            this.btnText = 'Sending...'
+            this.message = 'Šalje se...'
+            this.btnText = 'Šalje se...'
             this.disabled = true
             const authStore = useAuthenticationStore();
             try {
@@ -52,16 +52,16 @@ export default defineComponent({
                     }
                 );
                 console.log(response.data);
-                this.message = 'Invoice sent successfully';
-                this.btnText = 'Success!'
+                this.message = 'Uspešno poslato';
+                this.btnText = 'Uspešno!'
             } catch (error) {
                 console.error(error);
-                this.message = 'Something went wrong';
-                this.btnText = 'Error!'
+                this.message = 'Došlo je do greške';
+                this.btnText = 'Greška!'
             } finally {
                 setTimeout(() => {
                     this.message = ''
-                    this.btnText = 'Send to client'
+                    this.btnText = 'Pošalji'
                     this.disabled = false
                 }, 4000)
             }

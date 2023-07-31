@@ -5,47 +5,47 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Partner</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Firma</h1>
                     <button @click="cancelEditing" type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                        ref="closeBtn">Close</button>
+                        ref="closeBtn">Zatvori</button>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Name</label>
+                                    <label for="name">Naziv</label>
                                     <input type="text" class="form-control" id="name" v-model="customer.name"
                                         :readonly="readOnly" @input="validateName">
                                     <span v-if="nameError" class="error">{{ nameError }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="city">City</label>
+                                    <label for="city">Mesto</label>
                                     <input type="text" class="form-control" id="city" v-model="customer.city"
                                         :readonly="readOnly" @input="validateCity">
                                     <span v-if="cityError" class="error">{{ cityError }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="zip">Zip number</label>
+                                    <label for="zip">Poštanski broj</label>
                                     <input type="text" class="form-control" id="zip" v-model="customer.zip"
                                         :readonly="readOnly" @input="validateZip">
                                     <span v-if="zipError" class="error">{{ zipError }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="address">Address</label>
+                                    <label for="address">Adresa</label>
                                     <input type="text" class="form-control" id="address" v-model="customer.street"
                                         :readonly="readOnly" @input="validateAddress">
                                     <span v-if="addressError" class="error">{{ addressError }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="regNum">Registration number</label>
+                                    <label for="regNum">Matični broj</label>
                                     <input type="text" class="form-control" id="regNum"
                                         v-model="customer.registrationNumber" :readonly="readOnly"
                                         @input="validateRegistrationNumber">
                                     <span v-if="regNumError" class="error">{{ regNumError }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="taxNum">Tax number</label>
+                                    <label for="taxNum">PIB</label>
                                     <input type="text" class="form-control" id="taxNum" v-model="customer.taxNumber"
                                         :readonly="readOnly" @input="validateTaxNumber">
                                     <span v-if="taxNumError" class="error">{{ taxNumError }}</span>
@@ -53,31 +53,31 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="bankAcc">Bank account</label>
+                                    <label for="bankAcc">Tekući račun</label>
                                     <input type="text" class="form-control" id="bankAcc" v-model="customer.bankAccount"
                                         :readonly="readOnly" @input="validateBankAccount">
                                     <span v-if="bankAccError" class="error">{{ bankAccError }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="phone">Phone</label>
+                                    <label for="phone">Telefon</label>
                                     <input type="text" class="form-control" id="phone" v-model="customer.phone"
                                         :readonly="readOnly" @input="validatePhoneNumber">
                                     <span v-if="phoneError" class="error">{{ phoneError }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">Email</label>
+                                    <label for="email">Imejl</label>
                                     <input type="email" class="form-control" id="email" v-model="customer.email"
                                         :readonly="readOnly" @input="validateEmail">
                                     <span v-if="emailError" class="error">{{ emailError }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="website">Website</label>
+                                    <label for="website">Internet stranica</label>
                                     <input type="text" class="form-control" id="website" v-model="customer.website"
                                         :readonly="readOnly" @input="validateWebsite">
                                     <span v-if="websiteError" class="error">{{ websiteError }}</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="director">Director</label>
+                                    <label for="director">Direktor</label>
                                     <input type="text" class="form-control" id="director" v-model="customer.director"
                                         :readonly="readOnly" @input="validateDirector">
                                     <span v-if="directorError" class="error">{{ directorError }}</span>
@@ -171,7 +171,7 @@ export default defineComponent({
             await useInvoicesStore().fetchInvoices()
             this.loading = false
             this.$refs.closeBtn.click()
-            alert(`Invoice ${this.customer.name} deleted`)
+            alert(`Firma ${this.customer.name} obrisana`)
         },
         async createCustomer() {
             if (!this.validateInputs()) {

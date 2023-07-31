@@ -1,54 +1,56 @@
 <template>
     <div class="container main mt-3">
-        <h3 class="" id="staticBackdropLabel">{{ invoice.documentType }} {{
+        <div v-if="invoice.invoiceNumber">
+            <h3 class="m-3" id="staticBackdropLabel">{{ invoice.documentType }} {{
             invoice.invoiceNumber }} - {{ invoice.companyName }}</h3>
-        <div>
-            <InvoicePdfButton v-if="hasItems" :id="invoice.id" :invoice="invoice" />
-            <SendInvoiceToClient v-if="hasItems" :id="invoice.id" :invoice="invoice" />
+        </div>
+        <div v-if="hasItems">
+            <InvoicePdfButton :id="invoice.id" :invoice="invoice" />
+            <SendInvoiceToClient :id="invoice.id" :invoice="invoice" />
             <Payment ref="payment" urlSufix="invoiceId" :id="invoice.id" />
         </div>
         <form>
             <div class="row">
                 <div class="col-md-6">
                     <div v-if="!invoice.id > 0" class="form-group">
-                        <label for="documentType">Partner</label>
+                        <label for="documentType">Firma</label>
                         <SearchCustomers @company-selected="selectCompany" />
                     </div>
                     <div class="form-group">
-                        <label for="creationDate">Creation date</label>
+                        <label for="creationDate">Datum kreiranja</label>
                         <input type="date" class="form-control" id="creationDate" v-model="invoice.creationDate"
                             :readonly="readOnly">
                     </div>
                     <div class="form-group">
-                        <label for="dueDate">Due date</label>
+                        <label for="dueDate">Datum dospeća</label>
                         <input type="date" class="form-control" id="dueDate" v-model="invoice.dueDate" :readonly="readOnly">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div v-if="!invoice.id > 0" class="form-group">
-                        <label for="invoiceNumber">Invoice number</label>
+                        <label for="invoiceNumber">Broj dokumenta</label>
                         <input type="text" class="form-control" id="invoiceNumber" v-model="invoice.invoiceNumber"
                             :readonly="readOnly" @input="validateInvoiceNumber">
                         <span v-if="invoiceNumberError" class="error">{{ invoiceNumberError }}</span>
                     </div>
                     <div v-if="!invoice.id > 0" class="form-group">
-                        <label for="documentType">Document type</label>
+                        <label for="documentType">Vrsta dokumenta</label>
                         <select class="form-control" id="documentType" v-model="invoice.documentType" :disabled="readOnly">
-                            <option value="INVOICE">INVOICE</option>
-                            <option value="ESTIMATE">ESTIMATE</option>
+                            <option value="Faktura">Faktura</option>
+                            <option value="Profaktura">Profaktura</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="invoiceStatus">Status</label>
                         <select class="form-control" id="invoiceStatus" v-model="invoice.invoiceStatus"
                             :readonly="readOnly">
-                            <option value="PENDING">PENDING</option>
-                            <option value="PARTIALLY_PAID">PARTIALLY PAID</option>
-                            <option value="PAID">PAID</option>
+                            <option value="Neizmireno">Neizmireno</option>
+                            <option value="Delimično izmireno">Delimično izmireno</option>
+                            <option value="Plaćeno">Plaćeno</option>
                         </select>
                     </div>
                     <div v-if="invoice.id > 0" class="form-group">
-                        <label for="total">Total</label>
+                        <label for="total">Ukupno</label>
                         <div class="form-control" readonly>
                             {{ Number(invoice.total).toLocaleString(
                                 'sr-RS',
@@ -88,9 +90,6 @@ import { validateInvoiceNumber } from '@/components/validation/invoiceValidation
 import Payment from '@/components/payment/Payment.vue'
 
 export default defineComponent({
-    beforeUnmount() {
-        this.$refs.payment.$refs.closeBtn.click()
-    },
     components: {
         ConditionalButtons, CreateItemForm, ReadItems, InvoicePdfButton, SearchCustomers, SendInvoiceToClient, Payment
     },

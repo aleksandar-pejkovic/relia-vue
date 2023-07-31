@@ -1,7 +1,7 @@
 export function validateDate(dateString) {
     const regex = /^\d{2}\.\d{2}\.\d{4}$/;
     if (!dateString.match(regex)) {
-        return 'Invalid date format. Please use the format dd.mm.yyyy.';
+        return 'Datum neispravan. Koristi format: dd.mm.yyyy.';
     }
 
     const parts = dateString.split('.');
@@ -10,13 +10,13 @@ export function validateDate(dateString) {
     const year = parseInt(parts[2], 10);
 
     if (isNaN(day) || isNaN(month) || isNaN(year)) {
-        return 'Invalid date. Please enter a valid date.';
+        return 'Datum neispravan.';
     }
 
     const date = new Date(year, month - 1, day);
 
     if (date.getDate() !== day || date.getMonth() + 1 !== month || date.getFullYear() !== year) {
-        return 'Invalid date. Please enter a valid date.';
+        return 'Datum neispravan.';
     }
 
     return ''; // Empty string indicates a valid date
@@ -25,7 +25,7 @@ export function validateDate(dateString) {
 export function validateInvoiceNumber(invoiceNumber) {
     const regex = /^[a-zA-Z0-9/-]{2,30}$/;
     if (!regex.test(invoiceNumber)) {
-        return "Please enter a valid invoice number";
+        return "Broj dokumenta neispravan";
     } else {
         return "";
     }

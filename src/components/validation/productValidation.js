@@ -2,7 +2,7 @@
 export function validateName(name) {
     const regex = /^[a-zA-Z0-9\s-čćšđžČĆŠĐŽ]{2,50}/;
     if (!regex.test(name)) {
-        return "Please enter a valid name";
+        return "Naziv neispravan";
     } else {
         return "";
     }
@@ -11,7 +11,7 @@ export function validateName(name) {
 export function validateUnit(unit) {
     const regex = /^[A-Za-z0-9]{0,5}$/;
     if (!regex.test(unit)) {
-        return "Unit can contain up to 5 alphanumeric characters";
+        return "Jedinica mere može sadržati do 5 alfanumeričkih karaktera";
     } else {
         return "";
     }
@@ -21,14 +21,14 @@ export function validatePlu(plu) {
     if (plu > 0 && plu < 100000) {
         return "";
     } else {
-        return "Plu must be a number between 1 and 99999";
+        return "Plu mora biti između 1 i 99999";
     }
 }
 
 export function validateDescription(description) {
     const regex = /^[a-zA-Z0-9ČĆŠĐŽčćšđž,.!? \u0027-]{0,300}/;
     if (!regex.test(description)) {
-        return "Please enter a valid description";
+        return "Opis neispravan";
     } else {
         return "";
     }
@@ -38,7 +38,7 @@ export function validatePrice(price) {
     const minPrice = 0;
     const maxPrice = 100000000.00;
     if (price < minPrice || price > maxPrice || !price) {
-        return `Please enter a price between ${minPrice.toFixed(2)} and ${maxPrice.toFixed(2)}`;
+        return `Cena mora biti između ${minPrice.toFixed(2)} i ${maxPrice.toFixed(2)}`;
     } else {
         return "";
     }

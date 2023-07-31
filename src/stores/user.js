@@ -38,7 +38,7 @@ export const useUserStore = defineStore({
                         }
                     }
                 )
-                showSuccessMessage('Regustration successfull', 'You can now sign in')
+                showSuccessMessage('Uspešna ragistracija', 'You can now sign in')
             } catch (error) {
                 console.error(error)
                 showErrorMessage(error)

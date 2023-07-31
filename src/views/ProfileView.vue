@@ -2,19 +2,19 @@
     <div class="main container mt-3">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title">Profile</h5>
+                <h5 class="card-title">Profil</h5>
             </div>
             <div class="card-body">
                 <div v-if="user">
                     <form @submit.prevent="updateUser">
                         <div class="row mb-3 ">
-                            <label for="username" class="col-sm-2 col-form-label">Username</label>
+                            <label for="username" class="col-sm-2 col-form-label">Korisničko ime</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="username" v-model="user.username" readonly>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="email" class="col-sm-2 col-form-label">Email</label>
+                            <label for="email" class="col-sm-2 col-form-label">Imejl</label>
                             <div class="col-sm-10">
                                 <input type="email" class="form-control" id="email" v-model="user.email"
                                     :readonly="readOnly" @input="validateEmail">
@@ -22,7 +22,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="name" class="col-sm-2 col-form-label">Name</label>
+                            <label for="name" class="col-sm-2 col-form-label">Ime i prezime</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="name" v-model="user.name" :readonly="readOnly"
                                     @input="validateName">
@@ -30,7 +30,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="creation-date" class="col-sm-2 col-form-label">Creation Date</label>
+                            <label for="creation-date" class="col-sm-2 col-form-label">Datum kreiranja</label>
                             <div class="col-sm-10">
                                 <div class="form-control" id="creation-date" readonly>
                                     {{ formatDate(user?.creationDate ?? new Date()) }}
@@ -39,7 +39,7 @@
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button v-if="readOnly" @click.prevent="startEditing" class="btn btn-primary m-2">
-                                Edit
+                                Izmeni
                             </button>
                             <div v-else>
                                 <div v-if="loading" class="spinner-border text-primary" role="status">
@@ -47,11 +47,11 @@
                                 </div>
                                 <div v-else>
                                     <button @click.prevent="cancelEditing" class="btn btn-secondary m-2">
-                                        Cancel
+                                        Otkaži
                                     </button>
                                     <button type="submit" class="btn btn-primary m-2"
                                         :class="{ 'disabled': emailError || nameError }" :disabled="hasErrors">
-                                        Save
+                                        Sačuvaj
                                     </button>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                     </form>
                 </div>
                 <div v-else>
-                    <p>No user details available.</p>
+                    <p>Nema podataka.</p>
                 </div>
             </div>
         </div>
@@ -127,9 +127,9 @@ export default defineComponent({
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const isValidEmail = emailRegex.test(this.user.email);
             if (!this.user.email) {
-                this.emailError = 'Email is required.'
+                this.emailError = 'Imejl je obavezan.'
             } else if (!isValidEmail) {
-                this.emailError = 'Please enter a valid email address.';
+                this.emailError = 'UImejl adresa neispravna.';
             } else {
                 this.emailError = '';
             }
@@ -138,7 +138,7 @@ export default defineComponent({
             const nameRegex = /^[A-Z][a-zA-ZŠĐČĆŽšđčćž]*([ \u002D][A-Z][a-zA-ZŠĐČĆŽšđčćž]*)*$/;
             const isValidName = nameRegex.test(this.user.name)
             if (!isValidName) {
-                this.nameError = 'Please enter a valid name'
+                this.nameError = 'Ime neispravno.'
             } else {
                 this.nameError = ''
             }

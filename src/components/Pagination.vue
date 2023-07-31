@@ -3,7 +3,7 @@
         <ul class="pagination">
             <li class="page-item">
                 <a class="page-link" @click="goToPage(1)" :disabled="currentPage === 1" aria-label="First">
-                    <span aria-hidden="true">First</span>
+                    <span aria-hidden="true">Start</span>
                 </a>
             </li>
             <li class="page-item">
@@ -21,7 +21,7 @@
             </li>
             <li class="page-item">
                 <a class="page-link" @click="goToPage(totalPages)" :disabled="currentPage === totalPages" aria-label="Last">
-                    <span aria-hidden="true">Last</span>
+                    <span aria-hidden="true">Kraj</span>
                 </a>
             </li>
         </ul>

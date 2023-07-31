@@ -35,7 +35,7 @@ export default defineComponent({
     },
     methods: {
         downloadInvoicePdf() {
-            this.message = 'Creating...'
+            this.message = 'Generisanje...'
             this.disabled = true
             const authStore = useAuthenticationStore();
             axios.get(`${useBaseUrlStore().baseUrl}/api/pdf/invoice/${this.id}`, {
@@ -45,7 +45,7 @@ export default defineComponent({
                 }
             }).then(response => {
                 saveAs(response.data, `${this.invoice.documentType} ${this.invoice.invoiceNumber}.pdf`)
-                this.message = 'Ready!'
+                this.message = 'Spremno!'
                 setTimeout(() => {
                     this.message = 'PDF'
                     this.disabled = false

@@ -1,13 +1,13 @@
 <template>
     <div class="main-login main-2 container mt-3">
-        <h2>Login</h2>
+        <h2>Prijava</h2>
         <form @submit.prevent="login" class="row justify-content-center align-items-center flex-column">
             <div class="col-md-6">
-                <label for="username" class="form-label">Username</label>
+                <label for="username" class="form-label">Korisničko ime</label>
                 <input type="text" class="form-control" id="username" v-model="username">
             </div>
             <div class="col-md-6">
-                <label for="password" class="form-label">Password</label>
+                <label for="password" class="form-label">Lozinka</label>
                 <input type="password" class="form-control" id="password" v-model="password">
             </div>
             <div class="col-12">
@@ -15,11 +15,11 @@
                     <span class="visually-hidden">Loading...</span>
                 </div>
                 <div v-else>
-                    <router-link to="/" class="btn btn-secondary m-2">Cancel</router-link>
-                    <button class="btn btn-primary m-2" type="submit">Login</button>
+                    <router-link to="/" class="btn btn-secondary m-2">Otkaži</router-link>
+                    <button class="btn btn-primary m-2" type="submit">Prijavi se</button>
                 </div>
                 <div>
-                    <router-link to="/reset-password">Reset password</router-link>
+                    <router-link to="/reset-password">Resetuj lozinku</router-link>
                 </div>
             </div>
         </form>
@@ -69,12 +69,12 @@ export default defineComponent({
 
                     await this.setUsersData(dataMap);
 
-                    showSuccessMessage(`Welcome ${authStore.username}!`, "Nice to see you!");
+                    showSuccessMessage(`Dobro došao ${authStore.username}!`, "Lepo je videti te!");
 
                     if (companiesStore.ownCompany) {
                         this.$router.push("/dashboard");
                     } else {
-                        showSuccessMessage('Enter your company data', 'You can create it later or update it at any time');
+                        showSuccessMessage('Unesi podatke svoje firme', 'Mogu se uneti i menjati u bilo kom trenutku');
                         this.$router.push('/my-company');
                     }
                 })

@@ -4,7 +4,7 @@
       <div @click="this.$router.push('/invoices')" class="col-md-6">
         <div class="card mt-3">
           <div class="card-header">
-            <h5 class="card-title">Total Invoices</h5>
+            <h5 class="card-title">Ukupno dokumenata</h5>
           </div>
           <div class="card-body">
             <h2>{{ totalInvoices }}</h2>
@@ -14,7 +14,7 @@
       <div class="col-md-6">
         <div class="card mt-3">
           <div class="card-header">
-            <h5 class="card-title">Total Revenue</h5>
+            <h5 class="card-title">Ukupni promet</h5>
           </div>
           <div class="card-body">
             <h2>
@@ -33,7 +33,7 @@
       <div class="col-md-6">
         <div class="card mt-3">
           <div class="card-header">
-            <h5 class="card-title">Top Invoices</h5>
+            <h5 class="card-title">Top dokumenti</h5>
           </div>
           <div class="card-body">
             <InvoicesChart />
@@ -43,7 +43,7 @@
       <div class="col-md-6">
         <div class="card mt-3">
           <div class="card-header">
-            <h5 class="card-title">Top Customers</h5>
+            <h5 class="card-title">Top partneri</h5>
           </div>
           <div class="card-body">
             <CompaniesChart />

@@ -8,13 +8,13 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <input type="number" step="any" min="1" max="1000000" class="form-control m-2" id="quantity"
-                            placeholder="Quantity" v-model="item.quantity" @input="formatQuantity">
+                            placeholder="Količina" v-model="item.quantity" @input="formatQuantity">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
                         <input type="number" step="any" min="0" max="100000000" class="form-control m-2" id="price"
-                            placeholder="Price" v-model="item.price" @input="formatPrice">
+                            placeholder="Cena" v-model="item.price" @input="formatPrice">
                     </div>
                 </div>
                 <div class="col-md-1">
@@ -81,14 +81,14 @@ export default defineComponent({
         },
         async createItem() {
             if (!this.selectedProduct.id) {
-                this.showErrorMessage('Select a product')
+                this.showErrorMessage('Izaberi proizvod')
                 return
             }
             if (!this.item.quantity) {
-                this.showErrorMessage('Invalid quantity')
+                this.showErrorMessage('Nevažeća količina')
                 return
             } if (this.item.price < 0) {
-                this.showErrorMessage('Invalid price')
+                this.showErrorMessage('Nevažeća cena')
                 return
             }
             this.loading = true

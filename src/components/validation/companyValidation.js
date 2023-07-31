@@ -2,7 +2,7 @@
 export function validateName(name) {
     const regex = /^[a-zA-Z0-9\sčćžšđČĆŽŠĐ\-']*$/
     if (!regex.test(name)) {
-        return "Please enter a valid name";
+        return "Ime neispravno";
     } else {
         return "";
     }
@@ -12,7 +12,7 @@ export function validateName(name) {
 export function validateCity(city) {
     const regex = /^[a-zA-Z0-9\sčćžšđČĆŽŠĐ]*$/
     if (!regex.test(city)) {
-        return "Please enter a valid city";
+        return "Naziv mesta neispravan";
     } else {
         return "";
     }
@@ -22,7 +22,7 @@ export function validateCity(city) {
 export function validateZip(zip) {
     const regex = /^[0-9]{5}$/; // Only allows 5 digits
     if (!regex.test(zip)) {
-        return "Please enter a valid zip number";
+        return "Poštanski broj neispravan";
     } else {
         return "";
     }
@@ -32,7 +32,7 @@ export function validateZip(zip) {
 export function validateAddress(street) {
     const regex = /^[a-zA-Z0-9\sčćžšđČĆŽŠĐ]*$/; // Allows letters, numbers, and spaces
     if (!regex.test(street)) {
-        return "Please enter a valid address";
+        return "Adresa neispravna";
     } else {
         return "";
     }
@@ -42,7 +42,7 @@ export function validateAddress(street) {
 export function validateRegistrationNumber(registrationNumber) {
     const regex = /^[0-9]{8}$/; // Only allows 8 digits
     if (!regex.test(registrationNumber)) {
-        return "Please enter a valid registration number";
+        return "Matični broj neispravan";
     } else {
         return "";
     }
@@ -52,7 +52,7 @@ export function validateRegistrationNumber(registrationNumber) {
 export function validateTaxNumber(taxNumber) {
     const regex = /^[0-9]{9}$/; // Only allows 9 digits
     if (!regex.test(taxNumber)) {
-        return "Please enter a valid tax number";
+        return "PIB neispravan";
     } else {
         return "";
     }
@@ -62,7 +62,7 @@ export function validateTaxNumber(taxNumber) {
 export function validateBankAccount(bankAccount) {
     const regex = /^(?:\d{3})-(?:0*(\d{1,13})|\1)-(\d{2})$/; // Only allows 12 digits
     if (!regex.test(bankAccount)) {
-        return "Please enter a valid bank account number";
+        return "Tekući račun neispravan";
     } else {
         return "";
     }
@@ -72,7 +72,7 @@ export function validateBankAccount(bankAccount) {
 export function validatePhoneNumber(phone) {
     const regex = /^([+\d{1,3}])?[\d\-/]{6,15}$/;
     if (!regex.test(phone)) {
-        return "Please enter a valid phone number";
+        return "Broj telefona neispravan";
     } else {
         return "";
     }
@@ -82,7 +82,7 @@ export function validatePhoneNumber(phone) {
 export function validateEmail(email) {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Checks if input is in email format
     if (!regex.test(email)) {
-        return "Please enter a valid email address";
+        return "Imejl neispravan";
     } else {
         return "";
     }
@@ -92,7 +92,7 @@ export function validateEmail(email) {
 export function validateWebsite(website) {
     const regex = /^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}\/?[a-zA-Z0-9-]*$/; // Checks if input is in website format
     if (!regex.test(website)) {
-        return "Please enter a valid website address";
+        return "Internet stranica neispravna";
     } else {
         return "";
     }
@@ -101,7 +101,7 @@ export function validateWebsite(website) {
 export function validateDirector(director) {
     const regex = /^[a-zA-Z\sčćžšđČĆŽŠĐ]*$/; // Checks if input is in website format
     if (!regex.test(director)) {
-        return "Please enter a valid director name";
+        return "Ime direktora neispravno";
     } else {
         return "";
     }

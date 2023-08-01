@@ -112,8 +112,8 @@ export default {
                 this.addPaymentBtnText = 'Dodaj uplatu'
                 this.addPaymentBtnDisabled = false
             }).catch(() => {
-                    alert("Failed to create payment")
-                })
+                alert("Failed to create payment")
+            })
         },
         async deletePayment(id) {
             if (window.confirm("Are you sure?")) {
@@ -126,6 +126,9 @@ export default {
                         }
                     })
                     this.fetchPayments()
+                    await useInvoicesStore().fetchInvoices()
+                    await useInvoicesStore().updateEditInvoice(this.id)
+                    this.$emit('payment-added')
                 } catch (error) {
                     console.log(error)
                     alert(`Failed to remove Payment with id:${id}`)

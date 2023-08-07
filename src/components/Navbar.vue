@@ -1,7 +1,7 @@
 <template>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: darkslateblue;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">ReliaBill</a>
+            <RouterLink class="navbar-brand" to="/dashboard">ReliaBill</RouterLink>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -99,3 +99,17 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.dropdown-menu {
+    background-color: darkslateblue;
+}
+
+.dropdown-item {
+    color: gainsboro;
+}
+
+.dropdown-item:hover {
+    color: darkslateblue;
+}
+</style>

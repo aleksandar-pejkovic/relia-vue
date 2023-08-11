@@ -146,7 +146,7 @@ export default defineComponent({
             if (!this.user.password) {
                 this.passwordError = 'Lozinka je neophodna.';
             } else if (!isValidPassword) {
-                this.passwordError = 'Lozinka može biti 6-12 karaktera i mora imati veliko slovo, malo svlovo, specijalni znak i broj.';
+                this.passwordError = 'Lozinka može biti 6-12 karaktera i mora imati veliko slovo, malo slovo, specijalni znak i broj.';
             } else {
                 this.passwordError = '';
                 this.validateRepeatPassword()

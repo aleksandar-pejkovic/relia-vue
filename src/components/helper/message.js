@@ -16,7 +16,7 @@ export function showErrorMessage(error) {
 export function showLoginErrorMessage() {
     Swal.fire({
         title: 'Prijava nije uspela!',
-        text: "Pogrešan username ili pasvord",
+        text: "Pogrešno korisničko ime ili lozinka",
         icon: 'error',
         confirmButtonText: 'OK'
     });

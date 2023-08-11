@@ -74,7 +74,8 @@ export default defineComponent({
                 this.emailError ||
                 this.nameError ||
                 this.passwordError ||
-                this.repeatPasswordError
+                this.repeatPasswordError ||
+                this.isEmptyUserFields()
             );
         },
     },
@@ -100,6 +101,14 @@ export default defineComponent({
                 this.loading = false;
                 showErrorMessage(error)
             }
+        },
+        isEmptyUserFields() {
+            for (const field in this.user) {
+                if (this.user[field].trim() !== "") {
+                    return false;
+                }
+            }
+            return true;
         },
         validateUsername() {
             const usernameRegex = /^[a-zA-Z0-9_-]{3,35}$/;
@@ -137,7 +146,7 @@ export default defineComponent({
             if (!this.user.password) {
                 this.passwordError = 'Lozinka je neophodna.';
             } else if (!isValidPassword) {
-                this.passwordError = 'Lozinka može biti 6-12 karaktera i mora imate veliko slovo, malo svlovo, specijalni znak i broj.';
+                this.passwordError = 'Lozinka može biti 6-12 karaktera i mora imati veliko slovo, malo svlovo, specijalni znak i broj.';
             } else {
                 this.passwordError = '';
                 this.validateRepeatPassword()

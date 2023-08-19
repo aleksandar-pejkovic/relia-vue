@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: darkslateblue;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <RouterLink class="navbar-brand" to="/dashboard">ReliaBill</RouterLink>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -99,17 +99,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-.dropdown-menu {
-    background-color: darkslateblue;
-}
-
-.dropdown-item {
-    color: gainsboro;
-}
-
-.dropdown-item:hover {
-    color: darkslateblue;
-}
-</style>

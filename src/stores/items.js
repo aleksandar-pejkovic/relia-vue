@@ -96,6 +96,7 @@ export const useItemsStore = defineStore({
                 this.items = this.items.filter(i => i.id !== item.id);
                 localStorage.setItem('items', JSON.stringify(this.items));
                 this.filterItemsByInvoiceId(item.invoiceId)
+                useInvoicesStore().reduceTotal(item)
             } catch (error) {
                 console.error(error);
                 showErrorMessage(error)

@@ -140,7 +140,6 @@ export default defineComponent({
         deleteItem(item) {
             this.removingItem = true
             useItemsStore().deleteItem(item);
-            useInvoicesStore().reduceTotal(item)
             useProductsStore().discardSale(item.productName, item.quantity)
             this.removingItem = false
         }

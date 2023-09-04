@@ -17,7 +17,7 @@
                                 v-model="payment.paymentDate">
                         </div>
                         <div class="form-group col">
-                            <input type="number" class="form-control" id="paymentAmount" min="0" max="1000000000000"
+                            <input type="text" class="form-control" id="paymentAmount" min="0" max="1000000000000"
                                 v-model="payment.amount" @input="formatAmount">
                         </div>
                         <button type="submit" class="addBtn btn btn-success col-1" :disabled="addPaymentBtnDisabled">{{

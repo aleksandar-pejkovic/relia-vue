@@ -28,21 +28,21 @@ export default defineComponent({
 <style scoped>
 
 .btn {
-  color: #553c9a;
+  color: royalblue;
   background-color: transparent;
   border: 1px maroon solid;
   transition: background-color 0.5s ease;
 }
 
 .btn:hover {
-  background-color: #553c9a;
-  color: wheat;
+  background-color: royalblue;
+  color: white;
 }
 
 .title {
   font-size: 76px;
   font-weight: 600;
-  background-image: linear-gradient(45deg, #553c9a, #ee4b2b);
+  background-image: linear-gradient(45deg, royalblue, #ee4b2b);
   color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
@@ -50,7 +50,7 @@ export default defineComponent({
 
 .subtitle {
   font-size: 1.5rem;
-  background-image: linear-gradient(45deg, #ee4b2b, #553c9a);
+  background-image: linear-gradient(45deg, #ee4b2b, royalblue);
   color: transparent;
   background-clip: text;
   -webkit-background-clip: text;

@@ -4,16 +4,16 @@
   text-align: center;
   justify-content: center;
   user-select: none;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 body {
-  background-color: #efefef;
   height: 100vh;
 }
 
 h1 {
-  color: darkslateblue;
+  margin: 20px;
+  color: royalblue;
 }
 
 .main {
@@ -44,8 +44,8 @@ h1 {
 }
 
 thead {
-  background-color: darkslateblue;
-  color: wheat;
+  background-color: royalblue;
+  color: white;
 }
 
 th {
@@ -69,17 +69,17 @@ td {
 }
 
 label {
-  background-color: darkslateblue;
-  color: wheat;
+  color: royalblue;
   border-radius: 10px;
-  padding: 5px;
+  padding-top: 15px;
   width: 200px;
   margin-top: 5px;
 }
 
 .card {
+  margin: 30px;
   background-color: #FFFFFF;
-  color: darkslateblue;
+  color: royalblue;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -94,12 +94,12 @@ label {
 }
 
 .card-header {
-  background-color: darkslateblue;
+  background-color: royalblue;
   padding: 15px;
 }
 
 .card-title {         
-  color: wheat;
+  color: white;
   font-size: 24px;
   font-weight: bold;
   margin: 0;
@@ -171,7 +171,7 @@ label {
 }
 
 .col-form-label {
-  color: wheat;
+  color: royalblue;
   font-size: 14px;
   font-weight: bold;
   margin: 0;

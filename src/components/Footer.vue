@@ -46,13 +46,17 @@ const hideFooter = () => {
 .footer {
     background-color: #333;
     color: #ccc;
-    padding: 20px;
+    padding: 30px;
     text-align: center;
     width: 100%;
 }
 
 a {
     color: #ccc;
+}
+
+p {
+    padding: 10px;
 }
 
 .social-icons {

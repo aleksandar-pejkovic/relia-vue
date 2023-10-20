@@ -1,8 +1,8 @@
 <template>
     <div class="container main mt-3">
         <div v-if="invoice.invoiceNumber">
-            <h3 class="m-3" id="staticBackdropLabel">{{ invoice.documentType }} {{
-                invoice.invoiceNumber }} - {{ invoice.companyName }}</h3>
+            <h1 class="m-3" id="staticBackdropLabel">{{ invoice.documentType }} {{
+                invoice.invoiceNumber }} - {{ invoice.companyName }}</h1>
         </div>
         <div v-if="hasItems">
             <InvoicePdfButton :id="invoice.id" :invoice="invoice" />

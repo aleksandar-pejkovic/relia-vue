@@ -8,7 +8,7 @@
                 <CustomersReport />
             </div>
             <div class="col-md-2">
-                <button @click="openCustomerModal" type="button" class="btn btn-success m-2" data-bs-toggle="modal"
+                <button @click="openCustomerModal" type="button" class="btn btn-gold btn-primary m-2" data-bs-toggle="modal"
                     data-bs-target="#customerModal">
                     Dodaj
                 </button>
@@ -26,8 +26,8 @@
 
 <script>
 import { defineComponent } from 'vue';
-import ReadCustomers from '../components/customer/ReadCustomers.vue';
-import CustomerModal from '../components/customer/CustomerModal.vue';
+import ReadCustomers from '@/components/customer/ReadCustomers.vue';
+import CustomerModal from '@/components/customer/CustomerModal.vue';
 import { useCompaniesStore } from '../stores/companies';
 import SearchCustomers from '../components/customer/SearchCustomers.vue';
 import CustomersReport from '../components/customer/CustomersReport.vue';

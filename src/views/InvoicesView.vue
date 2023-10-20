@@ -5,7 +5,7 @@
                 <h1>Dokumenti</h1>
             </div>
             <div class="col-md-2">
-                <button @click="openInvoiceModal" type="button" class="btn btn-success m-2">
+                <button @click="openInvoiceModal" type="button" class="btn btn-gold btn-primary          m-2">
                     Dodaj
                 </button>
             </div>

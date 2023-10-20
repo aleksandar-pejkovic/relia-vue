@@ -1,6 +1,6 @@
 <template>
     <nav v-if="totalPages > 1" aria-label="Page navigation example">
-        <ul class="pagination">
+        <ul class="pagination m-3">
             <li class="page-item">
                 <a class="page-link" @click="goToPage(1)" :disabled="currentPage === 1" aria-label="First">
                     <span aria-hidden="true">Start</span>
@@ -97,6 +97,10 @@ export default defineComponent({
 <style scoped>
 a {
     cursor: pointer;
+}
+
+nav * {
+    color: black;
 }
 
 @media (max-width: 768px) {

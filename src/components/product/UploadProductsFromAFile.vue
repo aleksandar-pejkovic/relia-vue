@@ -1,11 +1,11 @@
 <template>
     <div>
-        <div v-if="loading" class="spinner-border text-primary" role="status">
+        <div v-if="loading" class="spinner-border text-warning" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
         <div v-else>
-            <input type="file" @change="handleFileUpload" accept=".xlsx, .xls, .csv" :max-size="52880">
-            <button @click="uploadFile" class="btn btn-outline-secondary m-1">Učitaj</button>
+            <input type="file" @change="handleFileUpload" accept=".xlsx, .xls, .csv" :max-size="52880" class="text-secondary">
+            <button @click="uploadFile" class="btn btn-gold btn-primary m-1">Učitaj</button>
         </div>
     </div>
 </template>

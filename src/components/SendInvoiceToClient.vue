@@ -1,5 +1,5 @@
 <template>
-    <button v-if="hasOwnCompany" type="button" class="btn btn-outline-primary m-2" @click="sendInvoiceToClient"
+    <button v-if="hasOwnCompany" type="button" class="btn btn-gold btn-primary m-2" @click="sendInvoiceToClient"
         :disabled="disabled">{{ btnText }}</button>
     <!-- <div v-if="message" class="alert alert-success" role="alert">
         {{ message }}

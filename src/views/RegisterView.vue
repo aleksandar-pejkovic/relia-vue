@@ -1,6 +1,6 @@
 <template>
     <div class="main-2 main-login container mt-3">
-        <h2>Registracija</h2>
+        <h1>Registracija</h1>
         <form @submit.prevent="register" class="row justify-content-center align-items-center flex-column">
             <div class="col-md-6">
                 <label for="username" class="form-label">Korisničko ime:</label>
@@ -28,13 +28,13 @@
                     @input="validateRepeatPassword">
                 <span v-if="repeatPasswordError" class="error">{{ repeatPasswordError }}</span>
             </div>
-            <div class="col-12">
-                <div v-if="loading" class="spinner-border text-primary" role="status">
+            <div class="col-12 mt-3">
+                <div v-if="loading" class="spinner-border text-warning" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
                 <div v-else>
-                    <router-link to="/" class="btn btn-secondary m-2">Otkaži</router-link>
-                    <button class="btn btn-primary" type="submit">Registruj se</button>
+                    <router-link to="/" class="btn btn-gold btn-secondary m-3">Otkaži</router-link>
+                    <button class="btn btn-gold btn-primary m-3" type="submit">Registruj se</button>
                 </div>
             </div>
         </form>

@@ -9,7 +9,7 @@
             <option value="IN_STOCK">Stanje na zalihama</option>
             <option value="NAME">Naziv</option>
         </select>
-        <button type="button" class="btn btn-outline-primary m-2" @click="downloadProductsReport">Izveštaj</button>
+        <button type="button" class="btn btn-gold btn-primary m-2" @click="downloadProductsReport">Izveštaj</button>
     </div>
 </template>
   

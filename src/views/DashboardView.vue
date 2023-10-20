@@ -1,5 +1,5 @@
 <template>
-  <div class="main container mt-3">
+  <div class="main container mt-5 mb-5">
     <div class="row">
       <div @click="this.$router.push('/invoices')" class="col-md-6">
         <div class="card mt-3">

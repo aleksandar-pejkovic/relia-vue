@@ -9,7 +9,7 @@
             <option value="PAYMENTS">Uplate</option>
             <option value="NAME">Naziv</option>
         </select>
-        <button type="button" class="btn btn-outline-primary m-2" @click="downloadCustomersReport">Izveštaj</button>
+        <button type="button" class="btn btn-gold btn-primary m-2" @click="downloadCustomersReport">Izveštaj</button>
     </div>
 </template>
   

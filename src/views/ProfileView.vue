@@ -38,7 +38,7 @@
                             </div>
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button v-if="readOnly" @click.prevent="startEditing" class="btn btn-primary m-2">
+                            <button v-if="readOnly" @click.prevent="startEditing" class="btn btn-dark btn-outline-primary m-2">
                                 Izmeni
                             </button>
                             <div v-else>
@@ -46,10 +46,10 @@
                                     <span class="visually-hidden">Loading...</span>
                                 </div>
                                 <div v-else>
-                                    <button @click.prevent="cancelEditing" class="btn btn-secondary m-2">
+                                    <button @click.prevent="cancelEditing" class="btn btn-dark btn-outline-secondary m-2">
                                         Otkaži
                                     </button>
-                                    <button type="submit" class="btn btn-primary m-2"
+                                    <button type="submit" class="btn btn-dark btn-outline-primary m-2"
                                         :class="{ 'disabled': emailError || nameError }" :disabled="hasErrors">
                                         Sačuvaj
                                     </button>

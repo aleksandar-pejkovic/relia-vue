@@ -4,16 +4,22 @@
   text-align: center;
   justify-content: center;
   user-select: none;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 body {
   height: 100vh;
+  background-image: url(office.jpg);
+  background-size: cover;
 }
 
 h1 {
   margin: 20px;
-  color: royalblue;
+  color: gold;
+}
+
+h2 {
+  margin: 20px;
+  color: black;
 }
 
 .main {
@@ -43,11 +49,6 @@ h1 {
   pointer-events: none;
 }
 
-thead {
-  background-color: royalblue;
-  color: white;
-}
-
 th {
   width: 250px;
   max-width: 300px;
@@ -69,36 +70,27 @@ td {
 }
 
 label {
-  color: royalblue;
+  color: goldenrod;
   border-radius: 10px;
-  padding-top: 15px;
   width: 200px;
-  margin-top: 5px;
+  margin-top: 25px;
+  margin-bottom: 5px;
 }
 
 .card {
   margin: 30px;
   background-color: #FFFFFF;
-  color: royalblue;
+  color: black;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.side-borders {
-  border-left: darkslateblue solid;
-  border-right: darkslateblue solid;
-}
-
-.item-borders {
-  border-top: darkslateblue solid;
-  border-bottom: darkslateblue solid;
+  border: 2px gold outset;
 }
 
 .card-header {
-  background-color: royalblue;
+  background-color: #343434;
   padding: 15px;
 }
 
-.card-title {         
+.card-title {
   color: white;
   font-size: 24px;
   font-weight: bold;
@@ -171,40 +163,58 @@ label {
 }
 
 .col-form-label {
-  color: royalblue;
+  color: goldenrod;
   font-size: 14px;
   font-weight: bold;
   margin: 0;
 }
 
+.title {
+  font-size: 76px;
+  font-weight: 600;
+  background: linear-gradient(45deg, gold, #ee4b2b);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  background: linear-gradient(45deg, #ee4b2b, gold);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
 .btn {
-  width: 120px;
+  margin-top: 20px;
+  width: 150px;
   border-radius: 25px;
   font-size: 14px;
   font-weight: bold;
   transition: all 0.3s ease-in-out;
+  background-color: transparent;
+  border: 1px goldenrod outset;
 }
 
-.btn-primary {
-  background-color: #007BFF;
-  border: none;
-  color: #FFFFFF;
+.btn-dark {
+  color: #343434;
+}
+
+.btn-gold {
+  color: gold;
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
-  background-color: #0062CC;
-}
-
-.btn-secondary {
-  background-color: #6C757D;
-  border: none;
-  color: #FFFFFF;
+  background: linear-gradient(45deg, gold, #ee4b2b);
+  border: 1px goldenrod outset;
 }
 
 .btn-secondary:hover,
 .btn-secondary:focus {
-  background-color: #5A6268;
+  border: 1px gold solid;
+  border: 1px goldenrod outset;
 }
 
 .list-group {

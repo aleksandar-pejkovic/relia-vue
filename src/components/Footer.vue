@@ -1,5 +1,5 @@
 <template>
-    <footer class="footer mt-3" v-show="showFooter">
+    <footer class="footer" v-show="showFooter">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -45,17 +45,23 @@ const hideFooter = () => {
 <style scoped>
 .footer {
     background-color: #333;
-    color: #ccc;
+    opacity: 0.8;
     padding: 30px;
     text-align: center;
     width: 100%;
 }
 
+.footer a:hover {
+    color: goldenrod;
+    transform: scale(2);
+}
+
 a {
-    color: #ccc;
+    color: gold;
 }
 
 p {
+    color: gold;
     padding: 10px;
 }
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="container mt-3">
+    <div class="container">
         <form @submit.prevent="createItem" class="justify-content-center align-items-center flex-column">
             <div class="row m-3">
                 <div class="col-md-4">

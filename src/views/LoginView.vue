@@ -1,6 +1,6 @@
 <template>
     <div class="main-login main-2 container mt-3">
-        <h2>Prijava</h2>
+        <h1>Prijava</h1>
         <form @submit.prevent="login" class="row justify-content-center align-items-center flex-column">
             <div class="col-md-6">
                 <label for="username" class="form-label">Korisničko ime</label>
@@ -10,13 +10,13 @@
                 <label for="password" class="form-label">Lozinka</label>
                 <input type="password" class="form-control" id="password" v-model="password">
             </div>
-            <div class="col-12">
-                <div v-if="loading" class="spinner-border text-primary" role="status">
+            <div class="col-12 mt-3">
+                <div v-if="loading" class="spinner-border text-warning" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
                 <div v-else>
-                    <router-link to="/" class="btn btn-secondary m-2">Otkaži</router-link>
-                    <button class="btn btn-primary m-2" type="submit">Prijavi se</button>
+                    <router-link to="/" class="btn btn-gold btn-secondary m-3">Otkaži</router-link>
+                    <button class="btn btn-gold btn-primary m-3" type="submit">Prijavi se</button>
                 </div>
                 <div>
                     <router-link to="/reset-password">Resetuj lozinku</router-link>

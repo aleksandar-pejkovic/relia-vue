@@ -1,8 +1,8 @@
 <template>
     <div>
-        <input class="form-control" type="search" v-model="searchQuery" placeholder="Pretraži proizvode..."
+        <input class="form-control m-2" type="search" v-model="searchQuery" placeholder="Pretraži proizvode..."
             @focus="showSearchList" @blur="hideSearchList">
-        <ul class="list-group mt-3" v-show="isFocused">
+        <ul class="list-group mt-2" v-show="isFocused">
             <li v-for="product in filteredProducts" :key="product.id" class="list-group-item"
                 @click="selectProduct(product)">{{ product.name }}
             </li>

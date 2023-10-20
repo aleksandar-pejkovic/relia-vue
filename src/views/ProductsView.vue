@@ -8,7 +8,7 @@
                 <ProductsReport />
             </div>
             <div class="col-md-2">
-                <button @click="openProductModal" type="button" class="btn btn-success m-2" data-bs-toggle="modal"
+                <button @click="openProductModal" type="button" class="btn btn-gold btn-primary m-2" data-bs-toggle="modal"
                     data-bs-target="#productModal">
                     Dodaj
                 </button>

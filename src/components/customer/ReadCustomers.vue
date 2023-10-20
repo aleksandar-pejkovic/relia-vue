@@ -1,7 +1,7 @@
 <template>
     <div v-if="!isSmallScreen">
         <div class="table-responsive">
-            <table class="table table-striped table-hover">
+            <table class="table table-striped table-dark table-hover">
                 <thead>
                     <tr>
                         <th @click="sortList('name')" class="col-2 clickable">
@@ -73,7 +73,7 @@
 <script>
 import { defineComponent } from 'vue';
 import { useCompaniesStore } from '@/stores/companies'
-import Pagination from '../Pagination.vue';
+import Pagination from '@/components/Pagination.vue';
 
 export default defineComponent({
     components: { Pagination },

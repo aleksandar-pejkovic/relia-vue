@@ -101,13 +101,13 @@
                                 </div>
                                 <div v-else>
                                     <button @click="cancelEditing" type="button"
-                                        class="btn btn-secondary m-2">Otkaži</button>
+                                        class="btn btn-dark btn-outline-secondary m-2">Otkaži</button>
                                     <button @click.prevent="updateOwnCompany" type="submit"
-                                        class="btn btn-success m-2">Ažuriraj</button>
+                                        class="btn btn-dark btn-outline-success m-2">Ažuriraj</button>
                                 </div>
                             </div>
                             <div v-else>
-                                <button @click="startEditing" type="button" class="btn btn-primary m-2">Izmeni</button>
+                                <button @click="startEditing" type="button" class="btn btn-dark btn-outline-primary m-2">Izmeni</button>
                             </div>
                         </div>
                     </form>

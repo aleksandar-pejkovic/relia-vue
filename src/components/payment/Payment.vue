@@ -1,5 +1,5 @@
 <template>
-    <button class="btn btn-outline-success m-2" data-bs-toggle="modal" data-bs-target="#paymentsModal">Uplate</button>
+    <button class="btn btn-gold btn-primary m-2" data-bs-toggle="modal" data-bs-target="#paymentsModal">Uplate</button>
 
     <div class="modal" id="paymentsModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">

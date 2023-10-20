@@ -5,8 +5,8 @@
             <span class="visually-hidden">Učitavanje...</span>
         </div>
         <div v-else>
-            <button @click="resetErrors" type="reset" class="btn btn-secondary m-2">Poništi</button>
-            <button @click.prevent="create" type="submit" class="btn btn-success m-2">Sačuvaj</button>
+            <button @click="resetErrors" type="reset" class="btn btn-outline-secondary m-2">Poništi</button>
+            <button @click.prevent="create" type="submit" class="btn btn-outline-success m-2">Sačuvaj</button>
         </div>
     </div>
     <div v-else>
@@ -15,8 +15,8 @@
                 <span class="visually-hidden">Učitavanje...</span>
             </div>
             <div v-else>
-                <button @click="cancelEditing" type="button" class="btn btn-secondary m-2">Otkaži</button>
-                <button @click.prevent="update" type="submit" class="btn btn-success m-2">Ažuriraj</button>
+                <button @click="cancelEditing" type="button" class="btn btn-outline-secondary m-2">Otkaži</button>
+                <button @click.prevent="update" type="submit" class="btn btn-outline-success m-2">Ažuriraj</button>
             </div>
         </div>
         <div v-else>

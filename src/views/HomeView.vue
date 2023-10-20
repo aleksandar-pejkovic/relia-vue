@@ -4,58 +4,14 @@
       <div class="col-12 text-center">
         <h1 class="title">Dobro došli u ReliaBill</h1>
         <p class="subtitle">Kreirajte i upravljajte fakturama sa lakoćom</p>
-        <router-link to="/login" class="btn btn-primary m-2">Prijavi se</router-link>
-        <router-link to="/register" class="btn btn-primary m-2">Registracija</router-link>
+        <router-link to="/login" class="btn btn-gold btn-primary m-3">Prijavi se</router-link>
+        <router-link to="/register" class="btn btn-gold btn-primary m-3">Registracija</router-link>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-import backgroundImage from "@/assets/background.jpg";
-import { defineComponent } from "vue";
-
-export default defineComponent({
-  name: "Background",
-  data() {
-    return {
-      backgroundImage,
-    };
-  },
-});
-</script>
-  
 <style scoped>
-
-.btn {
-  color: royalblue;
-  background-color: transparent;
-  border: 1px maroon solid;
-  transition: background-color 0.5s ease;
-}
-
-.btn:hover {
-  background-color: royalblue;
-  color: white;
-}
-
-.title {
-  font-size: 76px;
-  font-weight: 600;
-  background-image: linear-gradient(45deg, royalblue, #ee4b2b);
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-}
-
-.subtitle {
-  font-size: 1.5rem;
-  background-image: linear-gradient(45deg, #ee4b2b, royalblue);
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-}
-
 @media (max-width: 768px) {
   .title {
     font-size: 3rem;
@@ -77,26 +33,4 @@ export default defineComponent({
     margin-bottom: 1rem;
   }
 }
-
-.background-image {
-  background-image: url("@/assets/background.jpg");
-  background-size: cover;
-  background-position: center center;
-  height: 100vh;
-  width: 100%;
-  color: aliceblue;
-}
-
-@media (max-width: 768px) {
-  .background-image {
-    background-position: top center;
-  }
-}
-
-@media (max-width: 480px) {
-  .background-image {
-    height: 50vh;
-  }
-}
 </style>
-  

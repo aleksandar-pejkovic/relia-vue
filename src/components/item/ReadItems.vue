@@ -1,7 +1,7 @@
 <template>
     <div v-if="!isSmallScreen">
         <div class="table-responsive">
-            <table class="table table-striped table-hover">
+            <table class="table table-striped table-dark table-hover">
                 <thead>
                     <tr>
                         <th class="col-2">Proizvod</th>
